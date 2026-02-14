@@ -14,13 +14,12 @@ export function NavigationButtons({
   onNext
 }: NavigationButtonsProps) {
   return (
-    <div className="flex justify-center" style={{ gap: '40px' }}>
+    <div className="flex justify-center gap-4 sm:gap-10">
       <button
         onClick={onPrevious}
         disabled={currentIndex === 0}
-        className="rounded font-bold transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+        className="rounded font-bold transition-all disabled:opacity-50 disabled:cursor-not-allowed px-6 py-2 sm:px-8 sm:py-3"
         style={{
-          padding: '12px 30px',
           border: '2px solid #ADCEF7',
           background: 'white',
           color: '#3F51B5',
@@ -45,9 +44,8 @@ export function NavigationButtons({
       <button
         onClick={onNext}
         disabled={currentIndex === totalQuestions - 1}
-        className="rounded font-bold transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+        className="rounded font-bold transition-all disabled:opacity-50 disabled:cursor-not-allowed px-6 py-2 sm:px-8 sm:py-3"
         style={{
-          padding: '12px 30px',
           border: '2px solid #ADCEF7',
           background: 'white',
           color: '#3F51B5',

@@ -37,7 +37,7 @@ export function QuestionDisplay({
       </div>
 
       {question.image && (
-        <div className="flex-1 min-h-0 relative w-full mb-4">
+        <div className="h-[250px] lg:h-auto lg:flex-1 min-h-0 relative w-full mb-4 shrink-0 lg:shrink">
           <Image
             src={question.image}
             alt="Imagen de la pregunta"

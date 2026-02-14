@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import type { User } from '@supabase/supabase-js';
 import { useRouter } from 'next/navigation';
-import { GraduationCap, Shield, LogOut, CheckCircle2, AlertCircle } from 'lucide-react';
+import { GraduationCap, Shield, LogOut, CheckCircle2, AlertCircle, Menu, X } from 'lucide-react';
 import { ExamMode } from '@/lib/types/exam';
 
 interface NavbarClientProps {
@@ -31,6 +31,7 @@ export function NavbarClient({
 }: NavbarClientProps) {
   const [user, setUser] = useState<User | null>(initialUser);
   const [isAdmin, setIsAdmin] = useState(initialIsAdmin);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -84,40 +85,30 @@ export function NavbarClient({
   };
 
   return (
-    <nav style={{
+    <nav className="sticky top-0 z-50 px-4 py-3 md:px-10 md:py-4 shadow-md" style={{
       background: '#033E8C',
       borderBottom: '4px solid #FCD442',
-      padding: '16px 40px',
-      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.2)',
-      position: 'sticky',
-      top: 0,
-      zIndex: 50
     }}>
       <div className="max-w-7xl mx-auto flex justify-between items-center">
         <Link href="/" style={{ textDecoration: 'none' }}>
-          <h1 style={{
-            fontSize: '1.5rem',
-            fontWeight: '800',
+          <h1 className="text-lg md:text-2xl font-extrabold flex items-center gap-2" style={{
             color: 'white',
             cursor: 'pointer',
             letterSpacing: '-0.01em',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '10px'
           }}>
             {/* Icon can be added here if needed, but text is fine */}
-            Simulador Profe Tomy
+            <span className="hidden sm:inline">Simulador</span> Profe Tomy
           </h1>
         </Link>
         
         {/* Controles de Examen (Centrales) */}
         {isExam && onModeChange && (
-          <div className="flex items-center gap-6 bg-white/10 px-6 py-2 rounded-full border border-white/20">
+          <div className="flex items-center gap-2 sm:gap-6 bg-white/10 px-3 py-1 sm:px-6 sm:py-2 rounded-full border border-white/20">
             {/* Selector de Modo */}
             <div className="flex bg-white/20 rounded-lg p-1">
               <button
                 onClick={() => onModeChange('exam')}
-                className={`px-4 py-1.5 rounded-md text-sm font-bold transition-all ${
+                className={`px-2 py-1 sm:px-4 sm:py-1.5 rounded-md text-xs sm:text-sm font-bold transition-all ${
                   mode === 'exam'
                     ? 'shadow-md'
                     : 'hover:bg-white/10'
@@ -131,7 +122,7 @@ export function NavbarClient({
               </button>
               <button
                 onClick={() => onModeChange('correction')}
-                className={`px-4 py-1.5 rounded-md text-sm font-bold transition-all ${
+                className={`px-2 py-1 sm:px-4 sm:py-1.5 rounded-md text-xs sm:text-sm font-bold transition-all ${
                   mode === 'correction'
                     ? 'shadow-md'
                     : 'hover:bg-white/10'
@@ -150,31 +141,28 @@ export function NavbarClient({
 
             {/* Contador de Progreso */}
             <div className="flex items-center gap-2">
-              <div className="flex items-center justify-center w-8 h-8 rounded-full bg-[#63AEBF] text-white">
+              <div className="flex items-center justify-center w-8 h-8 rounded-full bg-[#63AEBF] text-white shrink-0">
                 <CheckCircle2 size={18} />
               </div>
-              <div className="flex flex-col">
+              <div className="hidden sm:flex flex-col">
                 <span className="text-xs text-blue-100 font-medium">Progreso</span>
                 <span className="text-sm font-bold text-white leading-none">
                   {answeredCount} / {totalQuestions}
                 </span>
               </div>
+               <div className="flex sm:hidden font-bold text-white text-sm">
+                  {answeredCount}/{totalQuestions}
+              </div>
             </div>
           </div>
         )}
 
-        {/* Menú de Usuario (Derecha) */}
-        <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+        {/* Menú de Usuario (Desktop) */}
+        <div className="hidden md:flex gap-3 items-center">
           {user ? (
             <>
               {/* Usuario logueado */}
-              <span style={{
-                color: '#E0F2F5',
-                fontSize: '0.95rem',
-                fontWeight: '500',
-                marginRight: '8px',
-                display: isExam ? 'none' : 'block' // Ocultar email en modo examen para ahorrar espacio
-              }} className="hidden md:block">
+              <span className="text-[#E0F2F5] text-sm font-medium mr-2 hidden lg:block">
                 {user.email}
               </span>
               
@@ -182,19 +170,7 @@ export function NavbarClient({
               {isAdmin && !isExam && (
                 <Link
                   href="/admin"
-                  style={{
-                    background: '#FCD442',
-                    color: '#033E8C',
-                    padding: '8px 16px',
-                    borderRadius: '6px',
-                    textDecoration: 'none',
-                    fontSize: '0.9rem',
-                    fontWeight: '700',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '6px',
-                    boxShadow: '0 2px 4px rgba(0,0,0,0.2)'
-                  }}
+                  className="bg-[#FCD442] text-[#033E8C] px-3 py-1.5 sm:px-4 sm:py-2 rounded-md no-underline text-xs sm:text-sm font-bold flex items-center gap-1.5 shadow-sm hover:brightness-105 transition-all"
                 >
                   <Shield size={16} />
                   Admin
@@ -204,19 +180,7 @@ export function NavbarClient({
               {!isExam && (
                 <Link
                   href="/exam"
-                  style={{
-                    background: '#63AEBF',
-                    color: 'white',
-                    padding: '8px 16px',
-                    borderRadius: '6px',
-                    textDecoration: 'none',
-                    fontSize: '0.9rem',
-                    fontWeight: '700',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '6px',
-                    boxShadow: '0 2px 4px rgba(0,0,0,0.2)'
-                  }}
+                  className="bg-[#63AEBF] text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded-md no-underline text-xs sm:text-sm font-bold flex items-center gap-1.5 shadow-sm hover:brightness-105 transition-all"
                 >
                   <GraduationCap size={18} />
                   Ir a Examen
@@ -226,19 +190,7 @@ export function NavbarClient({
               {/* Botón Cerrar Sesión (o Salir en examen) */}
               <button
                 onClick={isExam ? () => router.push('/') : handleLogout}
-                style={{
-                  background: '#ef4444', // Mantener rojo para salir por convención, o cambiar a #034C8C
-                  color: 'white',
-                  padding: '8px 16px',
-                  border: 'none',
-                  borderRadius: '6px',
-                  cursor: 'pointer',
-                  fontSize: '0.9rem',
-                  fontWeight: '600',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '6px'
-                }}
+                className="bg-red-500 text-white px-3 py-1.5 sm:px-4 sm:py-2 border-none rounded-md cursor-pointer text-xs sm:text-sm font-semibold flex items-center gap-1.5 hover:bg-red-600 transition-colors"
               >
                 <LogOut size={16} />
                 {isExam ? 'Salir' : 'Cerrar Sesión'}
@@ -249,40 +201,94 @@ export function NavbarClient({
               {/* Usuario no logueado */}
               <Link
                 href="/auth/login"
-                style={{
-                  background: 'transparent',
-                  color: 'white',
-                  padding: '8px 16px',
-                  border: '2px solid #FCD442',
-                  borderRadius: '6px',
-                  textDecoration: 'none',
-                  fontSize: '0.9rem',
-                  fontWeight: '700',
-                  transition: 'all 0.2s ease'
-                }}
+                className="bg-transparent text-white px-3 py-1.5 sm:px-4 sm:py-2 border-2 border-[#FCD442] rounded-md no-underline text-xs sm:text-sm font-bold transition-all hover:bg-white/10"
               >
                 Iniciar Sesión
               </Link>
               <Link
                 href="/auth/sign-up"
-                style={{
-                  background: '#FCD442',
-                  color: '#033E8C',
-                  padding: '8px 16px',
-                  borderRadius: '6px',
-                  textDecoration: 'none',
-                  fontSize: '0.9rem',
-                  fontWeight: '800',
-                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.2)',
-                  transition: 'transform 0.2s ease'
-                }}
+                className="bg-[#FCD442] text-[#033E8C] px-3 py-1.5 sm:px-4 sm:py-2 rounded-md no-underline text-xs sm:text-sm font-extrabold shadow-sm transform transition-transform hover:scale-105"
               >
                 Registrarse
               </Link>
             </>
           )}
         </div>
+
+        {/* Mobile Menu Toggle */}
+        <button 
+          className="md:hidden text-white p-1 shrink-0"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+        >
+          {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+        </button>
+
       </div>
+
+      {/* Mobile Menu Overlay */}
+      {isMobileMenuOpen && (
+        <div className="md:hidden absolute top-full left-0 w-full bg-[#033E8C] border-b-4 border-[#FCD442] shadow-xl flex flex-col p-4 gap-4 z-40 animate-in slide-in-from-top-2">
+          {user ? (
+            <>
+              <div className="text-[#E0F2F5] text-sm font-medium border-b border-white/10 pb-2 mb-2">
+                Conectado como: <br/>
+                <span className="font-bold text-white">{user.email}</span>
+              </div>
+              
+              {isAdmin && !isExam && (
+                <Link
+                  href="/admin"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="bg-[#FCD442] text-[#033E8C] p-3 rounded-lg text-center font-bold flex items-center justify-center gap-2"
+                >
+                  <Shield size={18} />
+                  Panel Admin
+                </Link>
+              )}
+              
+              {!isExam && (
+                <Link
+                  href="/exam"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="bg-[#63AEBF] text-white p-3 rounded-lg text-center font-bold flex items-center justify-center gap-2"
+                >
+                  <GraduationCap size={18} />
+                  Ir al Examen
+                </Link>
+              )}
+              
+              <button
+                onClick={() => {
+                  isExam ? router.push('/') : handleLogout();
+                  setIsMobileMenuOpen(false);
+                }}
+                className="bg-red-500 text-white p-3 rounded-lg font-bold flex items-center justify-center gap-2"
+              >
+                <LogOut size={18} />
+                {isExam ? 'Salir del Examen' : 'Cerrar Sesión'}
+              </button>
+            </>
+          ) : (
+            <>
+              <Link
+                href="/auth/login"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="bg-white/10 text-white p-3 rounded-lg text-center font-bold border border-white/20"
+              >
+                Iniciar Sesión
+              </Link>
+              <Link
+                href="/auth/sign-up"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="bg-[#FCD442] text-[#033E8C] p-3 rounded-lg text-center font-extrabold shadow-md"
+              >
+                Registrarse Ahora
+              </Link>
+            </>
+          )}
+        </div>
+      )}
+
     </nav>
   );
 }

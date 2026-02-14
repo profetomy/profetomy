@@ -247,22 +247,22 @@ export default function ExamPage() {
         initialIsAdmin={isAdmin}
       />
 
-      <div className="flex justify-center p-5 items-center h-[calc(100vh-80px)]">
+      <div className="flex justify-center p-2 lg:p-5 items-start lg:items-center min-h-[calc(100vh-80px)] lg:h-[calc(100vh-80px)] overflow-y-auto lg:overflow-visible">
         {/* Main Single Card Container */}
         <div 
-          className={`bg-white rounded-lg shadow-lg w-[95%] flex flex-row overflow-hidden ${
+          className={`bg-white rounded-lg shadow-lg w-full lg:w-[95%] flex flex-col lg:flex-row overflow-hidden ${
             currentQuestion?.image 
-              ? 'h-full max-h-[800px]' 
-              : 'h-auto max-h-[800px] min-h-[400px]'
+              ? 'h-auto lg:h-full lg:max-h-[800px]' 
+              : 'h-auto lg:max-h-[800px] lg:min-h-[400px]'
           }`} 
           style={{
           boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
         }}>
           
-          {/* Left Column: Question Area - Absolute positioning to fill height defined by sidebar */}
-          <div className="flex-1 p-10 flex flex-col border-r border-gray-100">
+          {/* Left Column: Question Area */}
+          <div className="flex-1 p-5 lg:p-10 flex flex-col border-b lg:border-b-0 lg:border-r border-gray-100 w-full">
             <div className={`flex-1 flex flex-col w-full min-h-0 ${
-              currentQuestion?.image ? 'justify-between' : 'justify-center gap-6'
+              currentQuestion?.image ? 'justify-start lg:justify-between gap-6 lg:gap-0' : 'justify-center gap-6'
             }`}>
               <div className={`w-full min-h-0 flex flex-col ${
                 currentQuestion?.image ? 'flex-1' : 'flex-initial'
@@ -297,9 +297,9 @@ export default function ExamPage() {
             </div>
           </div>
 
-          {/* Right Column: Sidebar content - Static position to dictate height */}
-          <div className={`w-[320px] shrink-0 p-5 pb-0 flex flex-col bg-gray-50/30 overflow-y-auto ${
-            !currentQuestion?.image ? 'max-h-[800px]' : ''
+          {/* Right Column: Sidebar content */}
+          <div className={`w-full lg:w-[320px] shrink-0 p-5 pb-0 flex flex-col bg-gray-50/30 overflow-y-auto ${
+            !currentQuestion?.image ? 'lg:max-h-[800px]' : ''
           }`}> 
             <Sidebar
               questions={examQuestions}
