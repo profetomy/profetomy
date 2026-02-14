@@ -4,25 +4,30 @@
 import { useEffect, useState } from "react";
 import type { AdminUser } from "@/lib/types/adminUser";
 import { createClient } from "@/lib/supabase/client";
+import { Search, ChevronLeft, ChevronRight } from "lucide-react";
+import { getAdminUsers } from "@/app/actions/getAdminUsers";
+import { manageSubscription } from "@/app/actions/manageSubscription";
 
 export default function AdminPage() {
   const [users, setUsers] = useState<AdminUser[]>([]);
   const [days, setDays] = useState<number>(30);
   const [loadingUserId, setLoadingUserId] = useState<string | null>(null);
-
-
+  
+  // Pagination & Search States
+  const [searchTerm, setSearchTerm] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 8;
   const fetchUsers = async () => {
-    const supabase = createClient();
-    const { data, error } = await supabase
-      .from("admin_users")
-      .select("*")
-      .order("created_at", { ascending: false });
+    console.log("Fetching users via Server Action...");
+    const { data, error } = await getAdminUsers();
 
     if (error) {
-      alert(error.message);
+      console.error("Error fetching users:", error);
+      alert(error);
       return;
     }
 
+    console.log("Server action response:", data);
     setUsers(data ?? []);
   };
 
@@ -30,133 +35,64 @@ export default function AdminPage() {
     fetchUsers();
   }, []);
 
+  // Filter Users
+  const filteredUsers = users.filter(user => 
+    user.email?.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  // Pagination Logic
+  const totalPages = Math.ceil(filteredUsers.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const paginatedUsers = filteredUsers.slice(startIndex, startIndex + itemsPerPage);
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+
+  // Reset page when search changes
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm]);
+
   const activateSubscription = async (
-  userId: string,
-  currentUntil?: string | null
-) => {
-  console.log('=== ACTIVATING SUBSCRIPTION ===');
-  console.log('User ID:', userId);
-  console.log('Current subscription_until:', currentUntil);
-  console.log('Days to add:', days);
-  
-  setLoadingUserId(userId);
+    userId: string,
+    currentUntil?: string | null
+  ) => {
+    console.log('=== ACTIVATING SUBSCRIPTION VIA SERVER ACTION ===');
+    setLoadingUserId(userId);
 
-  const supabase = createClient();
+    const { success, error } = await manageSubscription(userId, 'activate', days, currentUntil);
 
-  // Primero verificar si el perfil existe
-  console.log('Checking if profile exists...');
-  const { data: existingProfile, error: checkError } = await supabase
-    .from("profiles")
-    .select("*")
-    .eq("id", userId)
-    .single();
+    setLoadingUserId(null);
 
-  console.log('Profile check result:', { existingProfile, checkError });
+    if (!success) {
+      alert(`Error: ${error}`);
+    } else {
+      alert('Suscripción activada correctamente');
+      fetchUsers();
+    }
+  };
 
-  // Calcular nueva fecha de suscripción
-  let baseDate = new Date();
+  const cancelSubscription = async (userId: string) => {
+    if (!confirm('¿Estás seguro de que quieres anular la suscripción de este usuario?')) return;
+    
+    setLoadingUserId(userId);
+    
+    const { success, error } = await manageSubscription(userId, 'cancel');
+    
+    setLoadingUserId(null);
 
-  if (currentUntil && new Date(currentUntil) > new Date()) {
-    baseDate = new Date(currentUntil);
-    console.log('Extending existing subscription from:', currentUntil);
-  } else {
-    console.log('Creating new subscription from today');
-  }
-
-  baseDate.setDate(baseDate.getDate() + days);
-  const newSubscriptionDate = baseDate.toISOString();
-  
-  console.log('New subscription_until will be:', newSubscriptionDate);
-
-  let updateResult;
-
-  if (!existingProfile || checkError) {
-    // Si no existe el perfil, intentar crearlo
-    console.log('Profile does not exist, attempting to create...');
-    updateResult = await supabase
-      .from("profiles")
-      .insert({
-        id: userId,
-        subscription_until: newSubscriptionDate,
-        role: 'user',
-        created_at: new Date().toISOString()
-      })
-      .select();
-  } else {
-    // Si existe, actualizarlo
-    console.log('Profile exists, updating subscription...');
-    updateResult = await supabase
-      .from("profiles")
-      .update({
-        subscription_until: newSubscriptionDate,
-      })
-      .eq("id", userId)
-      .select();
-  }
-
-  console.log('Operation result:', updateResult);
-
-  setLoadingUserId(null);
-
-  if (updateResult.error) {
-    console.error('ERROR activating subscription:', updateResult.error);
-    alert(`Error: ${updateResult.error.message}\nCode: ${updateResult.error.code}\nDetails: ${updateResult.error.details || 'N/A'}`);
-  } else if (!updateResult.data || updateResult.data.length === 0) {
-    console.error('No rows were updated/inserted');
-    alert('Error: No se pudo actualizar la suscripción. Verifica las políticas RLS en Supabase.');
-  } else {
-    console.log('✓ Subscription activated successfully!', updateResult.data);
-    alert('Suscripción activada correctamente');
-    fetchUsers();
-  }
-  
-  console.log('=== END ACTIVATION ===');
-};
-
-const cancelSubscription = async (userId: string) => {
-  if (!confirm('¿Estás seguro de que quieres anular la suscripción de este usuario?')) {
-    return;
-  }
-
-  console.log('=== CANCELING SUBSCRIPTION ===');
-  console.log('User ID:', userId);
-  
-  setLoadingUserId(userId);
-
-  const supabase = createClient();
-
-  console.log('Setting subscription_until to null...');
-  const { data, error } = await supabase
-    .from("profiles")
-    .update({
-      subscription_until: null,
-    })
-    .eq("id", userId)
-    .select();
-
-  console.log('Cancel result:', { data, error });
-
-  setLoadingUserId(null);
-
-  if (error) {
-    console.error('ERROR canceling subscription:', error);
-    alert(`Error: ${error.message}\nCode: ${error.code}`);
-  } else if (!data || data.length === 0) {
-    console.error('No rows were updated');
-    alert('Error: No se pudo anular la suscripción. Verifica las políticas RLS.');
-  } else {
-    console.log('✓ Subscription canceled successfully!');
-    alert('Suscripción anulada correctamente');
-    fetchUsers();
-  }
-  
-  console.log('=== END CANCELLATION ===');
-};
-
+    if (!success) {
+      alert(`Error: ${error}`);
+    } else {
+      alert('Suscripción anulada correctamente');
+      fetchUsers();
+    }
+  };
 
   return (
     <div style={{
-      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+      background: '#033E8C',
       backgroundAttachment: 'fixed',
       minHeight: '100vh',
       padding: '40px 20px'
@@ -164,74 +100,94 @@ const cancelSubscription = async (userId: string) => {
       <div className="max-w-7xl mx-auto">
         <div className="bg-white rounded-xl shadow-2xl" style={{
           padding: '48px',
-          borderRadius: '16px'
+          borderRadius: '16px',
+          borderTop: '6px solid #FCD442'
         }}>
           <h1 style={{
             fontSize: '2.5rem',
-            fontWeight: '700',
-            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            backgroundClip: 'text',
+            fontWeight: '800',
+            color: '#033E8C',
             marginBottom: '32px',
             letterSpacing: '-0.01em'
           }}>
             Panel de Administración
           </h1>
           
-          {/* Controls */}
-          <div className="mb-8 p-6 bg-gray-50 rounded-xl border border-gray-100">
-            <label className="flex items-center gap-4 text-gray-700 font-medium">
-              <span>Días de suscripción a agregar:</span>
+          {/* Controls Container: Days Input + Search Bar */}
+          <div className="mb-8 flex flex-col md:flex-row gap-6 justify-between items-end">
+            {/* Days Input */}
+            <div className="p-6 bg-gray-50 rounded-xl border border-gray-100 flex-1 w-full max-w-md">
+              <label className="flex items-center gap-4 text-gray-700 font-medium">
+                <span style={{ color: '#034C8C' }}>Días de suscripción a agregar:</span>
+                <input
+                  type="number"
+                  value={days}
+                  min={1}
+                  onChange={(e) => setDays(Number(e.target.value))}
+                  className="rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500 shadow-sm"
+                  style={{
+                    padding: '8px 16px',
+                    border: '2px solid #63AEBF',
+                    borderRadius: '8px',
+                    width: '100px',
+                    color: '#033E8C',
+                    fontWeight: '700'
+                  }}
+                />
+              </label>
+            </div>
+
+            {/* Search Bar */}
+            <div className="relative w-full max-w-sm">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <Search size={20} color="#63AEBF" />
+              </div>
               <input
-                type="number"
-                value={days}
-                min={1}
-                onChange={(e) => setDays(Number(e.target.value))}
-                className="rounded-lg border-gray-300 focus:border-purple-500 focus:ring-purple-500 shadow-sm"
+                type="text"
+                placeholder="Buscar por correo..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all"
                 style={{
-                  padding: '8px 16px',
-                  border: '2px solid #e2e8f0',
-                  borderRadius: '8px',
-                  width: '100px',
-                  color: '#4a5568',
-                  fontWeight: '600'
+                  color: '#033E8C',
+                  fontSize: '1rem',
+                  outline: 'none'
                 }}
               />
-            </label>
+            </div>
           </div>
 
           {/* Users Table */}
-          <div className="overflow-hidden rounded-xl border border-gray-200">
+          <div className="overflow-hidden rounded-xl border border-gray-200 shadow-sm">
             <div className="overflow-x-auto">
               <table className="w-full text-left">
                 <thead>
-                  <tr style={{ background: '#f8fafc' }}>
-                    <th style={{ padding: '16px 24px', fontWeight: '600', color: '#4a5568' }}>Email</th>
-                    <th style={{ padding: '16px 24px', fontWeight: '600', color: '#4a5568' }}>Rol</th>
-                    <th style={{ padding: '16px 24px', fontWeight: '600', color: '#4a5568' }}>Suscripción hasta</th>
-                    <th style={{ padding: '16px 24px', fontWeight: '600', color: '#4a5568', textAlign: 'center' }}>Acciones</th>
+                  <tr style={{ background: '#F0F9FF', borderBottom: '2px solid #63AEBF' }}>
+                    <th style={{ padding: '16px 24px', fontWeight: '700', color: '#034C8C' }}>Email</th>
+                    <th style={{ padding: '16px 24px', fontWeight: '700', color: '#034C8C' }}>Rol</th>
+                    <th style={{ padding: '16px 24px', fontWeight: '700', color: '#034C8C' }}>Suscripción hasta</th>
+                    <th style={{ padding: '16px 24px', fontWeight: '700', color: '#034C8C', textAlign: 'center' }}>Acciones</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200">
-                  {users.length === 0 ? (
+                  {paginatedUsers.length === 0 ? (
                     <tr>
                       <td colSpan={4} style={{ padding: '40px', textAlign: 'center', color: '#718096' }}>
-                        No hay usuarios registrados
+                        {searchTerm ? 'No se encontraron usuarios con ese correo' : 'No hay usuarios registrados'}
                       </td>
                     </tr>
                   ) : (
-                    users.map((u) => (
-                      <tr key={u.id} className="hover:bg-gray-50 transition-colors">
-                        <td style={{ padding: '16px 24px', color: '#2d3748' }}>{u.email}</td>
+                    paginatedUsers.map((u) => (
+                      <tr key={u.id} className="hover:bg-blue-50 transition-colors">
+                        <td style={{ padding: '16px 24px', color: '#2d3748', fontWeight: '500' }}>{u.email}</td>
                         <td style={{ padding: '16px 24px' }}>
                           <span style={{
                             padding: '4px 12px',
                             borderRadius: '999px',
                             fontSize: '0.85rem',
-                            fontWeight: '600',
-                            backgroundColor: u.role === 'admin' ? '#e9d8fd' : '#ebf8ff',
-                            color: u.role === 'admin' ? '#6b46c1' : '#3182ce'
+                            fontWeight: '700',
+                            backgroundColor: u.role === 'admin' ? '#FCD442' : '#E0F2F5',
+                            color: u.role === 'admin' ? '#033E8C' : '#034C8C'
                           }}>
                             {u.role}
                           </span>
@@ -243,7 +199,7 @@ const cancelSubscription = async (userId: string) => {
                                 month: 'long',
                                 day: 'numeric'
                               })
-                            : <span style={{ color: '#a0aec0' }}>—</span>}
+                            : <span style={{ color: '#a0aec0', fontStyle: 'italic' }}>Sin suscripción</span>}
                         </td>
                         <td style={{ padding: '16px 24px', textAlign: 'center' }}>
                           {u.role !== "admin" && (
@@ -253,20 +209,20 @@ const cancelSubscription = async (userId: string) => {
                                   <button
                                     disabled={loadingUserId === u.id}
                                     onClick={() => activateSubscription(u.id, u.subscription_until)}
-                                    className="px-4 py-2 rounded-lg text-sm font-semibold text-white transition-all shadow-sm hover:shadow-md"
+                                    className="px-4 py-2 rounded-lg text-sm font-bold text-white transition-all shadow-sm hover:shadow-md"
                                     style={{
-                                      background: '#48bb78',
+                                      background: '#63AEBF',
                                       opacity: loadingUserId === u.id ? 0.7 : 1
                                     }}
                                   >
-                                    {loadingUserId === u.id ? "..." : "Extender"}
+                                    Extender
                                   </button>
                                   <button
                                     disabled={loadingUserId === u.id}
                                     onClick={() => cancelSubscription(u.id)}
-                                    className="px-4 py-2 rounded-lg text-sm font-semibold text-white transition-all shadow-sm hover:shadow-md"
+                                    className="px-4 py-2 rounded-lg text-sm font-bold text-white transition-all shadow-sm hover:shadow-md"
                                     style={{
-                                      background: '#f56565',
+                                      background: '#ef4444',
                                       opacity: loadingUserId === u.id ? 0.7 : 1
                                     }}
                                   >
@@ -277,13 +233,14 @@ const cancelSubscription = async (userId: string) => {
                                 <button
                                   disabled={loadingUserId === u.id}
                                   onClick={() => activateSubscription(u.id, u.subscription_until)}
-                                  className="px-4 py-2 rounded-lg text-sm font-semibold text-white transition-all shadow-sm hover:shadow-md"
+                                  className="px-4 py-2 rounded-lg text-sm font-bold transition-all shadow-sm hover:shadow-md"
                                   style={{
-                                    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                                    background: '#FCD442',
+                                    color: '#033E8C',
                                     opacity: loadingUserId === u.id ? 0.7 : 1
                                   }}
                                 >
-                                  {loadingUserId === u.id ? "Procesando..." : "Activar Suscripción"}
+                                  Activar
                                 </button>
                               )}
                             </div>
@@ -297,8 +254,49 @@ const cancelSubscription = async (userId: string) => {
             </div>
           </div>
 
+          {/* Pagination Controls */}
+          {filteredUsers.length > 0 && (
+            <div className="flex items-center justify-between mt-6 px-2">
+              <div className="text-sm text-gray-500">
+                Mostrando <span className="font-bold text-[#033E8C]">{startIndex + 1}</span> a <span className="font-bold text-[#033E8C]">{Math.min(startIndex + itemsPerPage, filteredUsers.length)}</span> de <span className="font-bold text-[#033E8C]">{filteredUsers.length}</span> usuarios
+              </div>
+              
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => handlePageChange(currentPage - 1)}
+                  disabled={currentPage === 1}
+                  className="p-2 rounded-lg transition-all"
+                  style={{
+                    background: currentPage === 1 ? '#F1F5F9' : '#033E8C',
+                    color: currentPage === 1 ? '#CBD5E1' : 'white',
+                    cursor: currentPage === 1 ? 'not-allowed' : 'pointer'
+                  }}
+                >
+                  <ChevronLeft size={20} />
+                </button>
+                
+                <span className="px-4 py-2 rounded-lg bg-[#F0F9FF] text-[#033E8C] font-bold">
+                  {currentPage} / {totalPages}
+                </span>
+
+                <button
+                  onClick={() => handlePageChange(currentPage + 1)}
+                  disabled={currentPage === totalPages}
+                  className="p-2 rounded-lg transition-all"
+                  style={{
+                    background: currentPage === totalPages ? '#F1F5F9' : '#033E8C',
+                    color: currentPage === totalPages ? '#CBD5E1' : 'white',
+                    cursor: currentPage === totalPages ? 'not-allowed' : 'pointer'
+                  }}
+                >
+                  <ChevronRight size={20} />
+                </button>
+              </div>
+            </div>
+          )}
+
           <div className="mt-8 text-center text-sm text-gray-500">
-            Panel de administración - Nexteo V2 5.8
+            Panel de administración - Simulador Profe Tomy
           </div>
         </div>
       </div>

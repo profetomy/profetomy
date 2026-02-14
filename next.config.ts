@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  cacheComponents: true,
+  // cacheComponents: true, // Removed to fix blocking route error with dynamic auth
   images: {
     remotePatterns: [
       {

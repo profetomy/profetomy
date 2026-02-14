@@ -14,6 +14,8 @@ import { InstructionsModal } from '@/components/exam/InstructionsModal';
 import { NavbarClient } from '@/components/NavbarClient';
 import Link from 'next/link';
 import { Lock } from 'lucide-react';
+import type { User } from '@supabase/supabase-js';
+import { checkExamAccess } from '@/app/actions/checkExamAccess';
 
 const EXAM_DURATION = 45 * 60; // 45 minutes in seconds
 
@@ -21,7 +23,7 @@ const EXAM_DURATION = 45 * 60; // 45 minutes in seconds
 function SubscriptionRequired() {
   return (
     <div className="min-h-screen flex items-center justify-center" style={{
-      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+      background: '#033E8C',
       backgroundAttachment: 'fixed',
       padding: '20px'
     }}>
@@ -29,10 +31,11 @@ function SubscriptionRequired() {
         padding: '48px',
         maxWidth: '600px',
         width: '90%',
-        borderRadius: '16px'
+        borderRadius: '16px',
+        borderTop: '6px solid #FCD442'
       }}>
         <div style={{
-          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+          background: '#FCD442',
           borderRadius: '50%',
           width: '80px',
           height: '80px',
@@ -41,12 +44,12 @@ function SubscriptionRequired() {
           justifyContent: 'center',
           margin: '0 auto 24px'
         }}>
-          <Lock size={40} color="white" />
+          <Lock size={40} color="#033E8C" />
         </div>
         <h1 style={{
-          color: '#1a202c',
+          color: '#033E8C',
           fontSize: '2rem',
-          fontWeight: '700',
+          fontWeight: '800',
           marginBottom: '16px',
           letterSpacing: '-0.01em'
         }}>
@@ -54,7 +57,7 @@ function SubscriptionRequired() {
         </h1>
         <p style={{
           fontSize: '1.1rem',
-          color: '#4a5568',
+          color: '#4B5563',
           marginBottom: '32px',
           lineHeight: '1.6'
         }}>
@@ -66,12 +69,12 @@ function SubscriptionRequired() {
           href="/"
           className="inline-block text-white rounded-lg font-bold transition-all"
           style={{
-            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+            background: '#034C8C',
             padding: '14px 32px',
             borderRadius: '8px',
             textDecoration: 'none',
             fontSize: '1rem',
-            boxShadow: '0 4px 12px rgba(102, 126, 234, 0.3)'
+            boxShadow: '0 4px 12px rgba(0,0,0, 0.2)'
           }}
         >
           Volver al inicio
@@ -87,6 +90,8 @@ export default function ExamPage() {
   const [hasActiveSubscription, setHasActiveSubscription] = useState(false);
   const [showInstructions, setShowInstructions] = useState(false);
   const [showResultsModal, setShowResultsModal] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const {
     examQuestions,
@@ -123,41 +128,28 @@ export default function ExamPage() {
   useEffect(() => {
     const checkSubscription = async () => {
       try {
-        const supabase = createClient();
-        const { data: { user } } = await supabase.auth.getUser();
-
-        if (!user) {
-          router.push('/auth/login');
-          return;
-        }
-
-        // Fetch profile with proper query
-        const { data: profile, error } = await supabase
-          .from('profiles')
-          .select('subscription_until, role')
-          .eq('id', user.id)
-          .single();
+        console.log("Verifying exam access via Server Action...");
+        // @ts-ignore
+        const { hasAccess, user: authUser, isAdmin: authIsAdmin, error } = await checkExamAccess();
 
         if (error) {
-          console.error('Error fetching profile:', error);
-          setHasActiveSubscription(false);
-          setIsCheckingSubscription(false);
-          return;
+           // If "User not authenticated", redirect to login
+           if (error === 'User not authenticated') {
+             router.push('/auth/login');
+             return;
+           }
+           console.error("Access check error:", error);
         }
 
-        console.log('Profile data:', profile);
+        if (authUser) setUser(authUser as User);
+        if (authIsAdmin) setIsAdmin(authIsAdmin);
 
-        const isAdmin = profile?.role?.toLowerCase() === 'admin';
-        const hasValidUntilDate = profile?.subscription_until && new Date(profile.subscription_until) > new Date();
-        
-        const hasSubscription = isAdmin || hasValidUntilDate;
-        
-        setHasActiveSubscription(hasSubscription);
+        setHasActiveSubscription(hasAccess);
         setIsCheckingSubscription(false);
 
-        if (hasSubscription) {
+        if (hasAccess) {
           initializeExam();
-          setShowInstructions(true); // Mostrar instrucciones al inicio
+          setShowInstructions(true);
         }
       } catch (error) {
         console.error('Unexpected error:', error);
@@ -195,11 +187,14 @@ export default function ExamPage() {
   if (isCheckingSubscription) {
     return (
       <div className="min-h-screen flex items-center justify-center" style={{
-        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+        background: '#033E8C',
         backgroundAttachment: 'fixed'
       }}>
-        <div className="text-2xl font-bold" style={{ color: 'white' }}>
-          Cargando examen...
+        <div className="flex flex-col items-center gap-4">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#FCD442]"></div>
+          <div className="text-xl font-bold text-white">
+            Verificando acceso...
+          </div>
         </div>
       </div>
     );
@@ -222,11 +217,14 @@ export default function ExamPage() {
   if (examQuestions.length === 0) {
     return (
       <div className="min-h-screen flex items-center justify-center" style={{
-        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+        background: '#033E8C',
         backgroundAttachment: 'fixed'
       }}>
-        <div className="text-2xl font-bold" style={{ color: 'white' }}>
-          Preparando preguntas...
+        <div className="flex flex-col items-center gap-4">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#63AEBF]"></div>
+          <div className="text-xl font-bold text-white">
+            Preparando tu examen...
+          </div>
         </div>
       </div>
     );
@@ -234,7 +232,8 @@ export default function ExamPage() {
 
   return (
     <div className="min-h-screen flex flex-col" style={{
-      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+      fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+      background: '#F7F7F7',
       backgroundAttachment: 'fixed',
       height: '100vh'
     }}>
@@ -244,54 +243,78 @@ export default function ExamPage() {
         onModeChange={switchMode}
         answeredCount={userAnswers.filter(a => a !== null).length}
         totalQuestions={examQuestions.length}
+        initialUser={user}
+        initialIsAdmin={isAdmin}
       />
 
-      <div className="flex flex-1 overflow-hidden">
-        {/* Main Quiz Area */}
-        <div className="flex-[3] overflow-y-auto bg-white rounded-l-lg shadow-lg" style={{
-          padding: '40px',
-          margin: '20px',
-          marginRight: 0,
-          borderRadius: '8px 0 0 8px',
-          boxShadow: '0 2px 10px rgba(0,0,0,0.1)'
+      <div className="flex justify-center p-5 items-center h-[calc(100vh-80px)]">
+        {/* Main Single Card Container */}
+        <div 
+          className={`bg-white rounded-lg shadow-lg w-[95%] flex flex-row overflow-hidden ${
+            currentQuestion?.image 
+              ? 'h-full max-h-[800px]' 
+              : 'h-auto max-h-[800px] min-h-[400px]'
+          }`} 
+          style={{
+          boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
         }}>
-          <QuestionDisplay
-            question={currentQuestion}
-            questionNumber={currentQuestionIndex + 1}
-            userAnswer={userAnswers[currentQuestionIndex]}
-            mode={mode}
-            isFinished={isFinished}
-          />
+          
+          {/* Left Column: Question Area - Absolute positioning to fill height defined by sidebar */}
+          <div className="flex-1 p-10 flex flex-col border-r border-gray-100">
+            <div className={`flex-1 flex flex-col w-full min-h-0 ${
+              currentQuestion?.image ? 'justify-between' : 'justify-center gap-6'
+            }`}>
+              <div className={`w-full min-h-0 flex flex-col ${
+                currentQuestion?.image ? 'flex-1' : 'flex-initial'
+              }`}>
+                <QuestionDisplay
+                  question={currentQuestion}
+                  questionNumber={currentQuestionIndex + 1}
+                  userAnswer={userAnswers[currentQuestionIndex]}
+                  mode={mode}
+                  isFinished={isFinished}
+                />
+              </div>
 
-          <OptionsList
-            question={currentQuestion}
-            userAnswer={userAnswers[currentQuestionIndex]}
-            mode={mode}
-            isFinished={isFinished}
-            onAnswerSelect={handleAnswerSelect}
-          />
+              <div className="my-4 w-full max-w-3xl mx-auto flex flex-col items-center">
+                <OptionsList
+                  question={currentQuestion}
+                  userAnswer={userAnswers[currentQuestionIndex]}
+                  mode={mode}
+                  isFinished={isFinished}
+                  onAnswerSelect={handleAnswerSelect}
+                />
+              </div>
 
-          <NavigationButtons
-            currentIndex={currentQuestionIndex}
-            totalQuestions={examQuestions.length}
-            onPrevious={prevQuestion}
-            onNext={nextQuestion}
-          />
+              <div className="mt-8 pb-4 w-full">
+                <NavigationButtons
+                  currentIndex={currentQuestionIndex}
+                  totalQuestions={examQuestions.length}
+                  onPrevious={prevQuestion}
+                  onNext={nextQuestion}
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Right Column: Sidebar content - Static position to dictate height */}
+          <div className={`w-[320px] shrink-0 p-5 pb-0 flex flex-col bg-gray-50/30 overflow-y-auto ${
+            !currentQuestion?.image ? 'max-h-[800px]' : ''
+          }`}> 
+            <Sidebar
+              questions={examQuestions}
+              userAnswers={userAnswers}
+              currentIndex={currentQuestionIndex}
+              mode={mode}
+              isFinished={isFinished}
+              formattedTime={formattedTime}
+              onQuestionClick={goToQuestion}
+              onShowInstructions={() => setShowInstructions(true)}
+              onCancelExam={handleCancelExam}
+              onFinishExam={handleFinishExam}
+            />
+          </div>
         </div>
-
-        {/* Sidebar */}
-        <Sidebar
-          questions={examQuestions}
-          userAnswers={userAnswers}
-          currentIndex={currentQuestionIndex}
-          mode={mode}
-          isFinished={isFinished}
-          formattedTime={formattedTime}
-          onQuestionClick={goToQuestion}
-          onShowInstructions={() => setShowInstructions(true)}
-          onCancelExam={handleCancelExam}
-          onFinishExam={handleFinishExam}
-        />
       </div>
 
       {/* Results Modal */}

@@ -4,7 +4,7 @@ import Link from "next/link";
 export default function Page() {
   return (
     <div className="min-h-screen flex items-center justify-center" style={{
-      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+      background: '#033E8C',
       backgroundAttachment: 'fixed',
       padding: '20px'
     }}>
@@ -12,27 +12,25 @@ export default function Page() {
         width: '100%',
         maxWidth: '480px',
         padding: '48px',
-        borderRadius: '16px'
+        borderRadius: '16px',
+        borderTop: '6px solid #FCD442'
       }}>
         {/* Logo/Title */}
         <div className="text-center mb-8">
           <h1 style={{
             fontSize: '2rem',
-            fontWeight: '700',
-            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            backgroundClip: 'text',
+            fontWeight: '800',
+            color: '#033E8C',
             marginBottom: '8px',
             letterSpacing: '-0.01em'
           }}>
-            Simulador de Examen Profe Tomy
+            Simulador Profe Tomy
           </h1>
           <p style={{
-            color: '#4a5568',
+            color: '#4B5563',
             fontSize: '1.05rem'
           }}>
-            Inicia sesión para acceder al simulador
+            Inicia sesión para continuar practicando
           </p>
         </div>
 
@@ -49,8 +47,8 @@ export default function Page() {
             <Link 
               href="/auth/sign-up"
               style={{
-                color: '#667eea',
-                fontWeight: '600',
+                color: '#034C8C',
+                fontWeight: '700',
                 textDecoration: 'none'
               }}
             >
@@ -61,9 +59,10 @@ export default function Page() {
             href="/"
             style={{
               display: 'inline-block',
-              color: '#718096',
+              color: '#63AEBF',
               fontSize: '0.9rem',
-              textDecoration: 'none'
+              textDecoration: 'none',
+              fontWeight: '600'
             }}
           >
             ← Volver al inicio

@@ -23,38 +23,36 @@ export function QuestionDisplay({
   const points = question.doublePoints ? 2 : 1;
 
   return (
-    <div>
-      <div className="text-lg font-bold mb-5" style={{ color: '#333' }}>
+    <div className="flex flex-col h-full overflow-hidden">
+      <div className="text-lg font-bold mb-3 shrink-0" style={{ color: '#333' }}>
         Pregunta N° {questionNumber}{doublePointsText}:
       </div>
       
-      <div className="font-bold mb-8" style={{ 
+      <div className="font-bold mb-4 shrink-0" style={{ 
         fontSize: '1.3rem',
-        lineHeight: '1.5',
+        lineHeight: '1.4',
         color: '#222'
       }}>
         {question.q}
       </div>
 
       {question.image && (
-        <div style={{ margin: '20px 0' }}>
+        <div className="flex-1 min-h-0 relative w-full mb-4">
           <Image
             src={question.image}
             alt="Imagen de la pregunta"
-            width={300}
-            height={200}
+            fill
             className="border rounded"
             style={{ 
-              maxWidth: '300px',
-              borderColor: '#ddd',
-              borderRadius: '4px'
+              objectFit: 'contain',
+              borderColor: '#ddd'
             }}
           />
         </div>
       )}
 
       {mode === 'correction' && isFinished && (
-        <div className="p-4 rounded-lg mb-6" style={{ 
+        <div className="p-4 rounded-lg mb-6 shrink-0 overflow-y-auto max-h-[150px]" style={{ 
           background: '#f5f5f5',
           padding: '15px',
           borderRadius: '6px',

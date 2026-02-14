@@ -43,7 +43,7 @@ export function InstructionsModal({ onClose }: InstructionsModalProps) {
             <strong>• Navegación:</strong> Puedes ir a cualquier pregunta usando la cuadrícula
           </p>
           <p style={{ marginBottom: '15px', fontSize: '1.1rem', color: '#333' }}>
-            <strong>• Colores:</strong> Naranja = doble puntaje, Azul = respondida
+            <strong>• Colores:</strong> Borde naranja = doble puntaje, Borde negro = respondida
           </p>
           <p style={{ marginBottom: '15px', fontSize: '1.1rem', color: '#333' }}>
             <strong>• Modo Corrección:</strong> Disponible después de finalizar el examen

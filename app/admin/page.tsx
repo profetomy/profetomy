@@ -5,13 +5,15 @@ import { Navbar } from "@/components/Navbar";
 import Link from "next/link";
 import { ShieldAlert } from "lucide-react";
 
+
 // Componente de error de acceso denegado
 function AccessDenied() {
   return (
     <>
       <Navbar />
+
       <div className="min-h-screen flex items-center justify-center" style={{
-        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+        background: '#033E8C',
         backgroundAttachment: 'fixed',
         padding: '20px'
       }}>
@@ -19,10 +21,11 @@ function AccessDenied() {
           padding: '48px',
           maxWidth: '600px',
           width: '90%',
-          borderRadius: '16px'
+          borderRadius: '16px',
+          borderTop: '6px solid #FCD442'
         }}>
           <div style={{
-            background: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)',
+            background: '#FCD442',
             borderRadius: '50%',
             width: '80px',
             height: '80px',
@@ -31,12 +34,12 @@ function AccessDenied() {
             justifyContent: 'center',
             margin: '0 auto 24px'
           }}>
-            <ShieldAlert size={40} color="white" />
+            <ShieldAlert size={40} color="#033E8C" />
           </div>
           <h1 style={{
-            color: '#1a202c',
+            color: '#033E8C',
             fontSize: '2rem',
-            fontWeight: '700',
+            fontWeight: '800',
             marginBottom: '16px',
             letterSpacing: '-0.01em'
           }}>
@@ -44,7 +47,7 @@ function AccessDenied() {
           </h1>
           <p style={{
             fontSize: '1.1rem',
-            color: '#4a5568',
+            color: '#4B5563',
             marginBottom: '32px',
             lineHeight: '1.6'
           }}>
@@ -54,12 +57,12 @@ function AccessDenied() {
             href="/"
             className="inline-block text-white rounded-lg font-bold transition-all"
             style={{
-              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+              background: '#034C8C',
               padding: '14px 32px',
               borderRadius: '8px',
               textDecoration: 'none',
               fontSize: '1rem',
-              boxShadow: '0 4px 12px rgba(102, 126, 234, 0.3)'
+              boxShadow: '0 4px 12px rgba(0,0,0, 0.2)'
             }}
           >
             Volver al inicio

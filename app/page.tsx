@@ -1,7 +1,8 @@
 import Link from 'next/link';
 import { Navbar } from '@/components/Navbar';
 import { createClient } from '@/lib/supabase/server';
-import { Clock, Target, CheckCircle2, Bell } from 'lucide-react';
+import { Car, Signpost, ShieldCheck, AlertTriangle } from 'lucide-react';
+
 
 export default async function LandingPage() {
   const supabase = await createClient();
@@ -9,70 +10,79 @@ export default async function LandingPage() {
 
   return (
     <div className="min-h-screen flex flex-col" style={{
-      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-      backgroundAttachment: 'fixed'
+      background: '#033E8C', // Deep Blue Background
+      fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif"
     }}>
       {/* Header/Navbar */}
       <Navbar />
 
       {/* Hero Section */}
-      <main className="flex-1 flex items-center justify-center" style={{
-        padding: '80px 20px'
-      }}>
-        <div className="max-w-5xl w-full">
+      <main className="flex-1 flex items-center justify-center p-5">
+        <div className="max-w-5xl w-full pt-10 pb-10">
           {/* Main Title */}
           <div className="text-center mb-16">
+            <div className="flex justify-center mb-6">
+              <div style={{
+                background: '#FCD442', // Yellow accent for icon bg
+                padding: '16px',
+                borderRadius: '50%',
+                boxShadow: '0 4px 15px rgba(0,0,0, 0.2)'
+              }}>
+                <Car size={48} color="#033E8C" />
+              </div>
+            </div>
             <h1 style={{
               fontSize: '3.5rem',
-              fontWeight: '700',
+              fontWeight: '800',
               color: 'white',
               marginBottom: '24px',
               letterSpacing: '-0.02em',
-              lineHeight: '1.1'
+              lineHeight: '1.1',
+              textShadow: '0 2px 4px rgba(0,0,0,0.2)'
             }}>
-              Simulador de Examen Profesional
+              Simulador de Examen de Conducción
             </h1>
             <p style={{
               fontSize: '1.4rem',
-              color: 'rgba(255, 255, 255, 0.9)',
+              color: '#E0F2F5', // Light blue-white for text
               maxWidth: '700px',
               margin: '0 auto',
               lineHeight: '1.6'
             }}>
-              Prepárate con exámenes simulados de 35 preguntas aleatorias.
-              Mejora tus conocimientos con retroalimentación inmediata.
+              Prepárate para obtener tu licencia con exámenes simulados de 35 preguntas.
+              Practica con las señales y reglas de tránsito reales.
             </p>
           </div>
 
           {/* Subscription Notice */}
-          <div className="bg-white rounded-xl shadow-2xl mb-12" style={{
+          <div className="bg-white rounded-xl shadow-lg mb-12" style={{
             padding: '32px',
-            borderLeft: '6px solid #667eea',
+            borderLeft: '6px solid #FCD442',
             maxWidth: '800px',
             margin: '0 auto 48px auto'
           }}>
             <div style={{ display: 'flex', alignItems: 'flex-start', gap: '20px' }}>
               <div style={{
-                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                background: '#FCD442',
                 borderRadius: '12px',
                 padding: '12px',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center'
               }}>
-                <Bell size={28} color="white" />
+                <AlertTriangle size={28} color="#033E8C" />
               </div>
               <div style={{ flex: 1 }}>
                 <h3 style={{
                   fontSize: '1.5rem',
                   fontWeight: '700',
-                  color: '#1a202c',
+                  color: '#033E8C',
                   marginBottom: '12px'
                 }}>
                   Suscripción Requerida
                 </h3>
                 <p style={{
-                  color: '#4a5568',
+                  color: '#4B5563',
                   fontSize: '1.05rem',
                   lineHeight: '1.6',
                   marginBottom: '8px'
@@ -80,11 +90,11 @@ export default async function LandingPage() {
                   Para acceder al simulador de exámenes necesitas una <strong>suscripción activa</strong>.
                 </p>
                 <p style={{
-                  color: '#4a5568',
+                  color: '#4B5563',
                   fontSize: '1.05rem',
                   lineHeight: '1.6'
                 }}>
-                  Contacta al <strong style={{ color: '#667eea' }}>Profe Tomy</strong> para obtener tu suscripción y comenzar a practicar.
+                  Contacta al <strong>Profe Tomy</strong> para obtener tu acceso y comenzar tu práctica.
                 </p>
               </div>
             </div>
@@ -98,116 +108,116 @@ export default async function LandingPage() {
             marginBottom: '48px'
           }}>
             {/* Feature 1 */}
-            <div className="bg-white rounded-xl shadow-lg" style={{
+            <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all" style={{
               padding: '32px',
-              transition: 'transform 0.3s ease, box-shadow 0.3s ease'
+              borderTop: '4px solid #FCD442'
             }}>
               <div style={{
-                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                background: '#E0F2F5',
                 borderRadius: '12px',
                 padding: '16px',
                 display: 'inline-flex',
                 marginBottom: '20px'
               }}>
-                <Clock size={32} color="white" />
+                <Car size={32} color="#034C8C" />
               </div>
               <h3 style={{
                 fontSize: '1.4rem',
                 fontWeight: '700',
-                color: '#1a202c',
+                color: '#033E8C',
                 marginBottom: '12px'
               }}>
                 45 Minutos
               </h3>
               <p style={{
-                color: '#4a5568',
+                color: '#4B5563',
                 fontSize: '1.05rem',
                 lineHeight: '1.6'
               }}>
-                Tiempo real de examen para practicar bajo condiciones reales de evaluación
+                Tiempo límite realista para que aprendas a gestionar tu examen de conducción oficial.
               </p>
             </div>
 
             {/* Feature 2 */}
-            <div className="bg-white rounded-xl shadow-lg" style={{
+            <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all" style={{
               padding: '32px',
-              transition: 'transform 0.3s ease, box-shadow 0.3s ease'
+              borderTop: '4px solid #63AEBF'
             }}>
               <div style={{
-                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                background: '#E0F2F5',
                 borderRadius: '12px',
                 padding: '16px',
                 display: 'inline-flex',
                 marginBottom: '20px'
               }}>
-                <Target size={32} color="white" />
+                <Signpost size={32} color="#034C8C" />
               </div>
               <h3 style={{
                 fontSize: '1.4rem',
                 fontWeight: '700',
-                color: '#1a202c',
+                color: '#033E8C',
                 marginBottom: '12px'
               }}>
                 35 Preguntas
               </h3>
               <p style={{
-                color: '#4a5568',
+                color: '#4B5563',
                 fontSize: '1.05rem',
                 lineHeight: '1.6'
               }}>
-                Selección aleatoria de un banco de 47 preguntas cuidadosamente elaboradas
+                Selección aleatoria incluyendo señales de tránsito y normas de circulación vigentes.
               </p>
             </div>
 
             {/* Feature 3 */}
-            <div className="bg-white rounded-xl shadow-lg" style={{
+            <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all" style={{
               padding: '32px',
-              transition: 'transform 0.3s ease, box-shadow 0.3s ease'
+              borderTop: '4px solid #034C8C'
             }}>
               <div style={{
-                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                background: '#E0F2F5',
                 borderRadius: '12px',
                 padding: '16px',
                 display: 'inline-flex',
                 marginBottom: '20px'
               }}>
-                <CheckCircle2 size={32} color="white" />
+                <ShieldCheck size={32} color="#034C8C" />
               </div>
               <h3 style={{
                 fontSize: '1.4rem',
                 fontWeight: '700',
-                color: '#1a202c',
+                color: '#033E8C',
                 marginBottom: '12px'
               }}>
-                Corrección Inmediata
+                Resultados al Instante
               </h3>
               <p style={{
-                color: '#4a5568',
+                color: '#4B5563',
                 fontSize: '1.05rem',
                 lineHeight: '1.6'
               }}>
-                Revisa tus respuestas al instante y aprende de tus errores
+                Conoce si aprobaste inmediatamente y revisa las preguntas en las que fallaste.
               </p>
             </div>
           </div>
 
-          {/* CTA Button - Solo si NO está logueado */}
+          {/* CTA Button */}
           {!user && (
             <div className="text-center">
               <Link
                 href="/auth/sign-up"
-                className="inline-block font-bold rounded-lg transition-all"
+                className="inline-block font-bold rounded-lg transition-all hover:scale-105"
                 style={{
-                  background: 'white',
-                  color: '#667eea',
+                  background: '#FCD442',
+                  color: '#033E8C',
                   padding: '18px 48px',
                   fontSize: '1.2rem',
-                  boxShadow: '0 10px 30px rgba(0, 0, 0, 0.2)',
+                  boxShadow: '0 4px 12px rgba(252, 212, 66, 0.4)',
                   textDecoration: 'none',
-                  fontWeight: '700'
+                  fontWeight: '800'
                 }}
               >
-                Comenzar Ahora
+                Comenzar Práctica
               </Link>
             </div>
           )}
@@ -217,11 +227,15 @@ export default async function LandingPage() {
       {/* Footer */}
       <footer className="text-center" style={{
         padding: '32px 20px',
-        color: 'rgba(255, 255, 255, 0.8)',
+        backgroundColor: '#033170', // Slightly darker blue for footer
+        color: 'white',
         fontSize: '0.95rem',
-        borderTop: '1px solid rgba(255, 255, 255, 0.1)'
       }}>
-        <p>© 2024 Simulador de Examen Profe Tomy - Simulador de Examen Profesional</p>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', marginBottom: '10px' }}>
+          <Car size={20} />
+          <span style={{ fontWeight: 'bold' }}>Simulador Profe Tomy</span>
+        </div>
+        <p style={{ opacity: 0.8 }}>© 2024 Preparación para Examen de Conducir</p>
       </footer>
     </div>
   );

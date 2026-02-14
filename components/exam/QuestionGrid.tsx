@@ -50,14 +50,11 @@ export function QuestionGrid({
           color: '#333'
         };
 
-        if (isCurrent) {
-          if (isDoublePoints) {
-            styles.border = '3px solid #FF9800';
-          } else {
-            styles.border = '3px solid #333333';
-          }
-          styles.background = 'white';
-        } else if (mode === 'correction' && isFinished && isAnswered) {
+        // Lógica de estilos estricta: Fondo blanco siempre, excepto en corrección.
+        // Borde negro grueso para actual y respondida.
+        
+        if (mode === 'correction' && isFinished && isAnswered) {
+          // MODO CORRECCIÓN: Colores de éxito/error
           if (isCorrect) {
             styles.backgroundColor = '#E8F5E8';
             styles.borderColor = '#4CAF50';
@@ -65,12 +62,17 @@ export function QuestionGrid({
             styles.backgroundColor = '#FFEBEE';
             styles.borderColor = '#F44336';
           }
-        } else if (isAnswered) {
-          styles.backgroundColor = '#E3F2FD';
-          styles.borderColor = '#2196F3';
-        } else if (isDoublePoints) {
-          styles.backgroundColor = '#FFF3E0';
-          styles.borderColor = '#FF9800';
+        } else {
+          // MODO EXAMEN O REVISIÓN SIN CORRECCIÓN
+          styles.backgroundColor = 'white'; // Siempre blanco
+          
+          if (isCurrent) {
+            styles.border = '3px solid #000000'; // Borde negro grueso
+          } else if (isAnswered) {
+            styles.border = '3px solid #000000'; // Borde negro grueso
+          } else if (isDoublePoints) {
+            styles.borderColor = '#FF9800'; // Solo color de borde para puntos dobles, fondo blanco
+          }
         }
 
         return (
@@ -79,21 +81,19 @@ export function QuestionGrid({
             onClick={() => onQuestionClick(index)}
             style={styles}
             onMouseEnter={(e) => {
+              // Solo efecto hover suave si no es la actual
               if (!isCurrent) {
-                e.currentTarget.style.backgroundColor = '#f0f0f0';
+                e.currentTarget.style.backgroundColor = '#f5f5f5';
               }
             }}
             onMouseLeave={(e) => {
+              // Restaurar fondo al salir del hover
               if (!isCurrent) {
-                if (mode === 'correction' && isFinished && isAnswered) {
-                  e.currentTarget.style.backgroundColor = isCorrect ? '#E8F5E8' : '#FFEBEE';
-                } else if (isAnswered) {
-                  e.currentTarget.style.backgroundColor = '#E3F2FD';
-                } else if (isDoublePoints) {
-                  e.currentTarget.style.backgroundColor = '#FFF3E0';
-                } else {
-                  e.currentTarget.style.backgroundColor = 'white';
-                }
+                 if (mode === 'correction' && isFinished && isAnswered) {
+                   e.currentTarget.style.backgroundColor = isCorrect ? '#E8F5E8' : '#FFEBEE';
+                 } else {
+                   e.currentTarget.style.backgroundColor = 'white';
+                 }
               }
             }}
           >

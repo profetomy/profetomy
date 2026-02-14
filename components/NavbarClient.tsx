@@ -15,6 +15,9 @@ interface NavbarClientProps {
   onModeChange?: (mode: ExamMode) => void;
   answeredCount?: number;
   totalQuestions?: number;
+  // Props para hidratación desde servidor
+  initialUser?: User | null;
+  initialIsAdmin?: boolean;
 }
 
 export function NavbarClient({ 
@@ -22,30 +25,36 @@ export function NavbarClient({
   mode, 
   onModeChange, 
   answeredCount = 0, 
-  totalQuestions = 0 
+  totalQuestions = 0,
+  initialUser = null,
+  initialIsAdmin = false
 }: NavbarClientProps) {
-  const [user, setUser] = useState<User | null>(null);
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [user, setUser] = useState<User | null>(initialUser);
+  const [isAdmin, setIsAdmin] = useState(initialIsAdmin);
   const router = useRouter();
 
   useEffect(() => {
     const supabase = createClient();
     
-    // Get initial user
-    supabase.auth.getUser().then(async ({ data: { user } }) => {
-      setUser(user);
-      
-      // Check if user is admin
-      if (user) {
-        const { data: profile } = await supabase
-          .from('profiles')
-          .select('role')
-          .eq('id', user.id)
-          .single();
+    // Si ya tenemos usuario inicial, no necesitamos hacer fetch inmediato,
+    // pero sí suscribirnos a cambios.
+    if (!initialUser) {
+        // Get initial user if not provided
+        supabase.auth.getUser().then(async ({ data: { user } }) => {
+        setUser(user);
         
-        setIsAdmin(profile?.role?.toLowerCase() === 'admin');
-      }
-    });
+        // Check if user is admin
+        if (user) {
+            const { data: profile } = await supabase
+            .from('profiles')
+            .select('role')
+            .eq('id', user.id)
+            .single();
+            
+            setIsAdmin(profile?.role?.toLowerCase() === 'admin');
+        }
+        });
+    }
 
     // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
@@ -66,7 +75,7 @@ export function NavbarClient({
     });
 
     return () => subscription.unsubscribe();
-  }, []);
+  }, [initialUser]);
 
   const handleLogout = async () => {
     const supabase = createClient();
@@ -76,11 +85,10 @@ export function NavbarClient({
 
   return (
     <nav style={{
-      background: 'rgba(255, 255, 255, 0.95)',
-      backdropFilter: 'blur(10px)',
-      borderBottom: '1px solid rgba(0, 0, 0, 0.1)',
+      background: '#033E8C',
+      borderBottom: '4px solid #FCD442',
       padding: '16px 40px',
-      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)',
+      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.2)',
       position: 'sticky',
       top: 0,
       zIndex: 50
@@ -89,47 +97,48 @@ export function NavbarClient({
         <Link href="/" style={{ textDecoration: 'none' }}>
           <h1 style={{
             fontSize: '1.5rem',
-            fontWeight: '700',
-            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            backgroundClip: 'text',
+            fontWeight: '800',
+            color: 'white',
             cursor: 'pointer',
-            letterSpacing: '-0.01em'
+            letterSpacing: '-0.01em',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '10px'
           }}>
-            Simulador de Examen Profe Tomy
+            {/* Icon can be added here if needed, but text is fine */}
+            Simulador Profe Tomy
           </h1>
         </Link>
         
         {/* Controles de Examen (Centrales) */}
         {isExam && onModeChange && (
-          <div className="flex items-center gap-6 bg-gray-50 px-6 py-2 rounded-full border border-gray-100 shadow-inner">
+          <div className="flex items-center gap-6 bg-white/10 px-6 py-2 rounded-full border border-white/20">
             {/* Selector de Modo */}
-            <div className="flex bg-white rounded-lg p-1 shadow-sm border border-gray-200">
+            <div className="flex bg-white/20 rounded-lg p-1">
               <button
                 onClick={() => onModeChange('exam')}
-                className={`px-4 py-1.5 rounded-md text-sm font-semibold transition-all ${
+                className={`px-4 py-1.5 rounded-md text-sm font-bold transition-all ${
                   mode === 'exam'
-                    ? 'bg-gradient-to-r from-purple-500 to-indigo-600 text-white shadow-md'
-                    : 'text-gray-500 hover:bg-gray-50'
+                    ? 'shadow-md'
+                    : 'hover:bg-white/10'
                 }`}
                 style={{
-                  background: mode === 'exam' ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' : 'transparent',
-                  color: mode === 'exam' ? 'white' : '#6b7280'
+                  background: mode === 'exam' ? '#FCD442' : 'transparent',
+                  color: mode === 'exam' ? '#033E8C' : '#E0F2F5'
                 }}
               >
                 Examen
               </button>
               <button
                 onClick={() => onModeChange('correction')}
-                className={`px-4 py-1.5 rounded-md text-sm font-semibold transition-all ${
+                className={`px-4 py-1.5 rounded-md text-sm font-bold transition-all ${
                   mode === 'correction'
-                    ? 'bg-gradient-to-r from-purple-500 to-indigo-600 text-white shadow-md'
-                    : 'text-gray-500 hover:bg-gray-50'
+                    ? 'shadow-md'
+                    : 'hover:bg-white/10'
                 }`}
                 style={{
-                  background: mode === 'correction' ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' : 'transparent',
-                  color: mode === 'correction' ? 'white' : '#6b7280'
+                  background: mode === 'correction' ? '#FCD442' : 'transparent',
+                  color: mode === 'correction' ? '#033E8C' : '#E0F2F5'
                 }}
               >
                 Corrección
@@ -137,16 +146,16 @@ export function NavbarClient({
             </div>
 
             {/* Separador */}
-            <div className="h-6 w-px bg-gray-200"></div>
+            <div className="h-6 w-px bg-white/30"></div>
 
             {/* Contador de Progreso */}
             <div className="flex items-center gap-2">
-              <div className="flex items-center justify-center w-8 h-8 rounded-full bg-green-100 text-green-600">
+              <div className="flex items-center justify-center w-8 h-8 rounded-full bg-[#63AEBF] text-white">
                 <CheckCircle2 size={18} />
               </div>
               <div className="flex flex-col">
-                <span className="text-xs text-gray-500 font-medium">Progreso</span>
-                <span className="text-sm font-bold text-gray-800 leading-none">
+                <span className="text-xs text-blue-100 font-medium">Progreso</span>
+                <span className="text-sm font-bold text-white leading-none">
                   {answeredCount} / {totalQuestions}
                 </span>
               </div>
@@ -160,7 +169,7 @@ export function NavbarClient({
             <>
               {/* Usuario logueado */}
               <span style={{
-                color: '#4a5568',
+                color: '#E0F2F5',
                 fontSize: '0.95rem',
                 fontWeight: '500',
                 marginRight: '8px',
@@ -174,18 +183,17 @@ export function NavbarClient({
                 <Link
                   href="/admin"
                   style={{
-                    background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
-                    color: 'white',
+                    background: '#FCD442',
+                    color: '#033E8C',
                     padding: '8px 16px',
-                    borderRadius: '8px',
+                    borderRadius: '6px',
                     textDecoration: 'none',
                     fontSize: '0.9rem',
-                    fontWeight: '600',
+                    fontWeight: '700',
                     display: 'flex',
                     alignItems: 'center',
                     gap: '6px',
-                    transition: 'transform 0.2s ease, box-shadow 0.2s ease',
-                    boxShadow: '0 2px 8px rgba(245, 158, 11, 0.3)'
+                    boxShadow: '0 2px 4px rgba(0,0,0,0.2)'
                   }}
                 >
                   <Shield size={16} />
@@ -197,22 +205,21 @@ export function NavbarClient({
                 <Link
                   href="/exam"
                   style={{
-                    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                    background: '#63AEBF',
                     color: 'white',
                     padding: '8px 16px',
-                    borderRadius: '8px',
+                    borderRadius: '6px',
                     textDecoration: 'none',
                     fontSize: '0.9rem',
-                    fontWeight: '600',
+                    fontWeight: '700',
                     display: 'flex',
                     alignItems: 'center',
                     gap: '6px',
-                    transition: 'transform 0.2s ease, box-shadow 0.2s ease',
-                    boxShadow: '0 2px 8px rgba(102, 126, 234, 0.3)'
+                    boxShadow: '0 2px 4px rgba(0,0,0,0.2)'
                   }}
                 >
-                  <GraduationCap size={16} />
-                  Examen
+                  <GraduationCap size={18} />
+                  Ir a Examen
                 </Link>
               )}
               
@@ -220,19 +227,17 @@ export function NavbarClient({
               <button
                 onClick={isExam ? () => router.push('/') : handleLogout}
                 style={{
-                  background: '#ef4444',
+                  background: '#ef4444', // Mantener rojo para salir por convención, o cambiar a #034C8C
                   color: 'white',
                   padding: '8px 16px',
                   border: 'none',
-                  borderRadius: '8px',
+                  borderRadius: '6px',
                   cursor: 'pointer',
                   fontSize: '0.9rem',
                   fontWeight: '600',
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '6px',
-                  transition: 'transform 0.2s ease, box-shadow 0.2s ease',
-                  boxShadow: '0 2px 8px rgba(239, 68, 68, 0.3)'
+                  gap: '6px'
                 }}
               >
                 <LogOut size={16} />
@@ -245,14 +250,14 @@ export function NavbarClient({
               <Link
                 href="/auth/login"
                 style={{
-                  background: 'white',
-                  color: '#667eea',
+                  background: 'transparent',
+                  color: 'white',
                   padding: '8px 16px',
-                  border: '2px solid #667eea',
-                  borderRadius: '8px',
+                  border: '2px solid #FCD442',
+                  borderRadius: '6px',
                   textDecoration: 'none',
                   fontSize: '0.9rem',
-                  fontWeight: '600',
+                  fontWeight: '700',
                   transition: 'all 0.2s ease'
                 }}
               >
@@ -261,15 +266,15 @@ export function NavbarClient({
               <Link
                 href="/auth/sign-up"
                 style={{
-                  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                  color: 'white',
+                  background: '#FCD442',
+                  color: '#033E8C',
                   padding: '8px 16px',
-                  borderRadius: '8px',
+                  borderRadius: '6px',
                   textDecoration: 'none',
                   fontSize: '0.9rem',
-                  fontWeight: '600',
-                  boxShadow: '0 2px 8px rgba(102, 126, 234, 0.3)',
-                  transition: 'transform 0.2s ease, box-shadow 0.2s ease'
+                  fontWeight: '800',
+                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.2)',
+                  transition: 'transform 0.2s ease'
                 }}
               >
                 Registrarse

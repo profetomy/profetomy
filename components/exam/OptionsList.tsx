@@ -7,7 +7,7 @@ interface OptionsListProps {
   userAnswer: UserAnswer;
   mode: ExamMode;
   isFinished: boolean;
-  onAnswerSelect: (answer: UserAnswer) => void;
+  onAnswerSelect: (answer: 'a' | 'b' | 'c') => void;
 }
 
 export function OptionsList({
@@ -20,7 +20,7 @@ export function OptionsList({
   const options: Array<'a' | 'b' | 'c'> = ['a', 'b', 'c'];
 
   return (
-    <div className="flex flex-col" style={{ gap: '15px', marginBottom: '40px' }}>
+    <div className="flex flex-col" style={{ gap: '2px' }}>
       {options.map(option => {
         const isSelected = userAnswer === option;
         const isCorrectAnswer = option === question.correct;
@@ -30,10 +30,10 @@ export function OptionsList({
         let styles: React.CSSProperties = {
           display: 'flex',
           alignItems: 'flex-start',
-          gap: '12px',
+          gap: '8px',
           fontSize: '1.1rem',
           cursor: 'pointer',
-          padding: '12px',
+          padding: '6px', // Reducido de 12px
           borderRadius: '6px',
           transition: 'all 0.2s',
           border: '2px solid transparent',
@@ -75,16 +75,42 @@ export function OptionsList({
               }
             }}
           >
-            <input
-              type="radio"
-              name="answer"
-              value={option}
-              checked={isSelected}
-              disabled={isDisabled}
-              onChange={() => onAnswerSelect(option)}
-            />
+            {/* Letra de la opción antes del input/radio */}
+            <span style={{ fontWeight: 'bold', marginRight: '8px', minWidth: '20px' }}>
+              {option})
+            </span>
+
+            {/* Radio personalizado */}
+            <div style={{ position: 'relative', marginRight: '12px', display: 'flex', alignItems: 'center' }}>
+              <input
+                type="radio"
+                name="answer"
+                value={option}
+                checked={isSelected}
+                disabled={isDisabled}
+                onChange={() => onAnswerSelect(option)}
+                style={{
+                  opacity: 0,
+                  position: 'absolute',
+                  width: '100%',
+                  height: '100%',
+                  cursor: 'pointer',
+                  zIndex: 1
+                }}
+              />
+              <div style={{
+                width: '20px',
+                height: '20px',
+                borderRadius: '50%',
+                border: isSelected ? '6px solid #3F51B5' : '2px solid #ccc',
+                backgroundColor: 'white',
+                transition: 'all 0.2s',
+                boxSizing: 'border-box'
+              }}></div>
+            </div>
+
             <span style={{ flex: 1 }}>
-              {option}) {question[option]}
+              {question[option]}
               {mode === 'correction' && isFinished && isCorrectAnswer && (
                 <span style={{ marginLeft: 'auto', color: '#4CAF50', fontWeight: 'bold' }}> ✓ CORRECTA</span>
               )}

@@ -14,7 +14,7 @@ export function NavigationButtons({
   onNext
 }: NavigationButtonsProps) {
   return (
-    <div className="flex" style={{ gap: '20px', marginTop: '30px' }}>
+    <div className="flex justify-center" style={{ gap: '40px' }}>
       <button
         onClick={onPrevious}
         disabled={currentIndex === 0}

@@ -2,6 +2,7 @@
 
 import { Question, UserAnswer, ExamMode } from '@/lib/types/exam';
 import { QuestionGrid } from './QuestionGrid';
+import { Clock } from 'lucide-react';
 
 interface SidebarProps {
   questions: Question[];
@@ -29,28 +30,32 @@ export function Sidebar({
   onFinishExam
 }: SidebarProps) {
   return (
-    <div className="flex flex-col rounded-r-lg shadow-lg" style={{
-      background: '#E0E0E0',
-      padding: '20px',
-      gap: '20px',
+    <div className="flex flex-col h-full" style={{
+      // background: '#E0E0E0',
+      padding: '20px', 
+      paddingLeft: '20px', 
+      gap: '15px',
       borderRadius: '0 8px 8px 0'
     }}>
       {/* Timer */}
       {mode === 'exam' && (
-        <div className="text-white text-center rounded-lg" style={{
-          background: '#66BB6A',
-          padding: '15px',
+        <div className="text-center rounded-lg w-full" style={{
+          background: '#C9D6CE',
+          border: '2px solid #2E7D32',
+          padding: '8px', 
           borderRadius: '6px',
-          boxShadow: '0 2px 4px rgba(0,0,0,0.2)'
+          color: '#2E7D32', // Color texto igual al borde
+          // boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
+          marginTop: '0px'
         }}>
-          <div style={{ fontSize: '0.9rem', marginBottom: '5px' }}>
+          <div style={{ fontSize: '0.9rem', marginBottom: '2px', color: '#2E7D32', fontWeight: 'bold' }}>
             Tiempo restante
           </div>
           <div className="font-bold flex items-center justify-center" style={{
-            fontSize: '1.8rem',
+            fontSize: '1.5rem',
             gap: '8px'
           }}>
-            <span>🕐</span>
+            <Clock size={24} />
             <span>{formattedTime}</span>
           </div>
         </div>
@@ -65,7 +70,7 @@ export function Sidebar({
           onClick={onShowInstructions}
           className="text-white rounded-lg font-bold cursor-pointer transition-opacity hover:opacity-90"
           style={{
-            backgroundColor: '#5C6BC0',
+            backgroundColor: '#3269D9',
             padding: '12px',
             borderRadius: '6px',
             fontSize: '0.9rem',
@@ -78,7 +83,7 @@ export function Sidebar({
           onClick={onCancelExam}
           className="text-white rounded-lg font-bold cursor-pointer transition-opacity hover:opacity-90"
           style={{
-            backgroundColor: '#E57373',
+            backgroundColor: '#BB333D',
             padding: '12px',
             borderRadius: '6px',
             fontSize: '0.9rem',
@@ -105,7 +110,7 @@ export function Sidebar({
           onClick={onFinishExam}
           className="text-white rounded-lg font-bold cursor-pointer transition-colors"
           style={{
-            backgroundColor: '#3F51B5',
+            backgroundColor: '#3269D9',
             padding: '15px',
             border: 'none',
             borderRadius: '6px',
@@ -113,10 +118,10 @@ export function Sidebar({
             marginTop: 'auto'
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.backgroundColor = '#303F9F';
+            e.currentTarget.style.backgroundColor = '#3269D9';
           }}
           onMouseLeave={(e) => {
-            e.currentTarget.style.backgroundColor = '#3F51B5';
+            e.currentTarget.style.backgroundColor = '#3269D9';
           }}
         >
           Finalizar examen
