@@ -1,0 +1,1295 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Examen Simulador PROFETOMY TIKTOK</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(45deg, #E0FFD9 0%, #EBF9E5 100%);
+            background-attachment: fixed;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            padding: 15px 30px;
+            border-bottom: 1px solid #ddd;
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #333;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .mode-toggle {
+            display: flex;
+            gap: 10px;
+        }
+
+        .mode-btn {
+            padding: 8px 16px;
+            border: 2px solid #3F51B5;
+            background: white;
+            color: #3F51B5;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+
+        .mode-btn.active {
+            background: #3F51B5;
+            color: white;
+        }
+
+        .mode-btn:hover {
+            background: #3F51B5;
+            color: white;
+        }
+
+        /* Main Container */
+        .main-container {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        /* Quiz Area */
+        .quiz-area {
+            flex: 3;
+            padding: 40px;
+            overflow-y: auto;
+            background: white;
+            margin: 20px;
+            margin-right: 0;
+            border-radius: 8px 0 0 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .question-header {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .question-text {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 30px;
+            line-height: 1.5;
+            color: #222;
+        }
+
+        .question-image {
+            max-width: 300px;
+            margin: 20px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        .option {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            padding: 12px;
+            border-radius: 6px;
+            transition: all 0.2s;
+            border: 2px solid transparent;
+        }
+
+        .option:hover {
+            background-color: #f5f5f5;
+        }
+
+        .option input[type="radio"] {
+            margin-top: 4px;
+            transform: scale(1.3);
+            accent-color: #3F51B5;
+        }
+
+        .option input[type="radio"]:checked {
+            background-color: #3F51B5;
+            border-color: #3F51B5;
+        }
+
+        /* Correction Mode Styles */
+        .correction-mode .option.correct {
+            background-color: #E8F5E8;
+            border-color: #4CAF50;
+            color: #2E7D32;
+        }
+
+        .correction-mode .option.incorrect {
+            background-color: #FFEBEE;
+            border-color: #F44336;
+            color: #C62828;
+        }
+
+        .correction-mode .option.user-selected {
+            font-weight: bold;
+        }
+
+        .correction-mode .option.correct::after {
+            content: " ✓ CORRECTA";
+            color: #4CAF50;
+            font-weight: bold;
+            margin-left: auto;
+        }
+
+        .correction-mode .option.incorrect.user-selected::after {
+            content: " ✗ TU RESPUESTA";
+            color: #F44336;
+            font-weight: bold;
+            margin-left: auto;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .btn-nav {
+            padding: 12px 30px;
+            border: 2px solid #ADCEF7;
+            background: white;
+            color: #3F51B5;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: all 0.2s;
+        }
+
+        .btn-nav:hover {
+            background: #3F51B5;
+            color: white;
+        }
+
+        .btn-nav:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            flex: 1;
+            max-width: 350px;
+            background: #E0E0E0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            border-radius: 0 8px 8px 0;
+            margin: 20px 20px 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        /* Timer */
+        .timer-box {
+            background: #66BB6A;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            border-radius: 6px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .timer-label {
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        .timer-display {
+            font-size: 1.8rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .timer-icon::before {
+            content: "🕐";
+            font-size: 1.2rem;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .btn-action {
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: opacity 0.2s;
+        }
+
+        .btn-action:hover {
+            opacity: 0.9;
+        }
+
+        .btn-instructions {
+            background-color: #5C6BC0;
+        }
+
+        .btn-cancel {
+            background-color: #E57373;
+        }
+
+        /* Question Grid */
+        .question-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            max-height: 400px;
+            overflow-y: auto;
+            padding: 10px;
+            background: white;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+
+        .grid-item {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #CCCCCC;
+            background: white;
+            font-size: 0.9rem;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.2s;
+            color: #333;
+        }
+
+        .grid-item:hover {
+            background-color: #f0f0f0;
+        }
+
+        .grid-item.current {
+            border: 3px solid #333333;
+            background: white;
+        }
+
+        .grid-item.answered {
+            background-color: #E3F2FD;
+            border-color: #2196F3;
+        }
+
+        .grid-item.double-points {
+            background-color: #FFF3E0;
+            border-color: #FF9800;
+        }
+
+        .grid-item.double-points.current {
+            border: 3px solid #FF9800;
+        }
+
+        /* Correction mode grid colors */
+        .correction-mode .grid-item.correct-answer {
+            background-color: #E8F5E8;
+            border-color: #4CAF50;
+        }
+
+        .correction-mode .grid-item.incorrect-answer {
+            background-color: #FFEBEE;
+            border-color: #F44336;
+        }
+
+        /* Finish Button */
+        .btn-finish {
+            background-color: #3F51B5;
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            margin-top: auto;
+            transition: background-color 0.2s;
+        }
+
+        .btn-finish:hover {
+            background-color: #303F9F;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: right;
+            padding: 10px 30px;
+            color: #999;
+            font-size: 0.8rem;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 15% auto;
+            padding: 30px;
+            border-radius: 8px;
+            width: 80%;
+            max-width: 500px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .modal h2 {
+            color: #3F51B5;
+            margin-bottom: 20px;
+        }
+
+        .modal p {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .modal .btn {
+            background: #3F51B5;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        .score-passed {
+            color: #4CAF50;
+            font-weight: bold;
+        }
+
+        .score-failed {
+            color: #F44336;
+            font-weight: bold;
+        }
+
+        /* Stats in correction mode */
+        .correction-stats {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            border-left: 4px solid #3F51B5;
+        }
+
+        .correction-stats h3 {
+            color: #3F51B5;
+            margin-bottom: 10px;
+        }
+
+        .correction-stats p {
+            margin: 5px 0;
+            font-size: 0.95rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                max-width: none;
+                order: -1;
+            }
+            
+            .quiz-area {
+                margin: 10px;
+                border-radius: 8px;
+            }
+            
+            .sidebar {
+                margin: 10px;
+                border-radius: 8px;
+            }
+
+            .header {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <span>examen simulador PROFETOMY TIKTOK</span>
+        <div class="mode-toggle">
+            <button class="mode-btn active" id="examMode" onclick="setMode('exam')">Modo Examen</button>
+            <button class="mode-btn" id="correctionMode" onclick="setMode('correction')">Modo Corrección</button>
+        </div>
+    </div>
+
+    <div class="main-container">
+        <div class="quiz-area">
+            <div id="quiz-content">
+                <!-- Contenido dinámico -->
+            </div>
+            <div class="nav-buttons">
+                <button class="btn-nav" id="prevBtn" onclick="prevQuestion()">← Anterior</button>
+                <button class="btn-nav" id="nextBtn" onclick="nextQuestion()">Siguiente →</button>
+            </div>
+        </div>
+
+        <div class="sidebar">
+            <div class="timer-box" id="timerBox">
+                <div class="timer-label">Tiempo restante</div>
+                <div class="timer-display">
+                    <span class="timer-icon"></span>
+                    <span id="timer">45:00</span>
+                </div>
+            </div>
+            
+            <div class="action-buttons">
+                <button class="btn-action btn-instructions" onclick="showInstructions()">Instrucciones</button>
+                <button class="btn-action btn-cancel" onclick="cancelExam()">Anular</button>
+            </div>
+
+            <div class="question-grid" id="question-grid">
+                <!-- Grid dinámico -->
+            </div>
+
+            <button class="btn-finish" id="finishBtn" onclick="finishExam()">Finalizar examen</button>
+        </div>
+    </div>
+
+    <div class="footer">
+         V2 5.8
+    </div>
+
+    <!-- Modal -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <div id="modal-content">
+                <!-- Contenido dinámico del modal -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Base de datos completa de preguntas
+        const allQuestions = [
+            {
+                q: "Deberán ser transportados en un sistema de retención infantil en el asiento trasero:",
+                a: "las niñas y niños hasta 10 años de edad inclusive",
+                b: "las niñas y niños hasta 8 años de edad inclusive", 
+                c: "las niños y niñas hasta 12 años de edad inclusive",
+                correct: "b",
+                image: null
+            },
+            {
+                q: "En la situación que muestra la imagen ¿qué debería hacer la persona que conduce si va circulando a 70 km/h?",
+                a: "frenar en seco",
+                b: "frenar suavemente",
+                c: "continuar derecho por la vía",
+                correct: "b",
+                image: null
+            },
+            {
+                q: "Al conducir en una zona rural por un camino muy angosto, ¿dónde le resultaría más difícil a quien conduzca ver personas a caballo que avanzan delante de él?",
+                a: "Al ir bajando un cerro",
+                b: "Al ir en una curva a la derecha",
+                c: "Al ir en una curva a la izquierda",
+                correct: "c",
+                image: null
+            },
+            {
+                q: "¿Qué significa esta señal?",
+                a: "Que a 100 m hay una pasarela peatonal sobre la autopista",
+                b: "Que a 100 m converge una pista de aceleración para entrar en la autopista",
+                c: "Que a 100 m comienza una pista de desaceleración para salir de la autopista",
+                correct: "c",
+                image: "https://static-us-img.skywork.ai/prod/nexus/1770942721/cropped_image_8_1770942721208005479.jpg"
+            },
+            {
+                q: "Al transitar por la noche, una persona conductora es encandilada por las luces delanteras de un vehículo que se aproxima, ¿Qué debe hacer la persona en esta circunstancia?",
+                a: "Encender las luces altas",
+                b: "Reducir la velocidad o detenerse",
+                c: "Bajar la visera que tiene el vehículo para proteger del sol",
+                correct: "b",
+                image: null
+            },
+            {
+                q: "Una persona conductora de automóvil debe probar el funcionamiento de los frenos después de pasar por una calle inundada",
+                a: "Porque los frenos pueden haberse mojado",
+                b: "Porque el carburador puede haberse ahogado",
+                c: "Porque el sistema hidráulico puede haberse recalentado",
+                correct: "a",
+                image: null
+            },
+            {
+                q: "El estado de salud, estrés, cansancio constituyen un factor de riesgo pues incide en conductas erráticas, como",
+                a: "Retraso en el paso de las marchas",
+                b: "Frenar con la técnica incorrecta",
+                c: "A y B son correctas",
+                correct: "c",
+                image: null
+            },
+            {
+                q: "Al llegar al lugar de un siniestro en el que participó un camión cargado con productos químicos peligrosos, ¿Qué se debe hacer antes de llamar al 133 de carabineros?",
+                a: "Tratar de diluir los productos químicos con agua",
+                b: "Tratar de evitar que los productos químicos se sigan derramando",
+                c: "Averiguar de qué clase de producto químico se trata, mirando los rótulos y letreros que tiene el camión",
+                correct: "c",
+                image: null
+            },
+            {
+                q: "Al conducir con neblina a la luz del día, ¿Qué luces debe encender quien conduce?",
+                a: "Las luces delanteras altas",
+                b: "Las luces delanteras bajas",
+                c: "Las luces de advertencia de peligro",
+                correct: "b",
+                image: null
+            },
+            {
+                q: "¿Qué tipo de información entregan las señales amarillas con forma de rombo?",
+                a: "Advierten la cercanía de peligros",
+                b: "Indican la velocidad máxima permitida",
+                c: "Señalan ordenes que deben seguir las personas conductoras",
+                correct: "a",
+                image: "https://static-us-img.skywork.ai/prod/nexus/1770942720/cropped_image_10_1770942720470034279.jpg"
+            },
+            {
+                q: "De las siguientes afirmaciones, ¿Cuáles son VERDADERAS? I. Una persona conductora que va con mucha prisa tiende a ser más cautelosa II. La falta de atención a las condiciones del tránsito es una de las principales causas de accidentes III. Discutir con alguien o estar pendientes de la radio aumenta el riesgo de pasar por alto una situación relevante del transito",
+                a: "I y III",
+                b: "II y III",
+                c: "I y II",
+                correct: "b",
+                image: null
+            },
+            {
+                q: "¿De qué peligro advierte la señal?",
+                a: "De curva y contra curva a la derecha",
+                b: "De zona de curvas sucesivas",
+                c: "De pavimento resbaladizo",
+                correct: "c",
+                image: "https://static-us-img.skywork.ai/prod/nexus/1770942720/cropped_image_22_1770942720472109904.jpg"
+            },
+            {
+                q: "Una persona prueba la suspensión de su vehículo y nota que este rebota u oscila en exceso. ¿Cuál de las siguientes condiciones explica mejor esta situación?",
+                a: "Amortiguadores gastados",
+                b: "Neumáticos poco inflados",
+                c: "Volante de dirección descentrado",
+                correct: "a",
+                image: null
+            },
+            {
+                q: "En condiciones normales, ¿Cuál sería aproximadamente la distancia de frenado de un automóvil si una persona conduce a 90 km/h?",
+                a: "70 metros",
+                b: "20 metros",
+                c: "45 metros",
+                correct: "c",
+                image: null
+            },
+            {
+                q: "¿Qué debería hacer una persona que está tomando un medicamento que probablemente afectará su capacidad para conducir?",
+                a: "Solicitar consejo médico antes de conducir",
+                b: "Limitar su conducción solo a viajes esenciales",
+                c: "Conducir solamente en compañía de alguien que posea una licencia de conducir",
+                correct: "a",
+                image: null
+            },
+            {
+                q: "¿Cuál de las siguientes afirmaciones es FALSA en cuanto a la conducción durante la noche?",
+                a: "Las luces bajas permiten ver las marcas en el pavimento a 200 m y más",
+                b: "La capacidad de las personas conductoras para apreciar distancias se ve disminuida",
+                c: "El color de las ropas de un peatón puede influir en que este sea más o menos visible para las personas que conducen",
+                correct: "a",
+                image: null
+            },
+            {
+                q: "¿Dónde se produce la mayor cantidad de siniestros de tránsito en chile?",
+                a: "Carreteras",
+                b: "Caminos rurales",
+                c: "Intersecciones de calles",
+                correct: "c",
+                image: null
+            },
+            {
+                q: "Respecto a los cruces ferroviarios a nivel, ¿Cuál de las siguientes opciones es VERDADERA?",
+                a: "Está permitido estacionar a una distancia mínima de 10 metros de un cruce ferroviario",
+                b: "Si ya se ha ingresado a un cruce ferroviario y se aproxima un tren a lo lejos, se recomienda continuar avanzando",
+                c: "Si no se siente tren alguno en las proximidades, es licito efectuar un adelantamiento en un cruce ferroviario",
+                correct: "b",
+                image: null
+            },
+            {
+                q: "¿Qué precaución se debe tomar al cargar un remolque que será arrastrado con un automóvil?",
+                a: "Que el peso se distribuya en forma pareja",
+                b: "Que el mayor peso se concentre en la parte trasera",
+                c: "Que la mayor parte del peso se concentre en la parte delantera",
+                correct: "c",
+                image: null
+            },
+            {
+                q: "¿Cuál de las siguientes acciones es la más importante al momento de evitar chocar el vehículo que va delante?",
+                a: "Conducir a una velocidad constante",
+                b: "Asegurarse de que los frenos estén en buen estado",
+                c: "Mantener una adecuada distancia de separación entre los vehículos",
+                correct: "c",
+                image: null
+            },
+            {
+                q: "¿Qué documento(s) se está obligado a portar al conducir un automóvil?",
+                a: "El certificado de inscripción del vehículo, certificado de revisión técnica y licencia de conductor",
+                b: "Certificado de revisión técnica, certificado de SOAP, permiso de circulación y licencia de conductor",
+                c: "Certificado de revisión técnica, certificado de SOAP, permiso de circulación y licencia de conductor",
+                correct: "b",
+                image: null
+            },
+            {
+                q: "¿Qué podría hacer que una persona conductora se desvíe de la calzada?",
+                a: "Sólo una velocidad muy alta",
+                b: "Una velocidad muy alta y una distracción",
+                c: "Una velocidad muy alta, una distracción y el cansancio",
+                correct: "c",
+                image: null
+            },
+            {
+                q: "DOBLE PUNTAJE. Para trasladar seguras a las niñas y los niños en un vehículo es necesario elegir un sistema de retención infantil (SRI) considerando, entre otras, las siguientes características",
+                a: "La estatura de las niñas y niños y que el SRI cumpla con normas vigentes",
+                b: "Sólo que el SRI cumpla con normas vigentes de certificación",
+                c: "La estatura, que cumpla normas vigentes y el sexo de las niñas y niños",
+                correct: "a",
+                image: null,
+                doublePoints: true
+            },
+            {
+                q: "Una persona conductora se detiene ante un paso cebra donde los peatones que se encuentran en la vereda no comienzan a cruzar. ¿Qué debería hacer la persona conductora?",
+                a: "Reanudar su marcha",
+                b: "Esperar pacientemente",
+                c: "Hacerle señas con la mano a los peatones para que crucen",
+                correct: "a",
+                image: null
+            },
+            {
+                q: "Una persona transita en su automóvil por una autopista cuando observa que, de un camión cargado que va adelante, cae una caja sin que la persona que conduce el camión se dé cuenta. ¿Qué debe hacer quien conduce el automóvil?",
+                a: "Tratar de alcanzar el camión y de llamar la atención de la persona que lo conduce",
+                b: "Detenerse junto a la caja y encender las luces de emergencia hasta que llegue carabineros",
+                c: "Continuar hasta donde haya un teléfono para avisar a carabineros o servicios de emergencias",
+                correct: "c",
+                image: null
+            },
+            {
+                q: "En la imagen, el vehículo blanco no puede continuar porque el tránsito está congestionado más allá de la intersección. ¿Por qué la persona que conduce el vehículo ha efectuado una maniobra incorrecta?",
+                a: "Porque debió constatar que no venían autos en sentido contrario",
+                b: "Porque obstaculiza el tránsito de los vehículos que vienen detrás de él",
+                c: "Porque debió asegurarse antes que tendría espacio suficiente para cruzar sin bloquear la intersección",
+                correct: "c",
+                image: "https://static-us-img.skywork.ai/prod/nexus/1770942720/cropped_image_9_1770942720479963021.jpg"
+            },
+            {
+                q: "¿Qué distancia de detención aproximada tiene un tren que circula a alrededor de 100 km/h?",
+                a: "100 metros",
+                b: "900 metros",
+                c: "200 metros",
+                correct: "b",
+                image: null
+            },
+            {
+                q: "¿En qué caso una persona conductora NO debería detenerse cuando el semáforo se pone en amarillo?",
+                a: "Cuando va demasiado rápido",
+                b: "Cuando ya ha ingresado al cruce",
+                c: "Cuando la luz cambia sorpresivamente",
+                correct: "b",
+                image: null
+            },
+            {
+                q: "¿Qué significa un semáforo en rojo?",
+                a: "Que la persona conductora deba disminuir su velocidad y estar preparada para detenerse",
+                b: "Que la persona conductora debe detenerse antes de la línea de detención de vehículos",
+                c: "Que la persona conductora debe detenerse sobre el paso de peatones",
+                correct: "b",
+                image: null
+            },
+            {
+                q: "¿Qué debe hacer una persona conductora cuando enfrenta esta señal?",
+                a: "Detenerse siempre",
+                b: "Detenerse solo si viene algún vehículo por la otra vía",
+                c: "Detenerse solo si hay peatones esperando para cruzar",
+                correct: "a",
+                image: "https://static-us-img.skywork.ai/prod/nexus/1770942720/cropped_image_4_1770942720659775755.jpg"
+            },
+            {
+                q: "En relación con el cansancio en la conducción, ¿Cuál de las siguientes afirmaciones es FALSA?",
+                a: "Un conductor cansado ve empeorada su capacidad de reacción",
+                b: "El cansancio es una causa importante de los siniestros que se registran en carreteras",
+                c: "Si una persona conductora está cansada, lo mejor es que su acompañante le vaya hablando permanentemente",
+                correct: "c",
+                image: null
+            },
+            {
+                q: "¿Cómo puede una persona conductora detener el zigzagueo de una casa rodante que remolcando con su vehículo?",
+                a: "Moviendo ligeramente el volante hacia los lados, en movimiento contrario al zigzagueo",
+                b: "Acelerando gradualmente para aumentar la velocidad",
+                c: "Disminuyendo la velocidad gradualmente",
+                correct: "c",
+                image: null
+            },
+            {
+                q: "¿Cuál de estos líquidos, en el caso de estar en un nivel bajo, podría causar un accidente?",
+                a: "El anticongelante",
+                b: "El líquido de freno",
+                c: "El agua de la batería",
+                correct: "b",
+                image: null
+            },
+            {
+                q: "¿Para qué sirven los seguros de niños de los vehículos?",
+                a: "Para fijar las hebillas que tienen los cinturones de seguridad",
+                b: "Para impedir que las puertas puedan abrirse desde el interior",
+                c: "Para bloquear las ventanas traseras manteniéndolas cerradas",
+                correct: "b",
+                image: null
+            },
+            {
+                q: "¿Por qué es importante usar zapatos apropiados al conducir un vehículo?",
+                a: "Para tener un adecuado control de los pedales",
+                b: "Para efectuar los cambios de marcha más rápidamente",
+                c: "Para evitar el desgaste acelerado de las gomas de los pedales",
+                correct: "a",
+                image: null
+            },
+            {
+                q: "Una persona conductora transita por una calzada con hielo y repentinamente siente la dirección muy liviana. ¿Qué debe hacer para tener nuevamente el control del vehículo?",
+                a: "Guiar el vehículo a la parte más seca de la calzada",
+                b: "Cambiar rápidamente a una marcha más baja",
+                c: "Soltar el acelerador del vehículo",
+                correct: "c",
+                image: null
+            },
+            {
+                q: "Una persona va conduciendo detrás de un camión articulado que va a doblar a la derecha hacia una vía angosta. ¿Qué maniobra debe realizar la persona que va detrás del camión?",
+                a: "Mantenerse detrás del camión hasta que finalice su maniobra",
+                b: "Desplazarse hacia la pista adyacente para sobrepasar al camión",
+                c: "Tocar la bocina para advertir de su presencia al conductor del camión",
+                correct: "a",
+                image: null
+            },
+            {
+                q: "¿A cuántos metros de una esquina es lo más cerca que una persona conductora se puede estacionar?",
+                a: "10 metros",
+                b: "15 metros",
+                c: "5 metros",
+                correct: "a",
+                image: "https://static-us-img.skywork.ai/prod/nexus/1770942721/cropped_image_12_1770942721104935508.jpg"
+            },
+            {
+                q: "¿Cuál de estas señales previene que más adelante hay una serie de curvas?",
+                a: "Ilustración A",
+                b: "Ilustración B",
+                c: "Ilustración C",
+                correct: "c",
+                image: "https://static-us-img.skywork.ai/prod/nexus/1770942721/cropped_image_16_1770942721147448508.jpg"
+            },
+            {
+                q: "¿Para qué sirven las señales amarillas con forma de rombo?",
+                a: "Para dar ordenes",
+                b: "Para entregar información",
+                c: "Para advertir acerca de peligros",
+                correct: "c",
+                image: "https://static-us-img.skywork.ai/prod/nexus/1770942720/cropped_image_0_1770942720884384402.jpg"
+            },
+            {
+                q: "Una persona conduce a 40 km/h cuando, 50 metros adelante, el semáforo cambia a amarillo. En esta situación, ¿Qué debería hacer?",
+                a: "Disminuir la velocidad y detenerse",
+                b: "Acelerar para alcanzar a cruzar",
+                c: "Continuar a la misma velocidad",
+                correct: "a",
+                image: null
+            },
+            {
+                q: "Cuando una persona conductora es la primera en llegar al sitio de un siniestro en el que hay heridos graves. ¿Qué NO debería hacer?",
+                a: "Llamar al 133 de Carabineros",
+                b: "Sacar de los autos a las personas heridas",
+                c: "Encender sus luces de advertencia de peligro",
+                correct: "b",
+                image: null
+            },
+            {
+                q: "DOBLE PUNTAJE. ¿Cuál de las siguientes afirmaciones es FALSA?",
+                a: "Al tener el estómago vacío el alcohol se absorbe más rápidamente",
+                b: "Una tasa de alcohol de 0,3 gr/l no afecta la función psicomotora de las personas",
+                c: "El consumo de éxtasis puede provocar un comportamiento agresivo con las demás personas conductoras",
+                correct: "b",
+                image: null,
+                doublePoints: true
+            },
+            {
+                q: "DOBLE PUNTAJE. En la calle que muestra la imagen no hay señales que establezcan la velocidad máxima permitida. ¿Cuál sería entonces dicha velocidad para quien conduce?",
+                a: "60 km/h",
+                b: "50 km/h",
+                c: "40 km/h",
+                correct: "b",
+                image: null,
+                doublePoints: true
+            },
+            {
+                q: "De acuerdo a los conceptos de Convivencia Vial, ¿en qué se basa el principio de confianza?",
+                a: "En que los demás van a cumplir con las normas del tránsito",
+                b: "En que todos los conductores son responsables",
+                c: "En que las autoridades controlan el tránsito",
+                correct: "a",
+                image: null
+            },
+            {
+                q: "¿Qué acción debe realizar una persona si al ir conduciendo se revienta un neumático trasero de su vehículo?",
+                a: "Frenar inmediatamente",
+                b: "Girar el volante hacia el lado que se desplaza la cola del vehículo",
+                c: "Acelerar para mantener el control",
+                correct: "b",
+                image: null
+            },
+            {
+                q: "Cuando el tiempo es muy frío, la calzada puede estar helada y deslizante. ¿Qué zonas de la calzada son especialmente propensas al hielo?",
+                a: "Los lugares sombríos y húmedos",
+                b: "Las zonas con mucho sol",
+                c: "Las subidas pronunciadas",
+                correct: "a",
+                image: null
+            },
+            {
+                q: "Para una persona acostumbrada a trabajar de día y dormir durante la noche, ¿en cuál de los siguientes horarios es más probable que aparezca el sueño al conducir?",
+                a: "Entre las 10 y 12 horas",
+                b: "Entre las 3 y 5 horas y entre las 14 y 16 horas",
+                c: "Entre las 18 y 20 horas",
+                correct: "b",
+                image: null
+            },
+            {
+                q: "Al estacionar en una subida se debe dejar el vehículo con el freno de mano puesto. ¿En qué posición se debe dejar la palanca de cambio?",
+                a: "En primera",
+                b: "En punto muerto",
+                c: "En reversa",
+                correct: "a",
+                image: null
+            },
+            {
+                q: "¿En cuál de los siguientes casos NO es necesario usar los espejos retrovisores de un vehículo?",
+                a: "Antes de cambiar de pista",
+                b: "Antes de hacer partir el motor",
+                c: "Antes de frenar",
+                correct: "b",
+                image: null
+            },
+            {
+                q: "¿Qué es lo primero que debe hacer una persona conductora si ha quedado en pana en medio de una autopista?",
+                a: "Salir del vehículo inmediatamente",
+                b: "Encender las luces de advertencia de peligro",
+                c: "Llamar por teléfono",
+                correct: "b",
+                image: null
+            },
+            {
+                q: "Respecto del uso de medicamentos en la conducción, ¿cuál de las siguientes afirmaciones es VERDADERA?",
+                a: "Algunos medicamentos disminuyen la atención y aumentan el tiempo de reacción al conducir",
+                b: "En ningún caso se debe conducir mientras se toman medicamentos",
+                c: "Los medicamentos no afectan la capacidad para conducir",
+                correct: "a",
+                image: null
+            }
+        ];
+
+        // Variables del juego
+        let currentExam = [];
+        let currentQuestionIndex = 0;
+        let userAnswers = [];
+        let timeLeft = 45 * 60; // 45 minutos en segundos
+        let timerInterval;
+        let doublePointsQuestions = [];
+        let currentMode = 'exam'; // 'exam' o 'correction'
+        let examFinished = false;
+        let examResults = null;
+
+        // Inicializar el examen
+        function initExam() {
+            generateRandomExam();
+            renderQuestion();
+            renderGrid();
+            startTimer();
+            updateNavButtons();
+            setMode('exam');
+        }
+
+        // Generar examen aleatorio de 35 preguntas
+        function generateRandomExam() {
+            // Mezclar todas las preguntas
+            const shuffled = [...allQuestions].sort(() => 0.5 - Math.random());
+            
+            // Tomar las primeras 35
+            currentExam = shuffled.slice(0, 35);
+            
+            // Seleccionar 3 preguntas para doble puntaje aleatoriamente
+            const doublePointsIndices = [];
+            while (doublePointsIndices.length < 3) {
+                const randomIndex = Math.floor(Math.random() * 35);
+                if (!doublePointsIndices.includes(randomIndex)) {
+                    doublePointsIndices.push(randomIndex);
+                    currentExam[randomIndex].doublePoints = true;
+                }
+            }
+            
+            doublePointsQuestions = doublePointsIndices;
+            userAnswers = new Array(35).fill(null);
+            examFinished = false;
+            examResults = null;
+        }
+
+        // Cambiar modo
+        function setMode(mode) {
+            currentMode = mode;
+            
+            // Actualizar botones
+            document.getElementById('examMode').classList.toggle('active', mode === 'exam');
+            document.getElementById('correctionMode').classList.toggle('active', mode === 'correction');
+            
+            // Actualizar clase del body
+            document.body.classList.toggle('correction-mode', mode === 'correction');
+            
+            // Actualizar interfaz
+            if (mode === 'correction') {
+                if (!examFinished) {
+                    alert('Debes finalizar el examen primero para ver la corrección');
+                    setMode('exam');
+                    return;
+                }
+                document.getElementById('timerBox').style.display = 'none';
+                document.getElementById('finishBtn').style.display = 'none';
+            } else {
+                document.getElementById('timerBox').style.display = 'block';
+                document.getElementById('finishBtn').style.display = 'block';
+            }
+            
+            renderQuestion();
+            updateGrid();
+        }
+
+        // Renderizar pregunta actual
+        function renderQuestion() {
+            const question = currentExam[currentQuestionIndex];
+            const container = document.getElementById('quiz-content');
+            
+            const doublePointsText = question.doublePoints ? ' (DOBLE PUNTAJE)' : '';
+            
+            let content = `
+                <div class="question-header">Pregunta N° ${currentQuestionIndex + 1}${doublePointsText}:</div>
+                <div class="question-text">${question.q}</div>
+                ${question.image ? `<img src="${question.image}" alt="Imagen de la pregunta" class="question-image">` : ''}
+            `;
+
+            if (currentMode === 'correction' && examFinished) {
+                // Mostrar estadísticas de corrección
+                const userAnswer = userAnswers[currentQuestionIndex];
+                const isCorrect = userAnswer === question.correct;
+                const points = question.doublePoints ? 2 : 1;
+                
+                content += `
+                    <div class="correction-stats">
+                        <h3>Resultado de esta pregunta:</h3>
+                        <p><strong>Tu respuesta:</strong> ${userAnswer ? userAnswer.toUpperCase() + ') ' + question[userAnswer] : 'Sin responder'}</p>
+                        <p><strong>Respuesta correcta:</strong> ${question.correct.toUpperCase()}) ${question[question.correct]}</p>
+                        <p><strong>Resultado:</strong> ${isCorrect ? '✅ CORRECTA' : '❌ INCORRECTA'} (${points} punto${points > 1 ? 's' : ''})</p>
+                    </div>
+                `;
+            }
+
+            content += '<div class="options">';
+            
+            ['a', 'b', 'c'].forEach(option => {
+                let optionClass = 'option';
+                
+                if (currentMode === 'correction' && examFinished) {
+                    if (option === question.correct) {
+                        optionClass += ' correct';
+                    }
+                    if (userAnswers[currentQuestionIndex] === option) {
+                        optionClass += ' user-selected';
+                        if (option !== question.correct) {
+                            optionClass += ' incorrect';
+                        }
+                    }
+                }
+                
+                const isChecked = userAnswers[currentQuestionIndex] === option ? 'checked' : '';
+                const isDisabled = currentMode === 'correction' ? 'disabled' : '';
+                
+                content += `
+                    <label class="${optionClass}">
+                        <input type="radio" name="answer" value="${option}" ${isChecked} ${isDisabled} onchange="saveAnswer('${option}')">
+                        ${option}) ${question[option]}
+                    </label>
+                `;
+            });
+            
+            content += '</div>';
+            container.innerHTML = content;
+            
+            updateGrid();
+        }
+
+        // Renderizar grid de preguntas
+        function renderGrid() {
+            const grid = document.getElementById('question-grid');
+            grid.innerHTML = '';
+            
+            for (let i = 0; i < 35; i++) {
+                const item = document.createElement('div');
+                item.className = 'grid-item';
+                item.textContent = i + 1;
+                item.onclick = () => goToQuestion(i);
+                
+                if (currentExam[i].doublePoints) {
+                    item.classList.add('double-points');
+                }
+                
+                grid.appendChild(item);
+            }
+            
+            updateGrid();
+        }
+
+        // Actualizar estado del grid
+        function updateGrid() {
+            const items = document.querySelectorAll('.grid-item');
+            items.forEach((item, index) => {
+                item.classList.remove('current', 'answered', 'correct-answer', 'incorrect-answer');
+                
+                if (index === currentQuestionIndex) {
+                    item.classList.add('current');
+                }
+                
+                if (userAnswers[index] !== null) {
+                    item.classList.add('answered');
+                }
+                
+                // En modo corrección, mostrar respuestas correctas/incorrectas
+                if (currentMode === 'correction' && examFinished && userAnswers[index] !== null) {
+                    if (userAnswers[index] === currentExam[index].correct) {
+                        item.classList.add('correct-answer');
+                    } else {
+                        item.classList.add('incorrect-answer');
+                    }
+                }
+            });
+        }
+
+        // Guardar respuesta
+        function saveAnswer(answer) {
+            if (currentMode === 'correction') return;
+            userAnswers[currentQuestionIndex] = answer;
+            updateGrid();
+        }
+
+        // Ir a pregunta específica
+        function goToQuestion(index) {
+            currentQuestionIndex = index;
+            renderQuestion();
+            updateNavButtons();
+        }
+
+        // Pregunta anterior
+        function prevQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                renderQuestion();
+                updateNavButtons();
+            }
+        }
+
+        // Pregunta siguiente
+        function nextQuestion() {
+            if (currentQuestionIndex < 34) {
+                currentQuestionIndex++;
+                renderQuestion();
+                updateNavButtons();
+            }
+        }
+
+        // Actualizar botones de navegación
+        function updateNavButtons() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            
+            prevBtn.disabled = currentQuestionIndex === 0;
+            nextBtn.disabled = currentQuestionIndex === 34;
+        }
+
+        // Iniciar cronómetro
+        function startTimer() {
+            const timerDisplay = document.getElementById('timer');
+            
+            timerInterval = setInterval(() => {
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                
+                timerDisplay.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    finishExam();
+                    return;
+                }
+                
+                timeLeft--;
+            }, 1000);
+        }
+
+        // Finalizar examen
+        function finishExam() {
+            if (examFinished) return;
+            
+            clearInterval(timerInterval);
+            examFinished = true;
+            
+            let correctAnswers = 0;
+            let totalPoints = 0;
+            let maxPoints = 0;
+            
+            currentExam.forEach((question, index) => {
+                const points = question.doublePoints ? 2 : 1;
+                maxPoints += points;
+                
+                if (userAnswers[index] === question.correct) {
+                    correctAnswers++;
+                    totalPoints += points;
+                }
+            });
+            
+            const incorrectPoints = maxPoints - totalPoints;
+            const passed = incorrectPoints < 6;
+            
+            examResults = {
+                correct: correctAnswers,
+                points: totalPoints,
+                maxPoints: maxPoints,
+                incorrect: incorrectPoints,
+                passed: passed
+            };
+            
+            showResults(correctAnswers, totalPoints, maxPoints, incorrectPoints, passed);
+        }
+
+        // Mostrar resultados
+        function showResults(correct, points, maxPoints, incorrect, passed) {
+            const modal = document.getElementById('modal');
+            const modalContent = document.getElementById('modal-content');
+            
+            const statusClass = passed ? 'score-passed' : 'score-failed';
+            const statusText = passed ? '¡APROBADO!' : 'REPROBADO';
+            
+            modalContent.innerHTML = `
+                <h2 class="${statusClass}">${statusText}</h2>
+                <p><strong>Respuestas correctas:</strong> ${correct} de 35</p>
+                <p><strong>Puntos obtenidos:</strong> ${points} de ${maxPoints}</p>
+                <p><strong>Puntos incorrectos:</strong> ${incorrect}</p>
+                <p><strong>Resultado:</strong> ${passed ? 'Aprobado (menos de 6 puntos incorrectos)' : 'Reprobado (6 o más puntos incorrectos)'}</p>
+                <button class="btn" onclick="setMode('correction'); closeModal();">Ver Corrección</button>
+                <button class="btn" onclick="newExam()">Nuevo Examen</button>
+                <button class="btn" onclick="closeModal()">Cerrar</button>
+            `;
+            
+            modal.style.display = 'block';
+        }
+
+        // Nuevo examen
+        function newExam() {
+            closeModal();
+            currentQuestionIndex = 0;
+            timeLeft = 45 * 60;
+            clearInterval(timerInterval);
+            initExam();
+        }
+
+        // Mostrar instrucciones
+        function showInstructions() {
+            const modal = document.getElementById('modal');
+            const modalContent = document.getElementById('modal-content');
+            
+            modalContent.innerHTML = `
+                <h2>Instrucciones del Examen</h2>
+                <p><strong>• Tiempo:</strong> 45 minutos</p>
+                <p><strong>• Preguntas:</strong> 35 preguntas aleatorias</p>
+                <p><strong>• Puntuación:</strong> 3 preguntas valen doble puntaje</p>
+                <p><strong>• Aprobación:</strong> Menos de 6 puntos incorrectos</p>
+                <p><strong>• Navegación:</strong> Puedes ir a cualquier pregunta usando la cuadrícula</p>
+                <p><strong>• Colores:</strong> Naranja = doble puntaje, Azul = respondida</p>
+                <p><strong>• Modo Corrección:</strong> Disponible después de finalizar el examen</p>
+                <button class="btn" onclick="closeModal()">Entendido</button>
+            `;
+            
+            modal.style.display = 'block';
+        }
+
+        // Cancelar examen
+        function cancelExam() {
+            if (confirm('¿Estás seguro de que quieres cancelar el examen?')) {
+                newExam();
+            }
+        }
+
+        // Cerrar modal
+        function closeModal() {
+            document.getElementById('modal').style.display = 'none';
+        }
+
+        // Cerrar modal al hacer clic fuera
+        window.onclick = function(event) {
+            const modal = document.getElementById('modal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+
+        // Inicializar cuando carga la página
+        window.onload = function() {
+            initExam();
+        }
+    </script>
+</body>
+</html>

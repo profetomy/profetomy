@@ -1,58 +1,228 @@
-import { DeployButton } from "@/components/deploy-button";
-import { EnvVarWarning } from "@/components/env-var-warning";
-import { AuthButton } from "@/components/auth-button";
-import { Hero } from "@/components/hero";
-import { ThemeSwitcher } from "@/components/theme-switcher";
-import { ConnectSupabaseSteps } from "@/components/tutorial/connect-supabase-steps";
-import { SignUpUserSteps } from "@/components/tutorial/sign-up-user-steps";
-import { hasEnvVars } from "@/lib/utils";
-import Link from "next/link";
-import { Suspense } from "react";
+import Link from 'next/link';
+import { Navbar } from '@/components/Navbar';
+import { createClient } from '@/lib/supabase/server';
+import { Clock, Target, CheckCircle2, Bell } from 'lucide-react';
 
-export default function Home() {
+export default async function LandingPage() {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+
   return (
-    <main className="min-h-screen flex flex-col items-center">
-      <div className="flex-1 w-full flex flex-col gap-20 items-center">
-        <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16">
-          <div className="w-full max-w-5xl flex justify-between items-center p-3 px-5 text-sm">
-            <div className="flex gap-5 items-center font-semibold">
-              <Link href={"/"}>Next.js Supabase Starter</Link>
-              <div className="flex items-center gap-2">
-                <DeployButton />
+    <div className="min-h-screen flex flex-col" style={{
+      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+      backgroundAttachment: 'fixed'
+    }}>
+      {/* Header/Navbar */}
+      <Navbar />
+
+      {/* Hero Section */}
+      <main className="flex-1 flex items-center justify-center" style={{
+        padding: '80px 20px'
+      }}>
+        <div className="max-w-5xl w-full">
+          {/* Main Title */}
+          <div className="text-center mb-16">
+            <h1 style={{
+              fontSize: '3.5rem',
+              fontWeight: '700',
+              color: 'white',
+              marginBottom: '24px',
+              letterSpacing: '-0.02em',
+              lineHeight: '1.1'
+            }}>
+              Simulador de Examen Profesional
+            </h1>
+            <p style={{
+              fontSize: '1.4rem',
+              color: 'rgba(255, 255, 255, 0.9)',
+              maxWidth: '700px',
+              margin: '0 auto',
+              lineHeight: '1.6'
+            }}>
+              Prepárate con exámenes simulados de 35 preguntas aleatorias.
+              Mejora tus conocimientos con retroalimentación inmediata.
+            </p>
+          </div>
+
+          {/* Subscription Notice */}
+          <div className="bg-white rounded-xl shadow-2xl mb-12" style={{
+            padding: '32px',
+            borderLeft: '6px solid #667eea',
+            maxWidth: '800px',
+            margin: '0 auto 48px auto'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '20px' }}>
+              <div style={{
+                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                borderRadius: '12px',
+                padding: '12px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}>
+                <Bell size={28} color="white" />
+              </div>
+              <div style={{ flex: 1 }}>
+                <h3 style={{
+                  fontSize: '1.5rem',
+                  fontWeight: '700',
+                  color: '#1a202c',
+                  marginBottom: '12px'
+                }}>
+                  Suscripción Requerida
+                </h3>
+                <p style={{
+                  color: '#4a5568',
+                  fontSize: '1.05rem',
+                  lineHeight: '1.6',
+                  marginBottom: '8px'
+                }}>
+                  Para acceder al simulador de exámenes necesitas una <strong>suscripción activa</strong>.
+                </p>
+                <p style={{
+                  color: '#4a5568',
+                  fontSize: '1.05rem',
+                  lineHeight: '1.6'
+                }}>
+                  Contacta al <strong style={{ color: '#667eea' }}>Profe Tomy</strong> para obtener tu suscripción y comenzar a practicar.
+                </p>
               </div>
             </div>
-            {!hasEnvVars ? (
-              <EnvVarWarning />
-            ) : (
-              <Suspense>
-                <AuthButton />
-              </Suspense>
-            )}
           </div>
-        </nav>
-        <div className="flex-1 flex flex-col gap-20 max-w-5xl p-5">
-          <Hero />
-          <main className="flex-1 flex flex-col gap-6 px-4">
-            <h2 className="font-medium text-xl mb-4">Next steps</h2>
-            {hasEnvVars ? <SignUpUserSteps /> : <ConnectSupabaseSteps />}
-          </main>
-        </div>
 
-        <footer className="w-full flex items-center justify-center border-t mx-auto text-center text-xs gap-8 py-16">
-          <p>
-            Powered by{" "}
-            <a
-              href="https://supabase.com/?utm_source=create-next-app&utm_medium=template&utm_term=nextjs"
-              target="_blank"
-              className="font-bold hover:underline"
-              rel="noreferrer"
-            >
-              Supabase
-            </a>
-          </p>
-          <ThemeSwitcher />
-        </footer>
-      </div>
-    </main>
+          {/* Features Grid */}
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+            gap: '24px',
+            marginBottom: '48px'
+          }}>
+            {/* Feature 1 */}
+            <div className="bg-white rounded-xl shadow-lg" style={{
+              padding: '32px',
+              transition: 'transform 0.3s ease, box-shadow 0.3s ease'
+            }}>
+              <div style={{
+                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                borderRadius: '12px',
+                padding: '16px',
+                display: 'inline-flex',
+                marginBottom: '20px'
+              }}>
+                <Clock size={32} color="white" />
+              </div>
+              <h3 style={{
+                fontSize: '1.4rem',
+                fontWeight: '700',
+                color: '#1a202c',
+                marginBottom: '12px'
+              }}>
+                45 Minutos
+              </h3>
+              <p style={{
+                color: '#4a5568',
+                fontSize: '1.05rem',
+                lineHeight: '1.6'
+              }}>
+                Tiempo real de examen para practicar bajo condiciones reales de evaluación
+              </p>
+            </div>
+
+            {/* Feature 2 */}
+            <div className="bg-white rounded-xl shadow-lg" style={{
+              padding: '32px',
+              transition: 'transform 0.3s ease, box-shadow 0.3s ease'
+            }}>
+              <div style={{
+                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                borderRadius: '12px',
+                padding: '16px',
+                display: 'inline-flex',
+                marginBottom: '20px'
+              }}>
+                <Target size={32} color="white" />
+              </div>
+              <h3 style={{
+                fontSize: '1.4rem',
+                fontWeight: '700',
+                color: '#1a202c',
+                marginBottom: '12px'
+              }}>
+                35 Preguntas
+              </h3>
+              <p style={{
+                color: '#4a5568',
+                fontSize: '1.05rem',
+                lineHeight: '1.6'
+              }}>
+                Selección aleatoria de un banco de 47 preguntas cuidadosamente elaboradas
+              </p>
+            </div>
+
+            {/* Feature 3 */}
+            <div className="bg-white rounded-xl shadow-lg" style={{
+              padding: '32px',
+              transition: 'transform 0.3s ease, box-shadow 0.3s ease'
+            }}>
+              <div style={{
+                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                borderRadius: '12px',
+                padding: '16px',
+                display: 'inline-flex',
+                marginBottom: '20px'
+              }}>
+                <CheckCircle2 size={32} color="white" />
+              </div>
+              <h3 style={{
+                fontSize: '1.4rem',
+                fontWeight: '700',
+                color: '#1a202c',
+                marginBottom: '12px'
+              }}>
+                Corrección Inmediata
+              </h3>
+              <p style={{
+                color: '#4a5568',
+                fontSize: '1.05rem',
+                lineHeight: '1.6'
+              }}>
+                Revisa tus respuestas al instante y aprende de tus errores
+              </p>
+            </div>
+          </div>
+
+          {/* CTA Button - Solo si NO está logueado */}
+          {!user && (
+            <div className="text-center">
+              <Link
+                href="/auth/sign-up"
+                className="inline-block font-bold rounded-lg transition-all"
+                style={{
+                  background: 'white',
+                  color: '#667eea',
+                  padding: '18px 48px',
+                  fontSize: '1.2rem',
+                  boxShadow: '0 10px 30px rgba(0, 0, 0, 0.2)',
+                  textDecoration: 'none',
+                  fontWeight: '700'
+                }}
+              >
+                Comenzar Ahora
+              </Link>
+            </div>
+          )}
+        </div>
+      </main>
+
+      {/* Footer */}
+      <footer className="text-center" style={{
+        padding: '32px 20px',
+        color: 'rgba(255, 255, 255, 0.8)',
+        fontSize: '0.95rem',
+        borderTop: '1px solid rgba(255, 255, 255, 0.1)'
+      }}>
+        <p>© 2024 Simulador de Examen Profe Tomy - Simulador de Examen Profesional</p>
+      </footer>
+    </div>
   );
 }

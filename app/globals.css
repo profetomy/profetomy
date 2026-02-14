@@ -3,6 +3,28 @@
 @tailwind utilities;
 
 @layer base {
+  /* Custom radio button styling to match original HTML */
+  input[type="radio"] {
+    margin-top: 4px;
+    transform: scale(1.3);
+    cursor: pointer;
+    width: 16px;
+    height: 16px;
+    /* Color gris claro cuando NO está seleccionado */
+    accent-color: #9e9e9e;
+  }
+
+  input[type="radio"]:checked {
+    /* Color azul cuando SÍ está seleccionado */
+    accent-color: #3F51B5;
+  }
+  
+  input[type="radio"]:hover {
+    cursor: pointer;
+  }
+}
+
+@layer base {
   :root {
     --background: 0 0% 100%;
     --foreground: 0 0% 3.9%;
@@ -63,6 +85,8 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background;
+    /* Let text color inherit from browser default, matching original HTML */
   }
 }
+
