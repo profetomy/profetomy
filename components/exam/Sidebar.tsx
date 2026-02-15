@@ -40,11 +40,11 @@ export function Sidebar({
       {/* Timer */}
       {mode === 'exam' && (
         <div className="text-center rounded-lg w-full" style={{
-          background: '#C9D6CE',
-          border: '2px solid #2E7D32',
+          background: '#FCD442',
+          border: '2px solid #033E8C',
           padding: '8px', 
           borderRadius: '6px',
-          color: '#2E7D32', // Color texto igual al borde
+          color: '#033E8C', // Color texto igual al borde
           // boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
           marginTop: '0px'
         }}>
@@ -63,14 +63,14 @@ export function Sidebar({
 
       {/* Action Buttons */}
       <div className="grid" style={{
-        gridTemplateColumns: '1fr 1fr',
+        gridTemplateColumns: '1fr',
         gap: '10px'
       }}>
         <button
           onClick={onShowInstructions}
           className="text-white rounded-lg font-bold cursor-pointer transition-opacity hover:opacity-90"
           style={{
-            backgroundColor: '#3269D9',
+            backgroundColor: '#033E8C',
             padding: '12px',
             borderRadius: '6px',
             fontSize: '0.9rem',
@@ -78,19 +78,6 @@ export function Sidebar({
           }}
         >
           Instrucciones
-        </button>
-        <button
-          onClick={onCancelExam}
-          className="text-white rounded-lg font-bold cursor-pointer transition-opacity hover:opacity-90"
-          style={{
-            backgroundColor: '#BB333D',
-            padding: '12px',
-            borderRadius: '6px',
-            fontSize: '0.9rem',
-            border: 'none'
-          }}
-        >
-          Anular
         </button>
       </div>
 
@@ -108,23 +95,17 @@ export function Sidebar({
       {mode === 'exam' && (
         <button
           onClick={onFinishExam}
-          className="text-white rounded-lg font-bold cursor-pointer transition-colors"
+          className="text-white rounded-lg font-bold cursor-pointer transition-opacity hover:opacity-90"
           style={{
-            backgroundColor: '#3269D9',
+            backgroundColor: '#033E8C',
             padding: '15px',
             border: 'none',
             borderRadius: '6px',
             fontSize: '1.1rem',
             marginTop: 'auto'
           }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.backgroundColor = '#3269D9';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.backgroundColor = '#3269D9';
-          }}
         >
-          Finalizar examen
+          Terminar examen
         </button>
       )}
     </div>

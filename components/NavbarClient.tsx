@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import type { User } from '@supabase/supabase-js';
@@ -118,14 +119,21 @@ export function NavbarClient({
     }}>
       <div className="max-w-7xl mx-auto flex justify-between items-center">
         <Link href="/" style={{ textDecoration: 'none' }}>
-          <h1 className="text-lg md:text-2xl font-extrabold flex items-center gap-2" style={{
-            color: 'white',
-            cursor: 'pointer',
-            letterSpacing: '-0.01em',
-          }}>
-            {/* Icon can be added here if needed, but text is fine */}
-            <span className="hidden sm:inline">Simulador</span> Profe Tomy
-          </h1>
+          <div className="flex items-center gap-2" style={{ cursor: 'pointer' }}>
+            <div className="relative h-12 w-12 md:h-16 md:w-16 rounded-full bg-white p-1 border-2 border-[#FCD442] flex items-center justify-center overflow-hidden shrink-0">
+              <Image 
+                src="/logo.png" 
+                alt="Simulador Profe Tomy" 
+                fill
+                sizes="(max-width: 768px) 48px, 64px"
+                className="object-contain p-0.5"
+                priority
+              />
+            </div>
+            <span className="text-white font-bold text-lg md:text-xl hidden sm:block">
+              Simulador Profe Tomy
+            </span>
+          </div>
         </Link>
         
         {/* Controles de Examen (Centrales) */}

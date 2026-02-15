@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { Navbar } from '@/components/Navbar';
 import { createClient } from '@/lib/supabase/server';
 import { Car, Signpost, ShieldCheck, AlertTriangle } from 'lucide-react';
@@ -22,13 +23,14 @@ export default async function LandingPage() {
           {/* Main Title */}
           <div className="text-center mb-16">
             <div className="flex justify-center mb-6">
-              <div style={{
-                background: '#FCD442', // Yellow accent for icon bg
-                padding: '16px',
-                borderRadius: '50%',
-                boxShadow: '0 4px 15px rgba(0,0,0, 0.2)'
-              }}>
-                <Car size={48} color="#033E8C" />
+              <div className="relative h-32 w-32 sm:h-40 sm:w-40 md:h-48 md:w-48 rounded-full bg-white p-4 shadow-2xl border-4 border-[#FCD442] flex items-center justify-center overflow-hidden">
+                <Image 
+                  src="/logo.png" 
+                  alt="Simulador Profe Tomy Logo" 
+                  fill
+                  className="object-contain p-2"
+                  priority
+                />
               </div>
             </div>
             <h1 className="text-3xl sm:text-4xl md:text-6xl font-extrabold text-white mb-6 tracking-tight leading-tight drop-shadow-md">
