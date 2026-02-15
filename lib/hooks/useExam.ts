@@ -13,10 +13,10 @@ export function useExam() {
   const [isFinished, setIsFinished] = useState(false);
   const [results, setResults] = useState<ExamResults | null>(null);
 
-  const initializeExam = useCallback(() => {
-    const newExam = generateRandomExam(allQuestions);
+  const initializeExam = useCallback((mode: 'random' | 'debug' = 'random') => {
+    const newExam = mode === 'debug' ? [...allQuestions] : generateRandomExam(allQuestions);
     setExamQuestions(newExam);
-    setUserAnswers(new Array(35).fill(null));
+    setUserAnswers(new Array(newExam.length).fill(null));
     setCurrentQuestionIndex(0);
     setMode('exam');
     setIsFinished(false);
@@ -38,10 +38,10 @@ export function useExam() {
   }, []);
 
   const nextQuestion = useCallback(() => {
-    if (currentQuestionIndex < 34) {
+    if (currentQuestionIndex < examQuestions.length - 1) {
       setCurrentQuestionIndex(prev => prev + 1);
     }
-  }, [currentQuestionIndex]);
+  }, [currentQuestionIndex, examQuestions.length]);
 
   const prevQuestion = useCallback(() => {
     if (currentQuestionIndex > 0) {

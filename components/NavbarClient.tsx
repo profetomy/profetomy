@@ -79,9 +79,36 @@ export function NavbarClient({
   }, [initialUser]);
 
   const handleLogout = async () => {
-    const supabase = createClient();
-    await supabase.auth.signOut();
-    router.push('/');
+    try {
+      console.log('Iniciando cierre de sesión...');
+      // Force UI update immediately
+      setUser(null);
+      setIsAdmin(false);
+      
+      console.log('Sesión cerrada en servidor (API)...');
+      
+      // Call API route
+      await fetch('/auth/signout', {
+        method: 'POST',
+      });
+      
+      console.log('Redirigiendo...');
+      window.location.href = '/';
+    } catch (error) {
+      console.error('Error al cerrar sesión:', error);
+      // Fallback
+      window.location.href = '/';
+    }
+  };
+
+  const handleMobileLogout = async () => {
+    console.log('Mobile logout clicked');
+    setIsMobileMenuOpen(false);
+    if (isExam) {
+      router.push('/');
+    } else {
+      await handleLogout();
+    }
   };
 
   return (
@@ -201,15 +228,9 @@ export function NavbarClient({
               {/* Usuario no logueado */}
               <Link
                 href="/auth/login"
-                className="bg-transparent text-white px-3 py-1.5 sm:px-4 sm:py-2 border-2 border-[#FCD442] rounded-md no-underline text-xs sm:text-sm font-bold transition-all hover:bg-white/10"
-              >
-                Iniciar Sesión
-              </Link>
-              <Link
-                href="/auth/sign-up"
                 className="bg-[#FCD442] text-[#033E8C] px-3 py-1.5 sm:px-4 sm:py-2 rounded-md no-underline text-xs sm:text-sm font-extrabold shadow-sm transform transition-transform hover:scale-105"
               >
-                Registrarse
+                Iniciar Sesión
               </Link>
             </>
           )}
@@ -258,10 +279,8 @@ export function NavbarClient({
               )}
               
               <button
-                onClick={() => {
-                  isExam ? router.push('/') : handleLogout();
-                  setIsMobileMenuOpen(false);
-                }}
+                type="button"
+                onClick={handleMobileLogout}
                 className="bg-red-500 text-white p-3 rounded-lg font-bold flex items-center justify-center gap-2"
               >
                 <LogOut size={18} />
@@ -273,16 +292,9 @@ export function NavbarClient({
               <Link
                 href="/auth/login"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="bg-white/10 text-white p-3 rounded-lg text-center font-bold border border-white/20"
-              >
-                Iniciar Sesión
-              </Link>
-              <Link
-                href="/auth/sign-up"
-                onClick={() => setIsMobileMenuOpen(false)}
                 className="bg-[#FCD442] text-[#033E8C] p-3 rounded-lg text-center font-extrabold shadow-md"
               >
-                Registrarse Ahora
+                Iniciar Sesión
               </Link>
             </>
           )}

@@ -31,24 +31,10 @@ export default async function LandingPage() {
                 <Car size={48} color="#033E8C" />
               </div>
             </div>
-            <h1 style={{
-              fontSize: '3.5rem',
-              fontWeight: '800',
-              color: 'white',
-              marginBottom: '24px',
-              letterSpacing: '-0.02em',
-              lineHeight: '1.1',
-              textShadow: '0 2px 4px rgba(0,0,0,0.2)'
-            }}>
+            <h1 className="text-3xl sm:text-4xl md:text-6xl font-extrabold text-white mb-6 tracking-tight leading-tight drop-shadow-md">
               Simulador de Examen de Conducción
             </h1>
-            <p style={{
-              fontSize: '1.4rem',
-              color: '#E0F2F5', // Light blue-white for text
-              maxWidth: '700px',
-              margin: '0 auto',
-              lineHeight: '1.6'
-            }}>
+            <p className="text-lg sm:text-xl md:text-2xl text-blue-100 max-w-2xl mx-auto leading-relaxed px-4">
               Prepárate para obtener tu licencia con exámenes simulados de 35 preguntas.
               Practica con las señales y reglas de tránsito reales.
             </p>
@@ -202,25 +188,15 @@ export default async function LandingPage() {
           </div>
 
           {/* CTA Button */}
-          {!user && (
             <div className="text-center">
               <Link
-                href="/auth/sign-up"
-                className="inline-block font-bold rounded-lg transition-all hover:scale-105"
-                style={{
-                  background: '#FCD442',
-                  color: '#033E8C',
-                  padding: '18px 48px',
-                  fontSize: '1.2rem',
-                  boxShadow: '0 4px 12px rgba(252, 212, 66, 0.4)',
-                  textDecoration: 'none',
-                  fontWeight: '800'
-                }}
+                href="/auth/login"
+                className="inline-block font-bold rounded-lg transition-all hover:scale-105 bg-[#FCD442] text-[#033E8C] px-8 py-4 text-lg md:px-12 md:py-5 md:text-xl shadow-[0_4px_12px_rgba(252,212,66,0.4)] no-underline"
+                style={{}}
               >
-                Comenzar Práctica
+                Iniciar Sesión
               </Link>
             </div>
-          )}
         </div>
       </main>
 

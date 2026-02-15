@@ -5,6 +5,7 @@ export interface Question {
   c: string;
   correct: 'a' | 'b' | 'c';
   image: string | null;
+  statements?: string[];
   doublePoints?: boolean;
 }
 

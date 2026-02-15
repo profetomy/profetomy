@@ -42,19 +42,6 @@ export default function Page() {
           paddingTop: '24px',
           borderTop: '1px solid #e2e8f0'
         }}>
-          <p style={{ color: '#4a5568', fontSize: '0.95rem', marginBottom: '12px' }}>
-            ¿No tienes una cuenta?{' '}
-            <Link 
-              href="/auth/sign-up"
-              style={{
-                color: '#034C8C',
-                fontWeight: '700',
-                textDecoration: 'none'
-              }}
-            >
-              Regístrate aquí
-            </Link>
-          </p>
           <Link
             href="/"
             style={{

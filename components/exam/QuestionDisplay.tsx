@@ -51,6 +51,18 @@ export function QuestionDisplay({
         </div>
       )}
 
+      {question.statements && question.statements.length > 0 && (
+        <div className="mb-6 shrink-0 px-2">
+          <ol className="list-inside space-y-2 font-medium text-gray-800" style={{ listStyleType: 'upper-roman' }}>
+            {question.statements.map((statement, index) => (
+              <li key={index} className="pl-1">
+                <span className="ml-1">{statement}</span>
+              </li>
+            ))}
+          </ol>
+        </div>
+      )}
+
       {mode === 'correction' && isFinished && (
         <div className="p-4 rounded-lg mb-6 shrink-0 overflow-y-auto max-h-[150px]" style={{ 
           background: '#f5f5f5',

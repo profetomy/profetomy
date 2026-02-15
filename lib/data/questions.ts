@@ -419,5 +419,438 @@ export const allQuestions: Question[] = [
     c: "Los medicamentos no afectan la capacidad para conducir",
     correct: "a",
     image: null
+    /*Aca empiezo con primer archivo de preguntas */
+
+  }
+  , {
+    q: "Deberán ser transportados en un sistema de retención infantil en el asiento trasero: ",
+    a: "Las niñas y niños hasta 10 años de edad inclusive",
+    b: "Las niñas y niños hasta 8 años de edad inclusive",
+    c: "Las niñas y niños hasta 12 años de edad inclusive",
+    correct: "b",
+    image: null
+  }
+  , {
+    q: "En la situación que muestra la imagen ¿qué debería hacer la persona que conduce si va circulando a 70 km/h?",
+    statements: [
+      "frenar en seco",
+      "frenar suavemente",
+      "continuar derecho por la vía",
+      "desplazarse hacia la izquierda"
+    ],
+    a: "II y IV",
+    b: "II y III",
+    c: "I y III",
+    correct: "b",
+    image: "/p2_ex.jpg"
+  },
+  {
+    q: "Al conducir en una zona rural por un camino muy angosto, ¿dónde le resultaría más difícil a quien conduzca ver personas a caballo que avanzan delante de él? ",
+    a: "Al ir bajando un cerro",
+    b: "Al ir en una curva a la derecha",
+    c: "Al ir en una curva a la izquierda",
+    correct: "b",
+    image: null
+  },
+  {
+    q: "¿Qué significa esta señal? ",
+    a: "Que a 100 m hay una pasarela peatonal sobre la autopista",
+    b: "Que a 100 m converge una pista de aceleración para entrar en la autopista",
+    c: "Que a 100 m comienza una pista de desaceleración para salir de la autopista ",
+    correct: "c",
+    image: "/p4_ex.jpg"
+  },
+  {
+    q: "Al transitar por la noche, una persona conductora es encandilada por las luces delanteras de un vehículo que se aproxima, ¿Qué debe hacer la persona en esta circunstancia?",
+    a: "Hacer parpadear sus luces",
+    b: "Reducir la velocidad o detenerse",
+    c: "Bajar la visera que tiene el vehículo para proteger del sol",
+    correct: "b",
+    image: null
+  },
+  {
+    q: "Una persona conductora de automóvil debe probar el funcionamiento de los frenos después de pasar por una calle inundada",
+    a: "Porque los frenos pueden haberse mojado",
+    b: "Porque el carburador puede haberse ahogado",
+    c: "Porque el sistema hidráulico puede haberse recalentado",
+    correct: "a",
+    image: null
+  },
+  {
+    q: "El estado de salud, estrés, cansancio constituyen un factor de riesgo pues incide en conductas erráticas, como",
+    a: "Retraso en el paso de las marchas",
+    b: "Frenar con la técnica incorrecta",
+    c: "A y B son correctas",
+    correct: "c",
+    image: null
+  },
+  {
+    q: "Al llegar al lugar de un siniestro en el que participo un camión cargado con productos químicos peligrosos, ¿Qué se debe hacer antes de llamar al 133 de carabineros?",
+    a: "Tratar de diluir los productos químicos con agua",
+    b: "Tratar de evitar que los productos químicos se sigan derramando",
+    c: "Averiguar de qué clase de producto químico se trata, mirando los rótulos y letreros que tiene el camión",
+    correct: "c",
+    image: null
+  },
+  {
+    q: "Al conducir con neblina a la luz del día, ¿Qué luces debe encender quien conduce?",
+    a: "Las luces delanteras altas",
+    b: "Las luces delanteras bajas",
+    c: "Las luces de advertencia de peligro",
+    correct: "b",
+    image: null
+  },
+  {
+    q: "¿Qué tipo de información entregan las señales amarillas con forma de rombo?",
+    a: "Advierten la cercanía de peligros",
+    b: "Indican la velocidad máxima permitida",
+    c: "Señalan ordenes que deben seguir las personas conductoras",
+    correct: "a",
+    image: "/p10_ex.jpg"
+  },
+  {
+    q: "11.	De las siguientes afirmaciones, ¿Cuáles son VERDADERAS?",
+    statements: [
+      "I.	Una persona conductora que va con mucha prisa tiende a ser más cautelosa",
+      "II.	La falta de atención a las condiciones del tránsito es una de las principales causas de accidentes",
+      "III.	Discutir con alguien o estar pendientes de la radio aumenta el riesgo de pasar por alto una situación relevante del tránsito"
+    ],
+    a: "I y III",
+    b: "II y III",
+    c: "I y II",
+    correct: "b",
+    image: null
+  },
+  {
+    q: "¿De qué peligro advierte la señal?  ",
+    a: "De curva y contra curva a la derecha",
+    b: "De zona de curvas sucesivas",
+    c: "De pavimento resbaladizo",
+    correct: "c",
+    image: "/p12_ex.jpg"
+  },
+  {
+    q: "Una persona prueba la suspensión de su vehículo y nota que este rebota u oscila en exceso. ¿Cuál de las siguientes condiciones explica mejor esta situación? ",
+    a: "Amortiguadores gastados",
+    b: "Neumáticos poco inflados",
+    c: "Volante de dirección descentrado",
+    correct: "a",
+    image: null
+  },
+  {
+    q: "¿Por qué una persona conductora de automóvil debe probar el funcionamiento de los frenos después de pasar por una calle inundada?  ",
+    a: "Porque los frenos pueden haberse mojado",
+    b: "Porque el carburador puede haberse ahogado",
+    c: "Porque el sistema hidráulico puede haberse recalentado",
+    correct: "a",
+    image: null
+  },
+  {
+    q: "En condiciones normales, ¿Cuál sería aproximadamente la distancia de frenado de un automóvil si una persona conduce a 90 km/h?",
+    a: "70 metros",
+    b: "20 metros",
+    c: "45 metros",
+    correct: "c",
+    image: null
+  },
+  {
+    q: "¿Qué debería hacer una persona que está tomando un medicamento que probablemente afectara su capacidad para conducir? ",
+    a: "Solicitar consejo médico antes de conducir",
+    b: "Limitar su conducción solo a viajes esenciales",
+    c: "Conducir solamente en compañía de alguien que posea una licencia de conducir",
+    correct: "a",
+    image: null
+  },
+  {
+    q: "¿Cuál de las siguientes afirmaciones es FALSA en cuanto a la conducción durante la noche? ",
+    a: "Las luces bajas permiten ver las marcas en el pavimento a 200 m y más",
+    b: "La capacidad de las personas conductoras para apreciar distancias se ve disminuida",
+    c: "El color de las ropas de un peatón puede influir en que este sea más o menos visible para las personas que conducen",
+    correct: "a",
+    image: null
+  },
+  {
+    q: "¿Dónde se produce la mayor cantidad de siniestros de tránsito en chile?",
+    a: "Carreteras",
+    b: "Caminos rurales",
+    c: "Intersecciones de calles",
+    correct: "c",
+    image: null
+  },
+  {
+    q: "Respecto a los cruces ferroviarios a nivel, ¿Cuál de las siguientes opciones es VERDADERA? ",
+    a: "Está permitido estacionar a una distancia mínima de 10 metros de un cruce ferroviario ",
+    b: "Si ya se ha ingresado a un cruce ferroviario y se aproxima un tren a lo lejos, se recomienda continuar avanzando",
+    c: "Si no se siente tren alguno en las proximidades, es licito efectuar un adelantamiento en un cruce ferroviario",
+    correct: "a",
+    image: null
+  },
+  {
+    q: "¿Qué precaución se debe tomar al cargar un remolque que será arrastrado con un automóvil? ",
+    a: "Que el peso se distribuya en forma pareja",
+    b: "Que el mayor peso se concentre en la parte trasera",
+    c: "Que la mayor parte del peso se concentre en la parte delantera",
+    correct: "a",
+    image: null
+  },
+  {
+    q: "¿Cuál de las siguientes acciones es la más importante al momento de evitar chocar el vehículo que va delante? ",
+    a: "Conducir a una velocidad constante",
+    b: "Asegurarse de que los frenos estén en buen estado",
+    c: "Mantener una adecuada distancia de separación entre los vehículos",
+    correct: "c",
+    image: null
+  },
+  {
+    q: "¿Qué documento(s) se está obligado a portar al conducir un automóvil? ",
+    statements: [
+      "El certificado de inscripción del vehículo en el registro nacional de vehículos motorizados",
+      "El certificado de revisión técnica o de homologación",
+      "El certificado de un SOAP",
+      "El permiso de circulación",
+      "Su licencia de conductor"
+    ],
+    a: "I, II, III y V",
+    b: "I, II, III, IV y V",
+    c: "II, III, IV y V",
+    correct: "c",
+    image: null
+  },
+  {
+    q: "¿Qué podría hacer que una persona conductora se desvié de la calzada?",
+    statements: [
+      "Una velocidad muy alta",
+      "Una distracción",
+      "El cansancio",
+    ],
+    a: "I, II, III",
+    b: "Sólo I",
+    c: "I y II",
+    correct: "a",
+    image: null
+  },
+  {
+    q: "DOBLE PUNTAJE. Para trasladar seguras a las niñas y los niños en un vehículo es necesario elegir un sistema de retención infantil (SRI) considerando, entre otras, las siguientes características",
+    statements: [
+      "La estatura de las niñas y niños",
+      "Que el SRI cumpla con normas vigentes de certificación y acreditación ",
+      "Sexo de las niñas y niños ",
+    ],
+    a: "I y II",
+    b: "Sólo II",
+    c: "I, II, III",
+    correct: "a",
+    image: null,
+    doublePoints: true
+  },
+  {
+    q: "Una persona conductora se detiene ante un paso cebra donde los peatones que se encuentran en la vereda no comienzan a cruzar. ¿Qué debería hacer la persona conductora? ",
+    a: "Reanudar su marcha",
+    b: "Esperar pacientemente",
+    c: "Hacerle señas con la mano a los peatones para que crucen",
+    correct: "b",
+    image: null,
+  },
+  {
+    q: "Una persona transita en su automóvil por una autopista cuando observa que, de un camión cargado que va adelante, cae una caja sin que la persona que conduce el camión se dé cuenta. ¿Qué debe hacer quien conduce el automóvil?",
+    a: "Tratar de alcanzar el camión y de llamar la atención de la persona que lo conduce",
+    b: "Detenerse junto a la caja y encender las luces de emergencia hasta que llegue carabineros",
+    c: "Continuar hasta donde haya un teléfono para avisar a carabineros o servicios de emergencias",
+    correct: "c",
+    image: null,
+  },
+  {
+    q: "En la imagen, el vehículo blanco no puede continuar porque el transito esta congestionado más allá de la intersección. ¿Por qué la persona que conduce el vehículo ha efectuado una maniobra incorrecta? ",
+    a: "Porque debió constatar que no venían autos en sentido contrario",
+    b: "Porque obstaculiza el tránsito de los vehículos que vienen detrás de el",
+    c: "Porque debió asegurarse antes que tendría espacio suficiente para cruzar sin bloquear la intersección",
+    correct: "c",
+    image: "/p27_ex.jpg",
+  },
+  {
+    q: "¿Qué distancia de detención aproximada tiene un tren que circula a alrededor de 100 km/h?",
+    a: "100 metros",
+    b: "900 metros",
+    c: "200 metros",
+    correct: "b",
+    image: null,
+  },
+  {
+    q: "¿En qué caso una persona conductora NO debería detenerse cuando el semáforo se pone en amarillo? ",
+    a: "Cuando va demasiado rápido",
+    b: "Cuando ya ha ingresado al cruce",
+    c: "Cuando la luz cambia sorpresivamente",
+    correct: "b",
+    image: null,
+  },
+  {
+    q: "¿Qué significa un semáforo en rojo? ",
+    a: "Que la persona conductora deba disminuir su velocidad y estar preparada para detenerse",
+    b: "Que la persona conductora debe detenerse antes de la línea de detención de vehículos",
+    c: "Que la persona conductora debe detenerse sobre el paso de peatones",
+    correct: "b",
+    image: null,
+  },
+  {
+    q: "¿Qué debe hacer una persona conductora cuando enfrenta esta señal? ",
+    a: "Detenerse siempre",
+    b: "Detenerse solo si viene algún vehículo por la otra vía",
+    c: "Detenerse solo si hay peatones esperando para cruzar",
+    correct: "a",
+    image: "/p31_ex.jpg",
+  },
+  {
+    q: "En relación con el cansancio en la conducción, ¿Cuál de las siguientes afirmaciones es FALSA? ",
+    a: "Un conductor cansado ve empeorada su capacidad de reacción",
+    b: "El cansancio es una causa importante de los siniestros que se registran en carreteras",
+    c: "Si una persona conductora está cansada, lo mejor es que su acompañante le vaya hablando permanentemente",
+    correct: "c",
+    image: null,
+  },
+  {
+    q: "¿Cómo puede una persona conductora detener el zigzagueo de una casa rodante que remolcando con su vehículo? ",
+    a: "Moviendo ligeramente el volante hacia los lados, en movimiento contrario al zigzagueo",
+    b: "Acelerando gradualmente para aumentar la velocidad",
+    c: "Disminuyendo la velocidad gradualmente",
+    correct: "c",
+    image: null,
+  },
+  {
+    q: "¿Cuál de estos líquidos, en el caso de estar en un nivel bajo, podría causar un accidente?",
+    a: "El anticongelante",
+    b: "El líquido de freno",
+    c: "El agua de la batería",
+    correct: "b",
+    image: null,
+  },
+  {
+    q: "¿Para qué sirven los seguros de niños de los vehículos? ",
+    a: "Para fijar las hebillas que tienen los cinturones de seguridad",
+    b: "Para impedir que las puertas puedan abrirse desde el interior",
+    c: "Para bloquear las ventanas traseras manteniéndolas cerradas",
+    correct: "b",
+    image: null,
+  },
+  {
+    q: "¿Por qué es importante usar zapatos apropiados al conducir un vehículo? ",
+    a: "Para tener un adecuado control de los pedales",
+    b: "Para efectuar los cambios de marcha más rápidamente",
+    c: "Para evitar el desgaste acelerado de las gomas de los pedales",
+    correct: "a",
+    image: null,
+  },
+  {
+    q: "Una persona conductora transita por una calzada con hielo y repentinamente siente la dirección muy liviana. ¿Qué debe hacer para tener nuevamente el control del vehículo?",
+    a: "Guiar el vehículo a la parte más seca de la calzada",
+    b: "Cambiar rápidamente a una marcha más baja",
+    c: "Soltar el acelerador del vehículo",
+    correct: "c",
+    image: null,
+  },
+  {
+    q: "Una persona va conduciendo detrás de un camión articulado que va a doblar a la derecha hacia una vía angosta. ¿Qué maniobra debe realizar la persona que va detrás del camión? ",
+    a: "Mantenerse detrás del camión hasta que finalice su maniobra",
+    b: "Desplazarse hacia la pista adyacente para sobrepasar al camión",
+    c: "Tocar la bocina para advertir de su presencia al conductor del camión",
+    correct: "a",
+    image: null,
+  },
+  {
+    q: "¿A cuántos metros de una esquina es lo más cerca que una persona conductora se puede estacionar? ",
+    a: "10 metros",
+    b: "15 metros",
+    c: "5 metros",
+    correct: "a",
+    image: "/p39_ex.png",
+  },
+  {
+    q: "¿Cuál de estas señales previene que más adelante hay una serie de curvas?",
+    a: "Ilustración B",
+    b: "Ilustración A",
+    c: "Ilustración C",
+    correct: "a",
+    image: "/p40_ex.jpg",
+  },
+  {
+    q: "Una persona conduce a 40 km/h cuando, 50 metros adelante, el semáforo cambia a amarillo. En esta situación, ¿Qué debería hacer?",
+    a: "Disminuir la velocidad y detenerse",
+    b: "Acelerar para alcanzar a cruzar",
+    c: "Continuar a la misma velocidad",
+    correct: "a",
+    image: null,
+  },
+  {
+    q: "Cuando una persona conductora es la primera en llegar al sitio de un siniestro en el que hay heridos graves. ¿Qué NO debería hacer? ",
+    a: "Llamar al 133 de Carabineros",
+    b: "Sacar de los autos a las personas heridas",
+    c: "Encender sus luces de advertencia de peligro",
+    correct: "b",
+    image: null,
+  },
+  {
+    q: "¿Cuál de las siguientes afirmaciones es FALSA?",
+    a: "Al tener el estómago vacío el alcohol se absorbe más rápidamente",
+    b: "Una tasa de alcohol de 0,3 gr/l no afecta la función psicomotora de las personas",
+    c: "El consumo de éxtasis puede provocar un comportamiento agresivo con las demás personas conductoras",
+    correct: "b",
+    image: null,
+    doublePoints: true,
+  },
+  {
+    q: "En la calle que muestra la imagen no hay señales que establezcan la velocidad máxima permitida. ¿Cuál sería entonces dicha velocidad para quien conduce? ",
+    a: "40 km/h",
+    b: "60 km/h",
+    c: "50 km/h",
+    correct: "c",
+    image: "/p44_ex.jpg",
+    doublePoints: true,
+  },
+  {
+    q: "45.	De acuerdo a los conceptos de Convivencia Vial, ¿en que se basa el principio de confianza? ",
+    a: "En que no hay que confiar en ningún usuario de la vía",
+    b: "En que cada uno haga lo que quiera",
+    c: "En que los demás van a cumplir con las normas del transito",
+    correct: "c",
+    image: null,
+  },
+  {
+    q: "¿Qué acción debe realizar una persona si al ir conduciendo se revienta un neumático trasero de su vehículo? ",
+    a: "Aplicar el freno de mano del vehículo",
+    b: "Girar el volante en dirección opuesta al coletazo",
+    c: "Girar el volante hacia el lado que se desplaza la cola del vehículo",
+    correct: "c",
+    image: null,
+  },
+  {
+    q: "Cuando el tiempo es muy frio, la calzada puede estar helada y deslizante. ¿Qué zonas de la calzada son especialmente propensas al hielo? ",
+    a: "Las pendientes",
+    b: "Los lugares sombríos y húmedos",
+    c: "Los tramos de vía rectos con leves cambios de rasante",
+    correct: "b",
+    image: null,
+  },
+  {
+    q: "Para una persona acostumbrada a trabajar de día y dormir durante la noche, ¿en cuál de los siguientes horarios es más probable que aparezca el sueño al conducir? ",
+    a: "Entre las 8 y 10 horas y entre las 20 y 22 horas",
+    b: "Entre las 11 y 12 horas y entre las 18 y 20 horas",
+    c: "Entre las 3 y 5 horas y entre las 14 y 16 horas",
+    correct: "c",
+    image: null,
+  },
+  {
+    q: "Al estacionar en una subida se debe dejar el vehículo con el freno de mano puesto. ¿en qué posición se debe dejar la palanca de cambio?",
+    a: "Da igual",
+    b: "En neutro",
+    c: "En primera",
+    correct: "c",
+    image: null,
+  },
+  {
+    q: "¿En cuál de los siguientes casos NO es necesario usar los espejos retrovisores de un vehículo?",
+    a: "Antes de cambiarse de pista",
+    b: "Antes de hacer partir el motor",
+    c: "Antes de disminuir la velocidad",
+    correct: "b",
+    image: null,
   }
 ];

@@ -91,25 +91,13 @@ export default function AdminPage() {
   };
 
   return (
-    <div style={{
+    <div className="min-h-screen p-5 md:p-10" style={{
       background: '#033E8C',
       backgroundAttachment: 'fixed',
-      minHeight: '100vh',
-      padding: '40px 20px'
     }}>
       <div className="max-w-7xl mx-auto">
-        <div className="bg-white rounded-xl shadow-2xl" style={{
-          padding: '48px',
-          borderRadius: '16px',
-          borderTop: '6px solid #FCD442'
-        }}>
-          <h1 style={{
-            fontSize: '2.5rem',
-            fontWeight: '800',
-            color: '#033E8C',
-            marginBottom: '32px',
-            letterSpacing: '-0.01em'
-          }}>
+        <div className="bg-white rounded-xl shadow-2xl p-6 md:p-12 border-t-[6px] border-[#FCD442]">
+          <h1 className="text-2xl md:text-4xl font-extrabold text-[#033E8C] mb-8 tracking-tight">
             Panel de Administración
           </h1>
           
@@ -118,21 +106,13 @@ export default function AdminPage() {
             {/* Days Input */}
             <div className="p-6 bg-gray-50 rounded-xl border border-gray-100 flex-1 w-full max-w-md">
               <label className="flex items-center gap-4 text-gray-700 font-medium">
-                <span style={{ color: '#034C8C' }}>Días de suscripción a agregar:</span>
+                <span className="text-[#034C8C]">Días de suscripción a agregar:</span>
                 <input
                   type="number"
                   value={days}
                   min={1}
                   onChange={(e) => setDays(Number(e.target.value))}
-                  className="rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500 shadow-sm"
-                  style={{
-                    padding: '8px 16px',
-                    border: '2px solid #63AEBF',
-                    borderRadius: '8px',
-                    width: '100px',
-                    color: '#033E8C',
-                    fontWeight: '700'
-                  }}
+                  className="rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500 shadow-sm p-2 border-2 border-[#63AEBF] w-24 text-[#033E8C] font-bold"
                 />
               </label>
             </div>
@@ -147,12 +127,7 @@ export default function AdminPage() {
                 placeholder="Buscar por correo..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all"
-                style={{
-                  color: '#033E8C',
-                  fontSize: '1rem',
-                  outline: 'none'
-                }}
+                className="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all text-[#033E8C] text-base outline-none"
               />
             </div>
           </div>
@@ -160,27 +135,27 @@ export default function AdminPage() {
           {/* Users Table */}
           <div className="overflow-hidden rounded-xl border border-gray-200 shadow-sm">
             <div className="overflow-x-auto">
-              <table className="w-full text-left">
+              <table className="w-full text-left bg-white">
                 <thead>
                   <tr style={{ background: '#F0F9FF', borderBottom: '2px solid #63AEBF' }}>
-                    <th style={{ padding: '16px 24px', fontWeight: '700', color: '#034C8C' }}>Email</th>
-                    <th style={{ padding: '16px 24px', fontWeight: '700', color: '#034C8C' }}>Rol</th>
-                    <th style={{ padding: '16px 24px', fontWeight: '700', color: '#034C8C' }}>Suscripción hasta</th>
-                    <th style={{ padding: '16px 24px', fontWeight: '700', color: '#034C8C', textAlign: 'center' }}>Acciones</th>
+                    <th className="p-3 md:p-6 font-bold text-[#034C8C] whitespace-nowrap">Email</th>
+                    <th className="p-3 md:p-6 font-bold text-[#034C8C] whitespace-nowrap">Rol</th>
+                    <th className="p-3 md:p-6 font-bold text-[#034C8C] whitespace-nowrap">Suscripción hasta</th>
+                    <th className="p-3 md:p-6 font-bold text-[#034C8C] text-center whitespace-nowrap">Acciones</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200">
                   {paginatedUsers.length === 0 ? (
                     <tr>
-                      <td colSpan={4} style={{ padding: '40px', textAlign: 'center', color: '#718096' }}>
+                      <td colSpan={4} className="p-10 text-center text-gray-500">
                         {searchTerm ? 'No se encontraron usuarios con ese correo' : 'No hay usuarios registrados'}
                       </td>
                     </tr>
                   ) : (
                     paginatedUsers.map((u) => (
                       <tr key={u.id} className="hover:bg-blue-50 transition-colors">
-                        <td style={{ padding: '16px 24px', color: '#2d3748', fontWeight: '500' }}>{u.email}</td>
-                        <td style={{ padding: '16px 24px' }}>
+                        <td className="p-3 md:p-6 text-gray-800 font-medium">{u.email}</td>
+                        <td className="p-3 md:p-6">
                           <span style={{
                             padding: '4px 12px',
                             borderRadius: '999px',
@@ -192,7 +167,7 @@ export default function AdminPage() {
                             {u.role}
                           </span>
                         </td>
-                        <td style={{ padding: '16px 24px', color: '#4a5568' }}>
+                        <td className="p-3 md:p-6 text-gray-600 whitespace-nowrap">
                           {u.subscription_until
                             ? new Date(u.subscription_until).toLocaleDateString('es-ES', {
                                 year: 'numeric',
@@ -201,7 +176,7 @@ export default function AdminPage() {
                               })
                             : <span style={{ color: '#a0aec0', fontStyle: 'italic' }}>Sin suscripción</span>}
                         </td>
-                        <td style={{ padding: '16px 24px', textAlign: 'center' }}>
+                        <td className="p-3 md:p-6 text-center whitespace-nowrap">
                           {u.role !== "admin" && (
                             <div className="flex justify-center gap-2">
                               {u.subscription_until && new Date(u.subscription_until) > new Date() ? (
@@ -209,9 +184,8 @@ export default function AdminPage() {
                                   <button
                                     disabled={loadingUserId === u.id}
                                     onClick={() => activateSubscription(u.id, u.subscription_until)}
-                                    className="px-4 py-2 rounded-lg text-sm font-bold text-white transition-all shadow-sm hover:shadow-md"
+                                    className="px-4 py-2 rounded-lg text-sm font-bold text-white transition-all shadow-sm hover:shadow-md bg-[#63AEBF]"
                                     style={{
-                                      background: '#63AEBF',
                                       opacity: loadingUserId === u.id ? 0.7 : 1
                                     }}
                                   >
@@ -220,9 +194,8 @@ export default function AdminPage() {
                                   <button
                                     disabled={loadingUserId === u.id}
                                     onClick={() => cancelSubscription(u.id)}
-                                    className="px-4 py-2 rounded-lg text-sm font-bold text-white transition-all shadow-sm hover:shadow-md"
+                                    className="px-4 py-2 rounded-lg text-sm font-bold text-white transition-all shadow-sm hover:shadow-md bg-red-500"
                                     style={{
-                                      background: '#ef4444',
                                       opacity: loadingUserId === u.id ? 0.7 : 1
                                     }}
                                   >
@@ -233,10 +206,8 @@ export default function AdminPage() {
                                 <button
                                   disabled={loadingUserId === u.id}
                                   onClick={() => activateSubscription(u.id, u.subscription_until)}
-                                  className="px-4 py-2 rounded-lg text-sm font-bold transition-all shadow-sm hover:shadow-md"
+                                  className="px-4 py-2 rounded-lg text-sm font-bold transition-all shadow-sm hover:shadow-md bg-[#FCD442] text-[#033E8C]"
                                   style={{
-                                    background: '#FCD442',
-                                    color: '#033E8C',
                                     opacity: loadingUserId === u.id ? 0.7 : 1
                                   }}
                                 >
@@ -256,8 +227,8 @@ export default function AdminPage() {
 
           {/* Pagination Controls */}
           {filteredUsers.length > 0 && (
-            <div className="flex items-center justify-between mt-6 px-2">
-              <div className="text-sm text-gray-500">
+            <div className="flex flex-col sm:flex-row items-center justify-between mt-6 px-2 gap-4">
+              <div className="text-sm text-gray-500 text-center sm:text-left">
                 Mostrando <span className="font-bold text-[#033E8C]">{startIndex + 1}</span> a <span className="font-bold text-[#033E8C]">{Math.min(startIndex + itemsPerPage, filteredUsers.length)}</span> de <span className="font-bold text-[#033E8C]">{filteredUsers.length}</span> usuarios
               </div>
               
