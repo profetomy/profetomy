@@ -40,3 +40,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# test_login.js
+test_login.js
+test_frontend.js
+load_test.js

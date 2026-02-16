@@ -213,7 +213,7 @@ export default async function LandingPage() {
           <Car size={20} />
           <span style={{ fontWeight: 'bold' }}>Simulador Profe Tomy</span>
         </div>
-        <p style={{ opacity: 0.8 }}>© 2024 Preparación para Examen de Conducir</p>
+        <p style={{ opacity: 0.8 }}>© 2026 Preparación para Examen de Conducir</p>
       </footer>
     </div>
   );
