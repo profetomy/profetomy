@@ -10,14 +10,6 @@ export const allQuestions: Question[] = [
     image: null
   },
   {
-    q: "En la situación que muestra la imagen ¿qué debería hacer la persona que conduce si va circulando a 70 km/h?",
-    a: "frenar en seco",
-    b: "frenar suavemente",
-    c: "continuar derecho por la vía",
-    correct: "b",
-    image: null
-  },
-  {
     q: "Al conducir en una zona rural por un camino muy angosto, ¿dónde le resultaría más difícil a quien conduzca ver personas a caballo que avanzan delante de él?",
     a: "Al ir bajando un cerro",
     b: "Al ir en una curva a la derecha",
