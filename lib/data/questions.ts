@@ -22,7 +22,7 @@ export const allQuestions: Question[] = [
     a: "Al ir bajando un cerro",
     b: "Al ir en una curva a la derecha",
     c: "Al ir en una curva a la izquierda",
-    correct: "c",
+    correct: "b",
     image: null
   },
   {
@@ -1218,7 +1218,7 @@ export const allQuestions: Question[] = [
     q: "¿Cómo será su actitud en la conducción de un automóvil? ",
     a: "Insegura, sin respeto hacia los demás",
     b: "Es indiferente la actitud para conducir un automóvil",
-    c: "Es indiferente la actitud para conducir un automóvil",
+    c: "Segura, responsable y tranquila ",
     correct: "c",
     image: null,
   },
