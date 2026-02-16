@@ -146,14 +146,6 @@ export const allQuestions: Question[] = [
     image: null
   },
   {
-    q: "¿Qué precaución se debe tomar al cargar un remolque que será arrastrado con un automóvil?",
-    a: "Que el peso se distribuya en forma pareja",
-    b: "Que el mayor peso se concentre en la parte trasera",
-    c: "Que la mayor parte del peso se concentre en la parte delantera",
-    correct: "c",
-    image: null
-  },
-  {
     q: "¿Cuál de las siguientes acciones es la más importante al momento de evitar chocar el vehículo que va delante?",
     a: "Conducir a una velocidad constante",
     b: "Asegurarse de que los frenos estén en buen estado",
@@ -185,14 +177,6 @@ export const allQuestions: Question[] = [
     correct: "a",
     image: null,
     doublePoints: true
-  },
-  {
-    q: "Una persona conductora se detiene ante un paso cebra donde los peatones que se encuentran en la vereda no comienzan a cruzar. ¿Qué debería hacer la persona conductora?",
-    a: "Reanudar su marcha",
-    b: "Esperar pacientemente",
-    c: "Hacerle señas con la mano a los peatones para que crucen",
-    correct: "a",
-    image: null
   },
   {
     q: "Una persona transita en su automóvil por una autopista cuando observa que, de un camión cargado que va adelante, cae una caja sin que la persona que conduce el camión se dé cuenta. ¿Qué debe hacer quien conduce el automóvil?",
@@ -1244,14 +1228,6 @@ export const allQuestions: Question[] = [
     b: "Cuando la calzada está húmeda",
     c: "Cuando llueve y los neumáticos están desgastados ",
     correct: "a",
-    image: null,
-  },
-  {
-    q: "Una persona conductora se detiene ante un paso de cebra donde los peatones que se encuentran en la vereda no comienzan a cruzar. ¿Qué debería hacer la persona conductora?  ",
-    a: "Reanudar la marcha",
-    b: "Esperar pacientemente",
-    c: "Hacerle señas con la mano a los peatones para que crucen",
-    correct: "b",
     image: null,
   },
   {
