@@ -851,6 +851,1022 @@ export const allQuestions: Question[] = [
     correct: "a",
     image: null,
   },
-
+  /*Aca empiezo con segundo archivo de preguntas */
+  {
+    q: "Cuando el tubo de escape expele humo “negro” significa que:",
+    a: "Está quemando aceite",
+    b: "El filtro del aire está sucio",
+    c: "Es normal, es vapor de agua",
+    correct: "b",
+    image: null
+  },
+  {
+    q: "La licencia de conductor clase B le permite conducir su automóvil con un remolque ligero. ¿Qué limitación de peso tiene?",
+    a: "Qué cuyo peso del remolque sólo puede ser hasta un 10% más que la unidad motriz",
+    b: "Que el peso total, unidad motriz más remolque, supere los 3500 kilos",
+    c: "Que el peso total, unidad motriz más remolque, no supere los 3500 kilos",
+    correct: "c",
+    image: null
+  },
+  {
+    q: "¿Reducir la velocidad manteniendo un cambio puesto, reduce el consumo de combustible?",
+    a: "Sí",
+    b: "No",
+    c: "Depende",
+    correct: "a",
+    image: null
+  },
+  {
+    q: "¿Qué afirmación es falsa?",
+    a: "Discutir con alguien o estar pendiente de la radio del vehículo aumenta el riesgo de pasar por alto una situación relevante del tránsito",
+    b: "Un conductor que va con mucha prisa tiende a SOBRESTIMAR la velocidad y los riesgos",
+    c: "La falta de atención a las condiciones de tránsito es una de las principales causas de los accidentes",
+    correct: "b",
+    image: null
+  },
+  {
+    q: "¿Por qué cuando hay nieve es conveniente conducir con la marcha más alta posible?",
+    a: "Para ayudar a evitar que las ruedas patinen.",
+    b: "Para reducir rápidamente la velocidad al frenar",
+    c: "Para dejar disponible una marcha baja en el caso de que las ruedas patinen",
+    correct: "a",
+    image: null
+  },
+  {
+    q: "¿Qué debe hacer usted al observar la señal de la imagen?",
+    a: "Conducir con cuidado y estar atentos por vehículos que pueden salir por el empalme lateral izquierdo",
+    b: "Tener cuidado, adelante cruce de camiones.",
+    c: "Descansar, más adelante área de descanso",
+    correct: "a",
+    image: "/p5_2ex.jpg"
+  },
+  {
+    q: "Podemos tener ceguera real temporal al:",
+    a: "Mirar los focos de un automóvil en contra",
+    b: "Cerrar los ojos mientras se conduce",
+    c: "Mirar directo a la carretera",
+    correct: "a",
+    image: null
+  },
+  {
+    q: "Las condiciones climáticas adversas como la lluvia, nieve o presencia de hielo en la calzada, aumentan el riesgo de deslizamiento por la menor adherencia al pavimento",
+    a: "Verdadero",
+    b: "Falso",
+    c: "Depende",
+    correct: "a",
+    image: "/p7_2ex.jpg"
+  },
+  {
+    q: "A la vista de la señal, ¿con qué debe contar usted?¿Qué significa esta señal?",
+    a: "Con una peligrosa curva a la derecha",
+    b: "Con vehículos que crucen el camino antes de la curva",
+    c: "Con una curva pronunciada hacia la izquierda y con la posibilidad de que pueda haber un vehículo detenido justo después de la curva",
+    correct: "c",
+    image: "/p9_2ex.jpg"
+    },
+    {
+      q: "Se sanciona con cárcel efectiva de al menos ____ a los conductores en estado de ebriedad que generen lesiones graves gravísimas o la muerte",
+      a: "180 días",
+      b: "90 días",
+      c: "Un año",
+      correct: "c",
+      image: "/p10_2ex.jpg"
+    },
+    {
+      q: "¿Podría ser el exceso de velocidad unos de los factores de mayor incidencia en la ocurrencia de accidentes de tránsito?",
+      a: "No, solo el consumo de drogas y el exceso de confianza",
+      b: "No, solo el exceso de consumo de drogas y alcohol",
+      c: "Si, junto con la desobediencia y el consumo de alcohol",
+      correct: "c",
+      image: null
+    },
+    {
+      q: "Indique qué significan estas señales",
+      a: "Viraje a la derecha, Camino angosto, Niños jugando",
+      b: "Dirección Obligada, Puente angosto, Zona de Escuela",
+      c: "Dirección Obligada, Camino angosto, Zona de Peatones",
+      correct: "b",
+      image: "/p12_2ex.jpg"
+    },
+    {
+      q: "¿Cuánto mayor es el riesgo de sufrir un accidente con una alcoholemia entre 0,3 y 0,5 g/l que si no se hubiera bebido?",
+      a: "El riesgo de accidente con esa cantidad de alcohol en la sangre es el doble que si no hubiera bebido",
+      b: "No hay riesgo de accidente porque esa cantidad no afecta en los sentidos de la persona para conducir",
+      c: "El riesgo de accidente con esa cantidad de alcohol en la sangre es cinco veces más que si no hubiera bebido",
+      correct: "a",
+      image: null
+    },
+    {
+      q: "Al conducir de noche por una zona urbana que posee alumbrado público, ¿qué luces llevará encendidas?",
+      a: "Luces altas",
+      b: "Luces bajas",
+      c: "Indistintamente las luces altas o bajas",
+      correct: "b",
+      image: null
+    },
+    {
+      q: "¿Cómo deben estar los espejos retrovisores del vehículo?",
+      a: "Cóncavos",
+      b: "Siempre con la patente del vehículo",
+      c: "Regulados adecuadamente",
+      correct: "c",
+      image: null
+    },
+    {
+      q: "¿Cómo debe estacionar su vehículo, por lo general, en las vías rurales?",
+      a: "Longitudinalmente con la mitad del vehículo sobre la berma",
+      b: "Con toda la estructura del vehículo sobre la berma",
+      c: "Sobre la calzada en el sentido contrario del tránsito",
+      correct: "b",
+      image: null
+    },
+    {
+      q: "Estas señales significan:",
+      a: "Cruce ferroviario a nivel sin barreras, Fin doble vía, Peso máximo",
+      b: "Cruce ferroviario a nivel sin barreras, No adelantar, Ancho máximo",
+      c: "Cruce ferroviario a nivel con barreras, Prohibido circular vehículos, Ancho máximo",
+      correct: "b",
+      image: "/p17_2ex.jpg"
+    },
+    {
+      q: "En condiciones normales, ¿cuál sería aproximadamente su distancia de frenado si usted circula a 90 km/h?",
+      a: "Unos 70 metros",
+      b: "Unos 45 metros",
+      c: "Unos 20 metros",
+      correct: "b",
+      image: null
+    },
+    {
+      q: "Un conductor que precisa de anteojos para conducir debido a una leve miopía, ¿puede tomar su auto para un viaje de día y corta duración si no dispone de ellos?",
+      a: "Si, considerando que la miopía es leve",
+      b: "No, debería planificar otra forma de hacer este viaje sin conducir",
+      c: "Si, considerando que se trata de un viaje corto y de día",
+      correct: "b",
+      image: null
+    },
+    {
+      q: "¿Puede usted circular por un área achurada de la calzada?",
+      a: "No, porque los vehículos no pueden detenerse ni circular por zonas achuradas",
+      b: "No, si se trata de una vía de mucho tránsito",
+      c: "Sí, siempre que la zona achurada no esté reforzada con tachas o tachones reflectantes",
+      correct: "a",
+      image: null
+    },
+    {
+      q: "¿Qué deberá hacer usted si al conducir con remolque éste comienza a zigzaguear?",
+      a: "Deténgase de inmediato para arreglar la carga del remolque",
+      b: "Suelte el acelerador lentamente hasta que recupere la estabilidad",
+      c: "Suelte el acelerador y frenará en seco para evitar un accidente",
+      correct: "b",
+      image: null
+    },
+    {
+      q: "Respecto al consumo del alcohol, que opción es un mito:",
+      a: "Tomar café luego de haber ingerido alcohol permite que su efecto en la sangre disminuya rápidamente",
+      b: "Beber una copa de vino disminuye la capacidad de una persona al conducir",
+      c: "Consumir alcohol con el estómago vació aumenta su velocidad de absorción en el cuerpo humano",
+      correct: "a",
+      image: null
+    },
+    {
+      q: "¿Por qué los vehículos consumen más combustible en las horas de más congestión?",
+      a: "Porque generalmente deben conducir en una marcha lenta",
+      b: "Por los recurrentes cambios de pista de circulación",
+      c: "Porque se ven obligados a frenar y acelerar repetidamente",
+      correct: "c",
+      image: null
+    },
+    {
+      q: "Con respecto a los Antihistamínicos, ¿pueden provocar un tiempo de reacción mayor?",
+      a: "No",
+      b: "Si",
+      c: "Depende",
+      correct: "b",
+      image: null
+    },
+    {
+      q: "Cuando se conduce por una autopista se debe facilitar el acceso a los vehículos que van a entrar",
+      a: "Verdadero",
+      b: "Falso",
+      c: "Depende del vehículo que entre",
+      correct: "a",
+      image: null
+    },
+    {
+      q: "Son el único elemento del vehículo en contacto con el suelo:",
+      a: "La carrocería",
+      b: "Los neumáticos",
+      c: "Los amortiguadores",
+      correct: "b",
+      image: null
+    },
+    {
+      q: "¿Cuál es el color de fondo de la señalización informativa de autopistas?¿Qué significa esta señal?",
+      a: "Azul",
+      b: "Blanco",
+      c: "Café",
+      correct: "a",
+      image: null
+    },
+    {
+      q: "¿Cuándo se hace más difícil apreciar las distancias y velocidades?",
+      a: "En la mañana",
+      b: "En el atardecer",
+      c: "En la noche y escasa visibilidad",
+      correct: "c",
+      image: null
+    },
+    {
+      q: "Un exceso de presión de aire en el neumático produce",
+      a: "Deterioro de la válvula de inflado",
+      b: "Desgaste en el centro de la banda de rodamiento del neumático",
+      c: "Desgaste en los bordes de la banda de rodamiento",
+      correct: "b",
+      image: null
+    },
+    {
+      q: "La distancia de frenado requerida será mayor en cuanto más conocimiento y experiencia tenga el conductor",
+      a: "Verdadero",
+      b: "Falso",
+      c: "Depende del vehículo",
+      correct: "b",
+      image: null
+    },
+    {
+      q: "¿En qué circunstancia usted se detendría justo encima de un paso de cebra existente?",
+      a: "Cuando ello sea necesario para evitar un accidente",
+      b: "En ningún momento",
+      c: "Durante la noche",
+      correct: "a",
+      image: null
+    },
+    {
+      q: "Cuando dos o más vehículos circulan en un mismo sentido por la derecha, ¿qué distancia debe mantener respecto del vehículo que le antecede?¿En qué circunstancia usted se detendría justo encima de un paso de cebra existente?",
+      a: "Que cualquier otro pueda adelantarlo",
+      b: "Que tres vehículos puedan adelantarlos",
+      c: "Que dos vehículos puedan adelantarlos",
+      correct: "a",
+      image: null
+    },
+    {
+      q: "¿Por qué es conveniente conducir con una marcha alta?",
+      a: "Para no exigir el motor y consumir menos combustible",
+      b: "Para llegar más pronto a destino",
+      c: "Para darle más fuerza al motor",
+      correct: "a",
+      image: null
+    },
+    {
+      q: "Si al circular por una autopista, cae una caja de un camión cargado que circula más adelante que usted, ¿qué debe hacer?",
+      a: "Trata de alcanzar al camión y de llamar la atención de su conductor",
+      b: "Se desplaza hacia la berma y luego intenta recoger la caja",
+      c: "Continúa hasta donde haya un teléfono para avisar a la policía o a los servicios de emergencia",
+      correct: "c",
+      image: null
+    },
+    {
+      q: "Para asegurar mejor estabilidad del vehículo, los neumáticos más nuevos deben situarse:",
+      a: "En las ruedas traseras",
+      b: "En una rueda delantera y una rueda trasera",
+      c: "En las ruedas delanteras",
+      correct: "a",
+      image: null
+    },
+    {
+      q: "¿Cuál de los siguientes vehículos NO son vehículos de emergencia?",
+      a: "Ambulancias",
+      b: "Las carrobombas",
+      c: "Las grúas que trasladan vehículos",
+      correct: "c",
+      image: null
+    },
+    {
+      q: "Conducir cansado es:",
+      a: "Peligroso",
+      b: "Más divertido",
+      c: "Necesario",
+      correct: "a",
+      image: null
+    },
+    {
+      q: "Los materiales reflectantes reflejan entre un 90 y 98%",
+      a: "Falso",
+      b: "Verdadero",
+      c: "Depende de la fuente de luz",
+      correct: "b",
+      image: null
+    },
+    {
+      q: "Después de la puesta de sol, ¿qué luces deben llevar los vehículos en vías públicas urbanas?",
+      a: "Cualquier tipo de luz",
+      b: "Luces altas",
+      c: "Luces bajas",
+      correct: "c",
+      image: null
+    },
+    {
+      q: "¿Debe usted evitar que lo adelante un vehículo que excede la velocidad máxima permitida de la vía?",
+      a: "Sí, porque el otro conductor está infringiendo la ley",
+      b: "No, en ningún momento",
+      c: "No, a menos que sea seguro hacerlo",
+      correct: "b",
+      image: null
+    },
+    {
+      q: "Se aumentará la eficacia del cinturón de seguridad utilizando ropa de mucho volumen",
+      a: "Falso",
+      b: "Verdadero",
+      c: "Depende del tipo de vehículo",
+      correct: "a",
+      image: null
+    },
+    {
+      q: "Conduciendo en una zona rural, por un camino estrecho. ¿Dónde le resultará más difícil ver personas a caballo que avanzan delante suyo?",
+      a: "Al ir usted en una curva a la derecha",
+      b: "Al ir ellas subiendo un cerro",
+      c: "Al ir usted en una curva a la izquierda",
+      correct: "a",
+      image: null
+    },
+    {
+      q: "En ningún caso se podrá circular con las luces:",
+      a: "De estacionamiento apagadas",
+      b: "Altas en zona rural",
+      c: "Altas encendidas en zona urbana",
+      correct: "c",
+      image: null
+    },
+    {
+      q: "¿Qué aportan las sustancias estimulantes al conductor?",
+      a: "Beneficiosos a corto plazo, pero pueden producir un efecto rebote a largo plazo",
+      b: "Beneficios si se toman en grandes cantidades",
+      c: "Las bebidas estimulantes no afectan de ninguna forma a la conducción",
+      correct: "a",
+      image: null
+    },
+    {
+      q: "El grupo etario de mayor accidentabilidad son:",
+      a: "Los jóvenes, entre 18 y 29 años",
+      b: "Los adultos, entre 40 y 49 años",
+      c: "Los adultos mayores, entre 60 y 80 años",
+      correct: "a",
+      image: null
+    },
+    {
+      q: "Si usted ingiere alcohol, ¿qué afirmación es falsa en cuanto a la concentración de alcohol en su sangre?",
+      a: "Dependerá de la cantidad de comida ingerida",
+      b: "Dependerá del tiempo que dure la ingestión de alcohol",
+      c: "La concentración de alcohol siempre será la misma para un hombre que para una mujer de similares características corporales",
+      correct: "c",
+      image: null
+    },
+    {
+      q: "La distancia de frenado puede aumentar con:",
+      a: "Problemas de embrague",
+      b: "Viento en contra",
+      c: "Amortiguadores en mal estado",
+      correct: "c",
+      image: null
+    },
+    {
+      q: "Fuera del área urbana, en carretera o autopista, se podría decir que:",
+      a: "No ocurran accidentes ni muertes",
+      b: "Haya más accidentes que en otros lugares",
+      c: "No ocurren tantos accidentes, pero la mayoría llega a la muerte",
+      correct: "c",
+      image: null
+    },
+    {
+      q: "¿Por qué es importante disminuir la velocidad cuando sopla viento fuerte?",
+      a: "Porque a mayor fuerza del viento, más alta debe ser la marcha. Así el peso del vehículo ayuda a que se afirme mejor",
+      b: "Porque a mayor fuerza del viento, más baja debe ser la marcha. Así el peso del vehículo ayuda a que se afirme mejor",
+      c: "Porque a mayor fuerza del viento, debe desenganchar la marcha. Así el peso del vehículo ayuda a que se afirme mejor",
+      correct: "b",
+      image: null
+    },
+    {
+      q: "¿Que puede provocar conducir en horas de alta congestión vehicular?",
+      a: "Frenar y acelerar",
+      b: "Frenar",
+      c: "Acelera y girar continuamente",
+      correct: "a",
+      image: null
+    },
+    {
+      q: "¿Qué condición no es necesaria para que el cinturón actúe de una manera eficaz?",
+      a: "La banda abdominal debe pasar sobre los huesos de la cadera y por debajo del abdomen",
+      b: "Vestir con ropa gruesa",
+      c: "Debe estar bien colocado y ajustado al cuerpo (ni muy flojo, ni muy apretado) bien abrochado",
+      correct: "b",
+      image: null
+    },
+    {
+      q: "¿Podría usted conducir sin haber obtenido la licencia de conductor?",
+      a: "Sí, en caminos públicos rurales a cualquier hora del día",
+      b: "Si, por las vías públicas que se localicen dentro de la ciudad",
+      c: "En ninguno de los casos mencionados",
+      correct: "c",
+      image: null
+    },
+    {
+      q: "Indique cuál de las siguientes afirmaciones es verdadera con respecto al uso del cinturón de seguridad",
+      a: "El cinturón de seguridad disminuye las posibilidades de sufrir lesiones en un accidente",
+      b: "Los air-bag (o bolsas de aire) reemplazan ventajosamente al cinturón de seguridad",
+      c: "Para quienes viajan en el asiento trasero de un automóvil el cinturón de seguridad no les presta utilidad",
+      correct: "a",
+      image: null
+    },
+    {
+      q: "Si usted se ve involucrado en un accidente en el que un pasajero del otro vehículo tiene lesiones leves, ¿debe informar del hecho a la autoridad?",
+      a: "Sí, debe dar cuenta del hecho a la autoridad policial más inmediata a la brevedad",
+      b: "No, el pasajero lesionado debe decidir si se informa a la policía o no",
+      c: "No, los accidentes en que sólo resultan lesionados leves no se informan a la policía",
+      correct: "a",
+      image: null
+    },
+    {
+      q: "El consumo de algunos antihistamínicos es equivalente a conducir:",
+      a: "Bajo la influencia del alcohol",
+      b: "Bajo estado de ebriedad",
+      c: "Ambos",
+      correct: "c",
+      image: null
+    },
+    {
+      q: "¿En qué tipo de vías existe más riesgo de que aparezca la somnolencia?",
+      a: "En vías con muchas curvas",
+      b: "En caminos monótonos",
+      c: "En vías con mucho tránsito",
+      correct: "b",
+      image: null
+    },
+    {
+      q: "¿Cómo deberá ser la distancia de detención con relación a la distancia que se encuentra un obstáculo?",
+      a: "Menor",
+      b: "Mayor",
+      c: "Igual",
+      correct: "a",
+      image: null
+    },
+    {
+      q: "Antes de efectuar un viraje a la izquierda es especialmente importante mirar hacia:",
+      a: "El tránsito que viene en sentido contrario como el de por detrás",
+      b: "El tránsito que viene de la izquierda como por el de atrás",
+      c: "El tránsito que viene por la derecha, como por el de atrás",
+      correct: "a",
+      image: null
+    },
+    {
+      q: "¿Qué provocan los hidrocarburos en la salud de las personas?",
+      a: "Sueño",
+      b: "Dolor de cabeza",
+      c: "Efectos nocivos para la salud",
+      correct: "c",
+      image: null
+    },
+    {
+      q: "Con una alcoholemia entre 0,3 y 0,5 g/l el riesgo de sufrir un accidente es el ____ que si no hubiera bebido",
+      a: "Doble",
+      b: "Cuádruple",
+      c: "Triple",
+      correct: "a",
+      image: null
+    },
+    {
+      q: "Un ralentí demasiado alto provoca:",
+      a: "Una mejor potencia",
+      b: "Menor consumo de aceite",
+      c: "Un mayor consumo de combustible",
+      correct: "c",
+      image: null
+    },
+    {
+      q: "El tiempo que tarda un conductor en reaccionar:",
+      a: "No puede variar en una misma persona",
+      b: "Solo puede variar de unas personas a otras",
+      c: "Puede variar en una misma persona",
+      correct: "c",
+      image: null
+    },
+    {
+      q: "¿A qué vehículos afecta más el estado de los neumáticos en la conducción?",
+      a: "A las motocicletas debido a su menor ancho y por lo tanto menor superficie de contacto ya que son sólo 2 ruedas",
+      b: "A las motocicletas debido a su mayor ancho y por lo tanto mayor superficie de contacto ya que son 4 ruedas",
+      c: "A los automóviles debido a su mayor ancho por lo tanto mayor superficie de contacto ya que son 4 ruedas",
+      correct: "a",
+      image: null
+    },
+    {
+      q: "¿Qué deberá hacer usted con la presión de aire de los neumáticos de su auto si lleva una carga muy pesada?",
+      a: "Aumentarla",
+      b: "Mantenerla",
+      c: "Disminuirla",
+      correct: "a",
+      image: null
+    },
+    {
+      q: "Si un conductor desea virar a la derecha en una vía con varias pistas demarcadas en un sentido, ¿que deberá hacer?",
+      a: "Ubicarse en la pista de la derecha de la calzada tan cerca como sea posible de la cuneta o del borde de esta",
+      b: "Acercarse al eje central de la calzada",
+      c: "Ubicarse en la pista de la izquierda de la calzada tan cerca como sea posible de la cuneta o del borde de esta",
+      correct: "a",
+      image: null
+    },
+    {
+      q: "Al estacionar en una vía con una bajada pronunciada deberá:",
+      a: "Estacionar detrás de otro auto",
+      b: "Dejar el volante girado hacia la acera y dejar puesto el freno de mano",
+      c: "Estacionar con dos ruedas sobre la acera",
+      correct: "b",
+      image: null
+    },
+    {
+      q: "La correa del ventilador destensada puede provocar",
+      a: "Pérdida de potencia del motor",
+      b: "Recalentamiento del motor",
+      c: "Desgaste de las pastillas de freno",
+      correct: "b",
+      image: null
+    },
+    {
+      q: "¿Qué señalización con el brazo debe realizar un conductor para indicar que va a virar a la derecha?",
+      a: "Ilustración C",
+      b: "Ilustración B",
+      c: "Ilustración A",
+      correct: "c",
+      image: "/p71_2ex.jpg"
+    },
+    {
+      q: "¿Se puede prescindir del uso del cinturón de seguridad en alguna ocasión?",
+      a: "Nunca se debe prescindir del uso del cinturón de seguridad",
+      b: "Cuando el vehículo tiene airbags o bolsas de aire tipo cortina",
+      c: "Cuando realiza un viaje muy corto dentro de la ciudad",
+      correct: "a",
+      image: null
+    },
+    {
+      q: "A la vista de la imagen, si usted desea adelantar...",
+      a: "El camión tiene la obligación de correrse hacia la berma para dejarle a usted más espacio",
+      b: "Tiene la obligación de esperar a que la pista del sentido contrario esté libre de vehículos para luego adelantar",
+      c: "Tiene la obligación de esperar a que la pista del sentido contrario esté libre de vehículos para luego adelantar",
+      correct: "b",
+      image: "/p73_2ex.jpg"
+    },
+    {
+      q: "Según las estadísticas de accidentes de tránsito en Chile, ¿qué afirmación es correcta?",
+      a: "La mayor parte de los fallecidos por accidentes de tránsito se produce en vías interurbanas o no urbanas",
+      b: "El grupo etario de mayor accidentalidad son los jóvenes, entre 15 y 25 años",
+      c: "Los períodos de mayor accidentalidad coinciden con los lunes",
+      correct: "a",
+      image: null
+    },
+    {
+      q: "¿Qué impide que la población joven pueda evaluar el peligro al conducir?",
+      a: "No entender que conducir es peligroso",
+      b: "Creer que habrá siempre un accidente",
+      c: "No percibir la conducción con posible peligro",
+      correct: "c",
+      image: null
+    },
+    {
+      q: "Es aconsejable que un conductor que está siendo tratado por una enfermedad con medicamentos...",
+      a: "Tenga presente que puede producir efectos negativos que afecten a la conducción",
+      b: "No conduzca en ningún caso mientras dure el tratamiento",
+      c: "Conduzca más despacio de lo normal",
+      correct: "a",
+      image: null
+    },
+    {
+      q: "¿Frente a cuál de estas dos señales debe detenerse siempre un conductor?",
+      a: "Frente a cualquiera de las dos señales",
+      b: "Frente a la señal de Ceda el paso",
+      c: "Frente a la señal de Pare",
+      correct: "c",
+      image: "/p78_2ex.jpg"
+    },
+    {
+      q: "¿Qué grupo de la población está más dispuesto a tomar riesgos en la conducción?",
+      a: "Los adultos con mayor experiencia",
+      b: "Los jóvenes",
+      c: "Los conductores que tienen a cargo vehículos de trabajo",
+      correct: "b",
+      image: null
+    },
+    {
+      q: "Por lo general, los choques en serie se deben a:",
+      a: "Guardar una distancia demasiado corta respecto de los vehículos que van delante",
+      b: "Malas condiciones de los frenos del vehículo",
+      c: "Malas condiciones de visibilidad",
+      correct: "a",
+      image: null
+    },
+    {
+      q: "¿Puede un niño viajar en los brazos de un adulto?",
+      a: "Sí, es más seguro",
+      b: "Nunca",
+      c: "Sí, si el viaje es en la ciudad ",
+      correct: "b",
+      image: null
+    },
+    {
+      q: "El fenómeno denominado visión de túnel, es aquel en que el campo visual se “encoge” a medida que aumenta la velocidad",
+      a: "Falso",
+      b: "Verdadero",
+      c: "Ese fenómeno no existe",
+      correct: "b",
+      image: null
+    },
+    {
+      q: "¿Qué debería hacer si usted va circulando por una calle y una pelota rueda hasta el frente de su vehículo?",
+      a: "Esquivar la pelota y alejarse del lugar",
+      b: "Detener inmediatamente el auto y bajarse para mover la pelota de lugar",
+      c: "Disminuir la velocidad y está preparado para frenar",
+      correct: "c",
+      image: null
+    },
+    {
+      q: "La sanción que corresponderá por conducir bajo la influencia del alcohol, sin ocasionar daños ni lesiones será:",
+      a: "Suspensión de la licencia de conductor por 2 meses",
+      b: "Suspensión de la licencia de conductor por 5 meses",
+      c: "Suspensión de la licencia de conductor por 3 meses",
+      correct: "c",
+      image: null
+    },
+    {
+      q: "Con respecto a los accidentes de tránsito, podemos afirmar que:",
+      a: "No somos conscientes de todo el problema",
+      b: "Anualmente en Chile se registran unos 56.000",
+      c: "Se valora adecuadamente el sufrimiento que provoca una persona fallecida en su entorno cercano  ",
+      correct: "a",
+      image: null
+    },
+    {
+      q: "¿Cuál de los tipos de señales que se muestran en la imagen le indican al conductor una prohibición?",
+      a: "Ilustración A",
+      b: "Ilustración B",
+      c: "Ilustración C",
+      correct: "b",
+      image: "/p86_2ex.jpg"
+    },
+    {
+      q: "¿Qué separación debe haber entre el apoyacabeza y la cabeza para que esté regulado adecuadamente?",
+      a: "La separación varia de 4 a 6 cms",
+      b: "La separación debe ser la que de la suficiente comodidad al conductor",
+      c: "La separación entre cabeza y apoya cabezas debe ser la mínima posible y nunca superior a 4 cm",
+      correct: "c",
+      image: null
+    },
+    {
+      q: "¿Es recomendable reducir la velocidad manteniendo un cambio puesto, para una conducción eficiente?",
+      a: "No",
+      b: "Si",
+      c: "Depende del camino",
+      correct: "b",
+      image: null
+    },
+    {
+      q: "¿Qué efecto tiene sobre el conductor el hecho de conducir con fatiga?",
+      a: "Disminuirá la tendencia a sobreestimar su propia capacidad",
+      b: "Sus reacciones serán más lentas",
+      c: "Su capacidad de coordinación aumentará",
+      correct: "b",
+      image: null
+    },
+    {
+      q: "¿Qué efectos pueden producir los medicamentos antidepresivos?",
+      a: "Euforia y nerviosismo",
+      b: "Sueño, mareo, visión borrosa y alteraciones de la coordinación",
+      c: "Aumento de los reflejos",
+      correct: "b",
+      image: null
+    },
+    {
+      q: "¿Cómo se denomina a la parte de la vía destinada al uso de vehículos motorizados y de tracción animal?",
+      a: "Calzada",
+      b: "Berma",
+      c: "Camino",
+      correct: "a",
+      image: null
+    },
+    {
+      q: "Esté o no marcada la senda peatonal. Está destinada al uso de:",
+      a: "Peatones y bicicletas",
+      b: "Peatones",
+      c: "Vehículos en general",
+      correct: "b",
+      image: null
+    },
+    {
+      q: "¿De qué se encarga el carburador?",
+      a: "De producir la chispa",
+      b: "Refinar el combustible",
+      c: "Realizar la mezcla exacta del aire con el combustible",
+      correct: "c",
+      image: null
+    },
+    {
+      q: "¿Qué significa esta señal?",
+      a: "Advierte la presencia de grava o material suelto",
+      b: "Proximidad de cables de alta tensión",
+      c: "Pavimento resbaladizo",
+      correct: "a",
+      image: "/p94_2ex.jpg"
+    },
+    {
+      q: "Los trastornos de sueño, como el insomnio, pueden provocar una fuerte somnolencia en el día, la cual influye muy negativamente en la seguridad vial",
+      a: "Falso",
+      b: "Verdadero",
+      c: "Depende del conductor",
+      correct: "b",
+      image: null
+    },
+    {
+      q: "¿El comportamiento del conductor influye en el consumo de combustible del vehículo?",
+      a: "No, el consumo sólo depende de la masa y carga del vehículo",
+      b: "No, el consumo depende únicamente de la cilindrada del motor",
+      c: "Sí",
+      correct: "c",
+      image: null
+    },
+    {
+      q: "¿Cómo afectará al tiempo de reacción si se toman medicinas relajantes?",
+      a: "Disminuirá",
+      b: "No variará",
+      c: "Aumentará",
+      correct: "c",
+      image: null
+    },
+    {
+      q: "Son infracciones graves, entre otras:",
+      a: "Arrojar desde un vehículo desperdicios, residuos, objetos o sustancias",
+      b: "No respetar las prohibiciones de los virajes en U",
+      c: "Exceder de 11 a 20 km/h los límites máximos de velocidad",
+      correct: "c",
+      image: null
+    },
+    {
+      q: "¿Qué debe hacer usted si al virar en una calle hay peatones atravesando la calzada por un paso reglamentario?",
+      a: "Les toca la bocina para advertirles su presencia",
+      b: "Espera permitiéndoles que crucen",
+      c: "Les hace señas para que retrocedan",
+      correct: "b",
+      image: null
+    },
+    {
+      q: "¿Qué licencias corresponden a la Licencias no profesionales?",
+      a: "Clase A2",
+      b: "Clase B y Clase C",
+      c: "Clase A1",
+      correct: "b",
+      image: null
+    },
+    {
+      q: "Cuando se produce un efecto de ceguera temporal, la distancia de visibilidad es de:",
+      a: "0 metros",
+      b: "1 metros",
+      c: "2 metros",
+      correct: "a",
+      image: null
+    },
+    {
+      q: "¿Qué clase de costos genera un accidente de tránsito?",
+      a: "Daños materiales y costos de salud únicamente",
+      b: "Daños materiales, costos de salud, administrativos y costos humanos",
+      c: "Siempre daños materiales fundamentalmente",
+      correct: "b",
+      image: null
+    },
+    {
+      q: "¿Qué debe hacer usted si desea ingresar en una autopista por una pista de aceleración, pero no logra que le cedan el espacio necesario y prudente para poder entrar?",
+      a: "Tocar la bocina e ingresar en la pista derecha ocupando la distancia de separación de seguridad entre los vehículos",
+      b: "Detenerse hasta que se produzca una brecha segura y pueda ingresar en la autopista",
+      c: "Acelerar, tocar la bocina y saltarse de inmediato a la segunda pista",
+      correct: "b",
+      image: null
+    },
+    {
+      q: "Mientras menos carga o peso tenga el vehículo, este requerirá de más fuerza para moverla",
+      a: "Verdadero",
+      b: "Falso",
+      c: "Depende del conductor",
+      correct: "b",
+      image: null
+    },
+    {
+      q: "¿Qué cualidad en el conductor nos indica que no tiene un alto grado de madurez personal?",
+      a: "Tiene un buen conocimiento de sí mismo y no sobreestima sus habilidades",
+      b: "No consideran necesario utilizar medidas de seguridad como ponerse el cinturón",
+      c: "Cuenta con que otros pueden cometer errores y los acepta",
+      correct: "b",
+      image: null
+    },
+    {
+      q: "¿Los permisos de circulación en los casos de vehículos particulares y motocicletas se pagarán anualmente en el mes de?",
+      a: "Febrero",
+      b: "Diciembre",
+      c: "Marzo",
+      correct: "c",
+      image: null
+    },
+    {
+      q: "¿Cuándo se debe revisar la presión de los neumáticos?",
+      a: "Cuando los neumáticos están calientes",
+      b: "Después de conducir a alta velocidad",
+      c: "Cuando los neumáticos están fríos",
+      correct: "c",
+      image: null
+    },
+    {
+      q: "Una frenada de emergencia es:",
+      a: "Una frenada parcial a alta velocidad",
+      b: "La detención completa del vehículo lo más rápido posible, con seguridad",
+      c: "Una frenada completa bajando la velocidad paulatinamente",
+      correct: "b",
+      image: null
+    },
+    {
+      q: "¿Por qué se recomienda conducir lentamente y mantener la marcha más alta posible cuando hay nieve?",
+      a: "Para tener una menor adherencia de las ruedas",
+      b: "Para dejar disponible una marcha baja en el caso que las ruedas patinen",
+      c: "Para evitar así que las ruedas del vehículo patinen",
+      correct: "c",
+      image: null
+    },
+    {
+      q: "¿Se debe de calentar el motor del vehículo antes de iniciar la marcha?",
+      a: "Sí, ya que permite ahorrar combustible",
+      b: "No, porque así reducimos la contaminación",
+      c: "Sí, porque permite mayor duración del aceite",
+      correct: "b",
+      image: null
+    },
+    {
+      q: "Si los frenos rozan puede ser debido a:",
+      a: "Una mala regulación del pedal de freno",
+      b: "Una mala regulación de las pastillas de freno",
+      c: "A falta de líquido de freno",
+      correct: "b",
+      image: null
+    },
+    {
+      q: "¿Las marchas más bajas tienen menor consumo de combustible?",
+      a: "Verdadero",
+      b: "Falso",
+      c: "Depende del vehículo",
+      correct: "b",
+      image: null
+    },
+    {
+      q: "¿Que requisitos debe tener la persona que acompaña a un menor de 17 años que tiene la licencia de conducir durante la conducción?",
+      a: "Ser mayor de edad y tener licencia clase B de a lo menos 5 años de antigüedad",
+      b: "Tener licencia profesional por más de 5 años de antigüedad",
+      c: "Poseer licencia de conducir clase B de a lo menos 5 años de antigüedad, y también ir en el asiento delantero",
+      correct: "c",
+      image: null
+    },
+    {
+      q: "Darse a la fuga y no avisar a la autoridad en caso de accidente puede ser sancionado con:",
+      a: "Multas, suspensión de licencia o inhabilidad perpetua para conducir vehículos y penas de cárcel efectiva",
+      b: "Sólo suspensión de la licencia de conducir",
+      c: "Sanciones menores",
+      correct: "a",
+      image: null
+    },
+    {
+      q: "La puesta en práctica de los hábitos que conforman la Conducción Eficiente permite reducir entre un 10 y un 15% el consumo de combustible.",
+      a: "Verdadero",
+      b: "Falso",
+      c: "Eso no tiene que ver con la Conducción Eficiente",
+      correct: "a",
+      image: null
+    },
+    {
+      q: "¿Qué niños deberán de ir transportados en un Sistema de Retención infantil en el asiento trasero?",
+      a: "Los niños hasta 8 años inclusive",
+      b: "Los niños hasta 12 años inclusive",
+      c: "Los niños hasta 10 años inclusive",
+      correct: "a",
+      image: null
+    },
+    {
+      q: "Si usted va a virar con su auto:",
+      a: "Todas las mencionadas",
+      b: "Debe ubicarse correctamente, así mostrará a los demás la trayectoria que va a seguir",
+      c: "Debe señalizar su intención de virar con una anticipación suficiente",
+      correct: "a",
+      image: null
+    },
+    {
+      q: "Después de pasar sobre un gran charco de agua, ¿qué es conveniente accionar repetidamente y de forma suave?",
+      a: "El embrague, para comprobar que no se ha quedado atascado",
+      b: "El pedal de freno, para que el calor producido por el roce evapore la humedad",
+      c: "La palanca de cambios, para comprobar que las marchas funcionan bien",
+      correct: "b",
+      image: null
+    },
+    {
+      q: "No se deberá adelantar a un ciclista:",
+      a: "Justo antes de un cruce si se pretende virar a la derecha",
+      b: "En un camino de tierra",
+      c: "Recién pasada una intersección",
+      correct: "a",
+      image: null
+    },
+    {
+      q: "Al encontrarse en la oscuridad y en una vía no urbana con otro vehículo, usted debe:",
+      a: "Poner las luces altas inmediatamente después del encuentro",
+      b: "Disminuir la velocidad a la mitad",
+      c: "Mantener siempre las luces bajas una vez pase el automóvil",
+      correct: "a",
+      image: null
+    },
+    {
+      q: "Se debe reducir la velocidad en una curva:",
+      a: "Cuando ya ha pasado la mitad de ella",
+      b: "Cuando la va recorriendo",
+      c: "Antes de entrar a ella",
+      correct: "c",
+      image: null
+    },
+    {
+      q: "¿El seguro obligatorio de accidentes personales cubre los daños a los vehículos involucrados en un accidente de tránsito?",
+      a: "Sí, hasta un 25% de los daños siempre y cuando se deje la constancia respectiva en la unidad policial más cercana al lugar del accidente",
+      b: "No, pues solo ampara los riesgos de muerte y lesiones de las personas a consecuencia del accidente",
+      c: "Sí, hasta un 50% de los daños, siempre y cuando se deje la constancia respectiva en la unidad policial más cercana al lugar del accidente",
+      correct: "b",
+      image: null
+    },
+    {
+      q: "¿Qué significa esta señal?",
+      a: "Es más seguro conducir a la velocidad indicada",
+      b: "La velocidad indicada es la máxima aconsejada",
+      c: "Usted no debe exceder la velocidad indicada",
+      correct: "c",
+      image: "/p123_2ex.jpg"
+    },
+    {
+      q: "Encienda sus luces de estacionamiento:",
+      a: "Cuando estacione en su casa",
+      b: "Cuando esté en terreno con alumbrado",
+      c: "Cuando estacione en una vía sin alumbrado público",
+      correct: "c",
+      image: null
+    },
+    {
+      q: "En una calle de un solo sentido de tránsito, ¿dónde se situará usted para virar a la izquierda?",
+      a: "Tan cerca como sea posible del borde izquierdo de la calzada",
+      b: "Al costado derecho del eje o de la línea central de la vía por la cual circula",
+      c: "Desde el lugar que le resulte más cómodo, siempre que señalice el viraje",
+      correct: "a",
+      image: null
+    },
+    {
+      q: "¿Qué es característico de una persona que cede con facilidad a la presión del grupo?",
+      a: "Demuestra autonomía y voluntad para expresar su opinión",
+      b: "Es muy segura de sí misma",
+      c: "Sienten temor a “quedar en ridículo”.",
+      correct: "c",
+      image: null
+    },
+    {
+      q: "¿Cuál no es una buena medida adoptar en caso de niebla?",
+      a: "Si su vehículo cuenta con focos neblineros delanteros, enciéndalos, simultáneamente con las luces bajas",
+      b: "Conviene utilizar luces altas, porque al proyectarse paralelas sobre la calzada, las diminutas gotas de agua y partículas en suspensión se dejan penetrar y permite ver hacia lo lejos",
+      c: "Las luces de niebla traseras son de gran importancia para ser visto por quienes circulan atrás, pero úselas sólo cuando la niebla es espesa, ya que podría deslumbrar",
+      correct: "b",
+      image: null
+    },
+    {
+      q: "Además de las luces, ¿qué más nos permite distinguir un vehículo en la oscuridad?",
+      a: "Las bocinas",
+      b: "Las luces bajas",
+      c: "Huinchas retro reflectantes",
+      correct: "c",
+      image: null
+    },
+    {
+      q: "¿Quién debe ceder el paso en la situación que se ve en la imagen?",
+      a: "El conductor que más lentamente se acerca al cruce",
+      b: "El conductor del vehículo amarillo que pretende virar a la izquierda",
+      c: "El conductor del camión que se aproxima al cruce por la derecha",
+      correct: "b",
+      image: "/p129_2ex.jpg"
+    },
+    {
+      q: "Las excusas que algunos conductores dan sobre no usar el cinturón de seguridad, ¿cómo son?",
+      a: "Totalmente falsos",
+      b: "Totalmente verdaderos",
+      c: "Falsos algunos de ellos",
+      correct: "a",
+      image: null
+    },
+    {
+      q: "El estrés altera las capacidades del conductor:",
+      a: "Disminuye el riesgo de cometer errores",
+      b: "Se vuelve menos agresivo hacia los demás conductores",
+      c: "Puede tener reacciones impulsivas y/o reducir su campo de atención",
+      correct: "c",
+      image: null
+    },
 
 ];
