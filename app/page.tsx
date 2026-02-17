@@ -191,13 +191,21 @@ export default async function LandingPage() {
 
           {/* CTA Button */}
             <div className="text-center">
-              <Link
-                href="/auth/login"
-                className="inline-block font-bold rounded-lg transition-all hover:scale-105 bg-[#FCD442] text-[#033E8C] px-8 py-4 text-lg md:px-12 md:py-5 md:text-xl shadow-[0_4px_12px_rgba(252,212,66,0.4)] no-underline"
-                style={{}}
-              >
-                Iniciar Sesión
-              </Link>
+              {user ? (
+                <Link
+                  href="/exam"
+                  className="inline-block font-bold rounded-lg transition-all hover:scale-105 bg-[#FCD442] text-[#033E8C] px-8 py-4 text-lg md:px-12 md:py-5 md:text-xl shadow-[0_4px_12px_rgba(252,212,66,0.4)] no-underline"
+                >
+                  Ir al Examen
+                </Link>
+              ) : (
+                <Link
+                  href="/auth/login"
+                  className="inline-block font-bold rounded-lg transition-all hover:scale-105 bg-[#FCD442] text-[#033E8C] px-8 py-4 text-lg md:px-12 md:py-5 md:text-xl shadow-[0_4px_12px_rgba(252,212,66,0.4)] no-underline"
+                >
+                  Iniciar Sesión
+                </Link>
+              )}
             </div>
         </div>
       </main>
