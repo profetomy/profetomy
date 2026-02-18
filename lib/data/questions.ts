@@ -371,7 +371,7 @@ export const allQuestions: Question[] = [
     doublePoints: true,
   },
   {
-    q: "45.	De acuerdo a los conceptos de Convivencia Vial, ¿en que se basa el principio de confianza? ",
+    q: "De acuerdo a los conceptos de Convivencia Vial, ¿en que se basa el principio de confianza?",
     a: "En que no hay que confiar en ningún usuario de la vía",
     b: "En que cada uno haga lo que quiera",
     c: "En que los demás van a cumplir con las normas del transito",
@@ -379,7 +379,7 @@ export const allQuestions: Question[] = [
     image: null,
   },
   {
-    q: "¿Qué acción debe realizar una persona si al ir conduciendo se revienta un neumático trasero de su vehículo? ",
+    q: "¿Qué acción debe realizar una persona si al ir conduciendo se revienta un neumático trasero de su vehículo?",
     a: "Aplicar el freno de mano del vehículo",
     b: "Girar el volante en dirección opuesta al coletazo",
     c: "Girar el volante hacia el lado que se desplaza la cola del vehículo",
@@ -387,7 +387,7 @@ export const allQuestions: Question[] = [
     image: null,
   },
   {
-    q: "Cuando el tiempo es muy frio, la calzada puede estar helada y deslizante. ¿Qué zonas de la calzada son especialmente propensas al hielo? ",
+    q: "Cuando el tiempo es muy frio, la calzada puede estar helada y deslizante. ¿Qué zonas de la calzada son especialmente propensas al hielo?",
     a: "Las pendientes",
     b: "Los lugares sombríos y húmedos",
     c: "Los tramos de vía rectos con leves cambios de rasante",
@@ -395,7 +395,7 @@ export const allQuestions: Question[] = [
     image: null,
   },
   {
-    q: "Para una persona acostumbrada a trabajar de día y dormir durante la noche, ¿en cuál de los siguientes horarios es más probable que aparezca el sueño al conducir? ",
+    q: "Para una persona acostumbrada a trabajar de día y dormir durante la noche, ¿en cuál de los siguientes horarios es más probable que aparezca el sueño al conducir?",
     a: "Entre las 8 y 10 horas y entre las 20 y 22 horas",
     b: "Entre las 11 y 12 horas y entre las 18 y 20 horas",
     c: "Entre las 3 y 5 horas y entre las 14 y 16 horas",
@@ -427,7 +427,7 @@ export const allQuestions: Question[] = [
     image: null,
   },
   {
-    q: "En la imagen se observa un automóvil rojo que está esperando en un cruce en T. el vehículo azul que se acerca desde la izquierda señaliza a la derecha. ¿Qué debe hacer la persona que conduce el vehículo rojo? ",
+    q: "En la imagen se observa un automóvil rojo que está esperando en un cruce en T. el vehículo azul que se acerca desde la izquierda señaliza a la derecha. ¿Qué debe hacer la persona que conduce el vehículo rojo?",
     a: "Ponerse en marcha una vez que el vehiculo azul haya comenzado a virar",
     b: "Ponerse en marcha lentamente, antes de que el vehiculo azul llegue al cruce",
     c: "Ponerse en marcha rápidamente, antes de que el vehiculo azul llegue al cruce`",
@@ -435,7 +435,7 @@ export const allQuestions: Question[] = [
     image: "/p52_ex.png",
   },
   {
-    q: "Dos vehículos circulan en sentido contrario a 90 km/h cada uno. ¿a una razón de cuanto se reduce la distancia entre ambos vehículos?",
+    q: "Dos vehículos circulan en sentido contrario a 90 km/h cada uno. ¿A una razón de cuanto se reduce la distancia entre ambos vehículos?",
     a: "180 km/h",
     b: "270 km/h",
     c: "90 km/h",
@@ -443,7 +443,7 @@ export const allQuestions: Question[] = [
     image: null,
   },
   {
-    q: "En la imagen se observan vehículos que están estacionados sobre un achurado de líneas oblicuas. ¿es esto correcto?",
+    q: "En la imagen se observan vehículos que están estacionados sobre un achurado de líneas oblicuas. ¿Es esto correcto?",
     a: "Sí, porque es una zona excluida al trafico",
     b: "No, porque no se debe estacionar en una zona achurada",
     c: "Sí, porque es una zona especialmente destinada para estacionar",
@@ -459,7 +459,7 @@ export const allQuestions: Question[] = [
     image: null,
   },
   {
-    q: "Al incorporarse a la circulación desde el estacionamiento de un centro comercial, ¿Qué vehiculo tiene preferencia de paso? ",
+    q: "Al incorporarse a la circulación desde el estacionamiento de un centro comercial, ¿Qué vehiculo tiene preferencia de paso?",
     a: "El vehiculo que viene por la calzada",
     b: "El vehiculo que circule a mayor velocidad",
     c: "El vehiculo que se incorpora desde el estacionamiento",
@@ -475,7 +475,7 @@ export const allQuestions: Question[] = [
     image: null,
   },
   {
-    q: "Una calzada de doble transito como la que muestra la fotografía, ¿por dónde debe circular obligatoriamente su vehículo? ",
+    q: "Una calzada de doble transito como la que muestra la fotografía, ¿por dónde debe circular obligatoriamente su vehículo?",
     a: "Por el centro de la calzada",
     b: "Por la derecha de la calzada",
     c: "Por la izquierda de la calzada",
@@ -545,7 +545,7 @@ export const allQuestions: Question[] = [
     image: null,
   },
   {
-    q: "El consumo de bebidas alcohólicas, incluso en cantidades pequeñas, ¿Qué efectos produce? ",
+    q: "El consumo de bebidas alcohólicas, incluso en cantidades pequeñas, ¿Qué efectos produce?",
     a: "Mejora la precisión y la coordinación",
     b: "Reduce la percepción del entorno",
     c: "Agudiza los reflejos",
@@ -562,7 +562,7 @@ export const allQuestions: Question[] = [
     image: null,
   },
   {
-    q: "En una calle de dos pistas con doble sentido de tránsito, una persona conductora encuentra su pista obstruida. ¿Qué debe hacer? ",
+    q: "En una calle de dos pistas con doble sentido de tránsito, una persona conductora encuentra su pista obstruida. ¿Qué debe hacer?",
     a: "Acelerar para alcanzar a pasar antes que los autos que vengan en contra",
     b: "Hacer señas a quienes vengan en contra para que le den la pasada",
     c: "Ceder primero el paso al tránsito que venga en sentido contrario",
@@ -660,7 +660,7 @@ export const allQuestions: Question[] = [
     image: null,
   },
   {
-    q: "No podrán viajar en el asiento delantero del vehículo, excepto en aquellos de cabina simple: ",
+    q: "No podrán viajar en el asiento delantero del vehículo, excepto en aquellos de cabina simple:",
     a: "Las niñas y niños menores de 8 años",
     b: "Las niñas y niños menores de 4 años",
     c: "Las niñas y niños menores de 12 años",
@@ -706,7 +706,7 @@ export const allQuestions: Question[] = [
 
   },
   {
-    q: "¿Cuánto puede aumentar aproximadamente la distancia de frenado cuando la calzada esta con hielo? ",
+    q: "¿Cuánto puede aumentar aproximadamente la distancia de frenado cuando la calzada esta con hielo?",
     a: "5 veces la distancia normal",
     b: "7 veces la distancia normal",
     c: "10 veces la distancia normal",
@@ -714,7 +714,7 @@ export const allQuestions: Question[] = [
     image: null,
   },
   {
-    q: "Aproximadamente, ¿Cuántas horas deben transcurrir para que el organismo de una persona que presenta 1,0 gr de alcohol por litro de sangre se encuentre libre de alcohol? ",
+    q: "Aproximadamente, ¿Cuántas horas deben transcurrir para que el organismo de una persona que presenta 1,0 gr de alcohol por litro de sangre se encuentre libre de alcohol?",
     a: "4 a 6 horas",
     b: "2 a 3 horas",
     c: "7 a 10 horas",
@@ -747,7 +747,7 @@ export const allQuestions: Question[] = [
     image: "/p92_ex.jpg",
   },
   {
-    q: "De acuerdo con las circunstancias que se aprecian en la imagen, ¿sería correcto que el automóvil indicado con la flecha roja continuara derecho? ",
+    q: "De acuerdo con las circunstancias que se aprecian en la imagen, ¿sería correcto que el automóvil indicado con la flecha roja continuara derecho?",
     a: "Si, porque no hay semáforo en rojo ni signo PARE que le indique que debe detenerse",
     b: "No, porque la flecha blanca dibujada en la calzada indica que esa pista es solo para virar",
     c: "Si, porque la flecha blanca dibujada en la calzada solamente recomienda usar esa pista para virar",
@@ -755,10 +755,10 @@ export const allQuestions: Question[] = [
     image: "/p93_ex.png",
   },
   {
-    q: "¿Cómo será su actitud en la conducción de un automóvil? ",
+    q: "¿Cómo será su actitud en la conducción de un automóvil?",
     a: "Insegura, sin respeto hacia los demás",
     b: "Es indiferente la actitud para conducir un automóvil",
-    c: "Segura, responsable y tranquila ",
+    c: "Segura, responsable y tranquila",
     correct: "c",
     image: null,
   },
@@ -771,7 +771,7 @@ export const allQuestions: Question[] = [
     image: null,
   },
   {
-    q: "Una persona conduce por una calle de doble sentido de tránsito. ¿Dónde debería ubicarse para virar a la izquierda? ",
+    q: "Una persona conduce por una calle de doble sentido de tránsito. ¿Dónde debería ubicarse para virar a la izquierda?",
     a: "Al centro de la pista donde va transitando ",
     b: "A la derecha de la línea del centro de la calzada",
     c: "A la izquierda de la línea del centro de la calzada ",
@@ -779,7 +779,7 @@ export const allQuestions: Question[] = [
     image: null,
   },
   {
-    q: "¿Cuándo NO se alarga la distancia de frenado de un vehículo? ",
+    q: "¿Cuándo NO se alarga la distancia de frenado de un vehículo?",
     a: "Cuando es de noche ",
     b: "Cuando la calzada está húmeda",
     c: "Cuando llueve y los neumáticos están desgastados ",
@@ -787,7 +787,7 @@ export const allQuestions: Question[] = [
     image: null,
   },
   {
-    q: "Una persona conductora se detiene ante un paso de cebra donde los peatones que se encuentran en la vereda no comienzan a cruzar. ¿Qué debería hacer la persona ",
+    q: "Una persona conductora se detiene ante un paso de cebra donde los peatones que se encuentran en la vereda no comienzan a cruzar. ¿Qué debería hacer la persona?",
     a: "Reanudar la marcha",
     b: "Esperar pacientemente ",
     c: "Hacerle señas con la mano a los peatones para que crucen",
@@ -876,7 +876,7 @@ export const allQuestions: Question[] = [
     image: "/p7_2ex.jpg"
   },
   {
-    q: "A la vista de la señal, ¿con qué debe contar usted?¿Qué significa esta señal?",
+    q: "A la vista de la señal, ¿Con qué debe contar usted? ¿Qué significa esta señal?",
     a: "Con una peligrosa curva a la derecha",
     b: "Con vehículos que crucen el camino antes de la curva",
     c: "Con una curva pronunciada hacia la izquierda y con la posibilidad de que pueda haber un vehículo detenido justo después de la curva",
@@ -1020,7 +1020,7 @@ export const allQuestions: Question[] = [
       image: null
     },
     {
-      q: "¿Cuál es el color de fondo de la señalización informativa de autopistas?¿Qué significa esta señal?",
+      q: "¿Cuál es el color de fondo de la señalización informativa de autopistas? ¿Qué significa esta señal?",
       a: "Azul",
       b: "Blanco",
       c: "Café",
@@ -1060,7 +1060,7 @@ export const allQuestions: Question[] = [
       image: null
     },
     {
-      q: "Cuando dos o más vehículos circulan en un mismo sentido por la derecha, ¿qué distancia debe mantener respecto del vehículo que le antecede?¿En qué circunstancia usted se detendría justo encima de un paso de cebra existente?",
+      q: "Cuando dos o más vehículos circulan en un mismo sentido por la derecha, ¿qué distancia debe mantener respecto del vehículo que le antecede?",
       a: "Que cualquier otro pueda adelantarlo",
       b: "Que tres vehículos puedan adelantarlos",
       c: "Que dos vehículos puedan adelantarlos",
@@ -1829,7 +1829,7 @@ export const allQuestions: Question[] = [
     },
     /*Tercer archivo de preguntas*/
     {
-      q: "Un vehículo circula a una velocidad de 70 km/h. aproximadamente. ¿Qué distancia en metros recorrerá este vehículo desde que la persona percibe un peligro hasta que comienza a frenar? ",
+      q: "Un vehículo circula a una velocidad de 70 km/h aproximadamente. ¿Qué distancia en metros recorrerá este vehículo desde que la persona percibe un peligro hasta que comienza a frenar? ",
       a: "5 metros",
       b: "10 metros",
       c: "20 metros",
@@ -1845,7 +1845,7 @@ export const allQuestions: Question[] = [
       image: null
     },
     {
-      q: "Dos vehículos circulan en sentido contrario a 90 km/h cada uno ¿A una razón de cuanto se reduce la distancia entre ambos vehículos? ",
+      q: "Dos vehículos circulan en sentido contrario a 90 km/h cada uno ¿A una razón de cuanto se reduce la distancia entre ambos vehículos?",
       a: "270 km/h",
       b: "90 km/h",
       c: "180 km/h",
@@ -1853,7 +1853,7 @@ export const allQuestions: Question[] = [
       image: null
     },
     {
-      q: "Aproximadamente, ¿Cuál es la distancia de detención mínima de un automóvil en un asfalto seco si se viaja a 90 km/h? ",
+      q: "Aproximadamente, ¿Cuál es la distancia de detención mínima de un automóvil en un asfalto seco si se viaja a 90 km/h?",
       a: "30 metros ",
       b: "70 metros",
       c: "50 metros",
@@ -1869,15 +1869,7 @@ export const allQuestions: Question[] = [
       image: null
     },
     {
-      q: "¿Cuáles son los valores que nos transmite la Educación vial? ",
-      a: "La valentía, el arrojo, la temeridad",
-      b: "Respeto, solidaridad, compresión y tolerancia ",
-      c: "Respeto solo hacia uno mismo, destreza en el manejo del vehículo y cumplimiento de las normas de transito ",
-      correct: "b",
-      image: null
-    },
-    {
-      q: "¿Qué opción es VERDADERA con respecto al airbag o bolsa de aire de un vehículo? ",
+      q: "¿Qué opción es VERDADERA con respecto al airbag o bolsa de aire de un vehículo?",
       a: "Reduce el campo de la persona que conduce ",
       b: "Complementa el uso de cinturón de seguridad",
       c: "Disminuye la probabilidad de sufrir un siniestro",
@@ -1885,7 +1877,7 @@ export const allQuestions: Question[] = [
       image: null
     },
     {
-      q: "En una colisión, ¿Cuál de los siguientes elementos de un automóvil reduce el riesgo de sufrir lesiones de cuello? ",
+      q: "En una colisión, ¿Cuál de los siguientes elementos de un automóvil reduce el riesgo de sufrir lesiones de cuello?",
       a: "Un sistema de frenos ABS",
       b: "Un asiento dotado de airbag (bolsas de aire) ",
       c: "Un asiento con apoya-cabeza ajustado en forma apropiada",
@@ -1893,7 +1885,7 @@ export const allQuestions: Question[] = [
       image: null
     },
     {
-      q: "¿Qué tipo de conducción es recomendable practicar por su seguridad y la de los demás? ",
+      q: "¿Qué tipo de conducción es recomendable practicar por su seguridad y la de los demás?",
       a: "Una conducción excesivamente lenta ",
       b: "Una conducción defensiva y preventiva  ",
       c: "Una conducción agresiva y temeraria ",
@@ -1901,15 +1893,7 @@ export const allQuestions: Question[] = [
       image: null
     },
     {
-      q: "Aproximadamente, ¿Cuántas muertes se originan al año por siniestros de tránsito en chile? ",
-      a: "Entre 3500 y 4500 ",
-      b: "Entre 1300 y 2500 ",
-      c: "Entre 500 y 700 ",
-      correct: "b",
-      image: null
-    },
-    {
-      q: "¿Qué efecto tiene desenganchar el motor del vehículo? ",
+      q: "¿Qué efecto tiene desenganchar el motor del vehículo?",
       a: "Permite realizar maniobras con mayor facilidad",
       b: "Reduce el control del conductor sobre el vehículo ",
       c: "Aumenta el consumo de combustible del vehículo ",
@@ -1917,7 +1901,7 @@ export const allQuestions: Question[] = [
       image: null
     },
     {
-      q: "¿Qué puede esperarse de una persona conductora impulsiva? ",
+      q: "¿Qué puede esperarse de una persona conductora impulsiva?",
       a: "Que conduzca con excesiva precaución ",
       b: "Que actúe sin pensar en las consecuencias",
       c: "Que reaccione adecuadamente ante cualquier imprevisto  ",
@@ -1925,7 +1909,7 @@ export const allQuestions: Question[] = [
       image: null
     },
     {
-      q: "¿Cuál de los siguientes líquidos de un vehículo podría causar un accidente en el caso de estar en nivel bajo? ",
+      q: "¿Cuál de los siguientes líquidos de un vehículo podría causar un accidente en el caso de estar en nivel bajo?",
       a: "El líquido de freno",
       b: "El agua de la batería ",
       c: "El líquido refrigerante ",
@@ -1933,7 +1917,7 @@ export const allQuestions: Question[] = [
       image: null
     },
     {
-      q: "¿Cuándo debe revisarse la presión de aire de los neumáticos? ",
+      q: "¿Cuándo debe revisarse la presión de aire de los neumáticos?",
       a: "Al finalizar un viaje largo",
       b: "Al menos una vez al mes ",
       c: "Cuando los neumáticos están fríos ",
@@ -1941,7 +1925,7 @@ export const allQuestions: Question[] = [
       image: null
     },
     {
-      q: "¿Cuál de las siguientes afirmaciones es FALSA? ",
+      q: "¿Cuál de las siguientes afirmaciones es FALSA?",
       a: "Las personas que sobreestiman sus habilidades de conducción a menudo crean situaciones de riesgo",
       b: "Las personas jóvenes con frecuencia sobreestiman sus habilidades de conducción, teniendo un mayor riesgo de siniestros ",
       c: "Las personas que sobreestiman sus habilidades de conducción generalmente conducirán más atentos y concentrados ",
@@ -1958,7 +1942,7 @@ export const allQuestions: Question[] = [
       doublePoints: true
     },
     {
-      q: "¿Qué es el efecto submarino del cinturón de seguridad? ",
+      q: "¿Qué es el efecto submarino del cinturón de seguridad?",
       a: "El cinturón de seguridad se bloquea automáticamente evitando cualquier tipo de lesión",
       b: "Cuando la persona se desliza por debajo del cinturón de seguridad, aumentando el riesgo de lesión ",
       c: "Cuando el cinturón de seguridad está demasiado ajustado y causa molestias a la persona ",
@@ -1967,7 +1951,7 @@ export const allQuestions: Question[] = [
       doublePoints: true
     },
     {
-      q: "¿Cuál es la profundidad mínima permitida en los surcos de los neumáticos de un automóvil? ",
+      q: "¿Cuál es la profundidad mínima permitida en los surcos de los neumáticos de un automóvil?",
       a: "1,4 mm",
       b: "1,2 mm",
       c: "1,6 mm",
@@ -1975,16 +1959,7 @@ export const allQuestions: Question[] = [
       image: null,
     },
     {
-      q: "¿Qué ocurre cuando una persona ingiere pequeñas concentraciones de alcohol? ",
-      a: "Su visión periférica se mantiene en perfecto estado",
-      b: "Disminuyen ciertas inhibiciones y la persona tiende a sobrestimar sus capacidades",
-      c: "Cuando es una persona conductora experimentada, su capacidad de decisión no se ve afectada",
-      correct: "b",
-      image: null,
-      doublePoints: true
-    },
-    {
-      q: "Aproximadamente, ¿Cuántas horas deben transcurrir para que el organismo de una persona que presenta 1,0 gr de alcohol por litro de sangre se encuentra libre de alcohol? ",
+      q: "Aproximadamente, ¿Cuántas horas deben transcurrir para que el organismo de una persona que presenta 1,0 gr de alcohol por litro de sangre se encuentra libre de alcohol?",
       a: "4 a 6 horas",
       b: "2 a 3 horas",
       c: "7 a 10 horas",
@@ -1993,29 +1968,29 @@ export const allQuestions: Question[] = [
       doublePoints: true
     },
     {
-      q: "¿Qué aspecto NO afecta la prueba de alcoholemia de una persona conductora? ",
-      a: "El tiempo transcurrido desde que ingreso alcohol ",
-      b: "El haber fumado mientras consumía alcohol ",
-      c: "Su peso corporal ",
+      q: "¿Qué aspecto NO afecta la prueba de alcoholemia de una persona conductora?",
+      a: "El tiempo transcurrido desde que ingreso alcohol",
+      b: "El haber fumado mientras consumía alcohol",
+      c: "Su peso corporal",
       correct: "b",
       image: null,
       doublePoints: true
     },
     {
-      q: "¿En qué medica se ve afectado el tiempo de reacción de una persona conductora por la ingesta de alcohol? ",
-      a: "De ninguna manera, dado que el alcohol no afecta al tiempo de reacción ",
-      b: "Aumenta, debido a que la comunicación en el sistema nervioso se hace más lenta ",
-      c: "Disminuye, debido a que la comunicación en el sistema nervioso se acelera ",
+      q: "¿En qué medica se ve afectado el tiempo de reacción de una persona conductora por la ingesta de alcohol?",
+      a: "De ninguna manera, dado que el alcohol no afecta al tiempo de reacción",
+      b: "Aumenta, debido a que la comunicación en el sistema nervioso se hace más lenta",
+      c: "Disminuye, debido a que la comunicación en el sistema nervioso se acelera",
       correct: "b",
       image: null,
       doublePoints: true
     },
     {
-      q: "¿Cuáles de las siguientes razones explican que el consumo de alcohol disminuya la capacidad de reacción de una persona conductora? ",
+      q: "¿Cuáles de las siguientes razones explican que el consumo de alcohol disminuya la capacidad de reacción de una persona conductora?",
       statements: [
-        "Inhibe la capacidad de distinguir entre diferentes estímulos ",
+        "Inhibe la capacidad de distinguir entre diferentes estímulos",
         "Hace más rápida la comunicación en el sistema nervioso",
-        "Perturba el estado de animo ",
+        "Perturba el estado de animo",
         
       ],
       a: "I y III ",
@@ -2035,7 +2010,7 @@ export const allQuestions: Question[] = [
       doublePoints: true
     },
     {
-      q: "¿Cuál de las siguientes afirmaciones es FALSA? ",
+      q: "¿Cuál de las siguientes afirmaciones es FALSA?",
       a: "Al tener el estómago vacío el alcohol se absorbe más rápidamente ",
       b: "Una tasa de alcohol de 0,3 gr/l no afecta la función psicomotora de las personas ",
       c: "El consumo de éxtasis puede provocar un comportamiento agresivo con las demás personas conductoras ",
@@ -2044,7 +2019,7 @@ export const allQuestions: Question[] = [
       doublePoints: true
     },
     {
-      q: "Aproximadamente. ¿En cuánto tiempo se alcanza el punto máximo de efectos negativos para la conducción producto de la ingesta de bebidas alcohólicas? ",
+      q: "Aproximadamente. ¿En cuánto tiempo se alcanza el punto máximo de efectos negativos para la conducción producto de la ingesta de bebidas alcohólicas?",
       a: "Inmediatamente ",
       b: "A las 2 horas de haberlas ingerido",
       c: "A la hora de haberlas ingerido ",
@@ -2062,7 +2037,7 @@ export const allQuestions: Question[] = [
       doublePoints: true
     },
     {
-      q: "Si una persona ha ingerido alcohol, ¿Cuál efecto probablemente NO le ocurrirá al conducir? ",
+      q: "Si una persona ha ingerido alcohol, ¿Cuál efecto probablemente NO le ocurrirá al conducir?",
       a: "Empobrecimiento de su juicio sobre la velocidad",
       b: "Aumento de la confianza en sí mismo ",
       c: "Aumento de la conciencia de peligro ",
@@ -2071,9 +2046,9 @@ export const allQuestions: Question[] = [
       doublePoints: true
     },
     {
-      q: "¿Qué otra sustancia puede perjudicar la capacidad para conducir de una persona en forma similar al alcohol? ",
-      a: "El consumo de té ",
-      b: "El consumo de café ",
+      q: "¿Qué otra sustancia puede perjudicar la capacidad para conducir de una persona en forma similar al alcohol?",
+      a: "El consumo de té",
+      b: "El consumo de café",
       c: "La ingesta de algunos medicamentos",
       correct: "c",
       image: null,
@@ -2088,7 +2063,7 @@ export const allQuestions: Question[] = [
       doublePoints: true
     },
     {
-      q: "¿Cuál es la principal razón por la que se utilizan sistemas de retención infantil?  ",
+      q: "¿Cuál es la principal razón por la que se utilizan sistemas de retención infantil?",
       a: "Para proteger a las niñas y niños en caso de siniestro",
       b: "Para que las niñas y niños viajen cómodamente",
       c: "Para mantener a las niñas y niños ocupados durante el viaje",
@@ -2105,6 +2080,270 @@ export const allQuestions: Question[] = [
       image: null,
       doublePoints: true
     },
+    {
+      q: "¿Cuál es la forma más segura de llevar a una niña o niño de 2 o 3 años en un vehículo?",
+      a: "En el asiento que está detrás de la persona conductora, con el cinturón de seguridad ajustado",
+      b: "En las piernas de una persona adulta, compartiendo un mismo cinturón de seguridad",
+      c: "En el asiento trasero, en una silla de seguridad",
+      correct: "c",
+      image: null,
+    },
+    {
+      q: "Si un semáforo se encuentra con luz verde, ¿Qué acción debe realizar una persona conductora antes de avanzar en un cruce? ",
+      a: "Mirar hacia ambos lados antes de cruzar",
+      b: "Verificar que la pista esta expedita justo después del cruce",
+      c: "Cerciorarse de que la luz del semáforo no este pronta a cambiar",
+      correct: "b",
+      image: null,
+    },
+    {
+      q: "¿Cuál debe ser el comportamiento de una persona conductora ante un semáforo en amarillo?",
+      a: "Si es posible hacerlo con seguridad, detenerse como si se tratara de una luz roja",
+      b: "Acelerar para pasar antes de que cambie a luz roja",
+      c: "Pasar igual como si fuera un semáforo intermitente",
+      correct: "a",
+      image: null,
+    },
+    {
+      q: "Una persona conduce a 40/h cuando, 50 metros adelante, el semáforo cambia a amarillo. En esta situación ¿Qué debería hacer?",
+      a: "Disminuir la velocidad y detenerse",
+      b: "Acelerar para alcanzar a cruzar",
+      c: "Continuar a la misma velocidad",
+      correct: "a",
+      image: null,
+    },
+    {
+      q: "¿Qué significa esta señal?",
+      a: "La proximidad de una zona en que es probable la presencia de personas ciclistas en la vía",
+      b: "La proximidad de una zona en que las personas ciclistas deben circular en sentido contrario",
+      c: "La proximidad de una zona en que las personas ciclistas deben circular por la pista de la derecha",
+      correct: "a",
+      image: "/p50_3ex.jpg",
+    },
+    {
+      q: "¿De qué peligro advierte la señal?",
+      a: "De curva y contra curva a la derecha",
+      b: "De zona de curvas sucesivas",
+      c: "De pavimento resbaladizo",
+      correct: "c",
+      image: "/p51_3ex.jpg",
+    },
+    {
+      q: "¿Qué debe hacer una persona conductora cuando enfrenta esta señal?",
+      a: "Detenerse siempre",
+      b: "Detenerse solo si viene algún vehículo por la otra vía",
+      c: "Detenerse solo si hay peatones esperando a cruzar",
+      correct: "a",
+      image: "/p52_3ex.jpg",
+    },
+    {
+      q: "¿Sobre qué peligro le advierte a una persona conductora esta señal?",
+      a: "Posibles desprendimientos sobre la calzada",
+      b: "Posibilidad de fuertes vientos laterales",
+      c: "Posibilidad de aluviones",
+      correct: "a",
+      image: "/p55_3ex.png",
+    },
+    {
+      q: "¿De qué peligro advierte la señal?",
+      a: "De diferencia en el nivel de calzada  ",
+      b: "De la posible presencia de agua en la calzada",
+      c: "De la posible presencia de piedras sueltas en la vida ",
+      correct: "c",
+      image: "/p57_3ex.jpg",
+    },
+    {
+      q: "¿Qué indica la señal de transito que se observa en la imagen?",
+      a: "Advierte de la proximidad de un cruce peligroso",
+      b: "La obligación de detenerse a la altura de la señal",
+      c: "La obligación de ceder el paso a los vehículos que se aproximen por la otra vía",
+      correct: "c",
+      image: "/p58_3ex.jpg",
+    },
+    {
+      q: "¿Cuál de las imágenes muestra un correcto adelantamiento efectuado en una calzada bidireccional?",
+      a: "La imagen A",
+      b: "La imagen B",
+      c: "La imagen C",
+      correct: "b",
+      image: "/p59_3ex.jpg",
+    },
+    {
+      q: "En la situación que muestra la imagen, ¿Qué debería hacer la persona que conduce si va circulando a 70 km/h? ",
+      statements: [
+        "Frenar en seco",
+        "Frenar suavemente",
+        "Continuar derecho por la vía",
+        "Desplazarse hacia la izquierda "
+      ],
+      a: "I y III",
+      b: "II y III",
+      c: "II y IV",
+      correct: "b",
+      image: "/p60_3ex.jpg",
+    },
+    {
+      q: "¿Cuál es la velocidad máxima permitida en una carretera en zona rural al conducir un automóvil de día por una calzada en buen estado y transito bidireccional con una pista por sentido?",
+      a: "60 km/h",
+      b: "100 km/h",
+      c: "120 km/h",
+      correct: "b",
+      image: null,
+      doublePoints: true
+    },
+    {
+      q: "¿Qué significa esta señal?",
+      a: "Que se debe conducir a un máximo de 70 kilómetros por hora",
+      b: "Que se debe mantener una velocidad inferior a 70 kilómetros por hora",
+      c: "Que se debe conducir a un máximo de 70 kilómetros por hora, excepto al adelantar por la izquierda, situación en la que puede aumentar la velocidad",
+      correct: "a",
+      image: null,
+      doublePoints: true
+    },{
+      q: "¿Cómo se puede evitar que el vehículo patine cuando la calzada está cubierta con una capa de hielo? ",
+      a: "Conduciendo a una velocidad baja en el cambio más alto posible",
+      b: "Usando el freno de mano si las ruedas comienzan a resbalar",
+      c: "Conduciendo en un cambio bajo todo el tiempo",
+      correct: "a",
+      image: null,
+    },{
+      q: "¿Cuál de las siguientes afirmaciones es VERDADERO en cuanto a la conducción durante la noche?",
+      a: "Las luces bajas permiten ver las marcas en el pavimento a 200 m y más",
+      b: "La capacidad visual de las personas conductoras se ve disminuida, lo que aumenta la posibilidad de siniestros",
+      c: "La capacidad de concentración de las personas conductoras se ve aumentada, debido a la menor cantidad de luz",
+      correct: "b",
+      image: null,
+    },{
+      q: "En épocas de invierno, ¿Dónde es más previsible que haya hielo en la calzada? ",
+      a: "En las intersecciones",
+      b: "En calles con alto flujo vehicular",
+      c: "En tramos de vías que pasan entre bosques",
+      correct: "c",
+      image: null,
+    },{
+      q: "¿En qué circunstancias la distancia de detención total de un vehículo es mucho más larga?",
+      a: "Cuando hay neblina",
+      b: "Cuando está lloviendo",
+      c: "Cuando hay vientos fuertes",
+      correct: "b",
+      image: null,
+    },{
+      q: "¿Cuál de las siguientes afirmaciones es correcta en cuanto a la conducción bajo la lluvia?",
+      a: "El riesgo de que los neumáticos patinen es mayor mientras mayor es la velocidad",
+      b: "El riesgo de que los neumáticos patinen es menor cuando recién ha comenzado a llover",
+      c: "Se puede eliminar el riesgo de patinaje de los neumáticos verificando el buen estado de los frenos",
+      correct: "a",
+      image: null,
+    },{
+      q: "En una calzada mojada el vehículo comienza a patinar, ¿Qué es lo primero que debe hacer?",
+      a: "Soltar el freno completamente",
+      b: "Tirar rápidamente del freno de mano",
+      c: "Poner el pie en el pedal de embrague",
+      correct: "a",
+      image: null,
+    },{
+      q: "Una persona conductora va en su vehículo tirando un remolque pequeño que comienza a zigzaguear. ¿Qué debe hacer?",
+      a: "Frenar a fondo, manteniendo la presión sobre el pedal de freno",
+      b: "Retirar suavemente el pie del acelerador y disminuir la velocidad",
+      c: "Aumentar la velocidad para detener el movimiento oscilante del remolque",
+      correct: "b",
+      image: null,
+    },{
+      q: "En relación con el transporte de una carga sobre la parrilla de un automóvil, ¿Cuál de las siguientes afirmaciones constituye una obligación para la persona conductora?",
+      a: "Llevar carga solo cuando sea estrictamente necesario",
+      b: "Llevar la carga cubierta con un plástico",
+      c: "Llevar la carga muy bien sujeta",
+      correct: "c",
+      image: null,
+    },{
+      q: "¿Qué acción de las siguientes incrementa el consumo de combustible? ",
+      a: "Presionar el acelerador al dar arranque al motor",
+      b: "No presionar el acelerador al dar arranque al motor",
+      c: "Presionar el embrague el dar arranque al motor",
+      correct: "a",
+      image: null,
+    },{
+      q: "Antes de iniciar un viaje es importante:",
+      statements:[
+        "Planificar el viaje",
+        "Preparar la carga",
+        "Revisar la presión de los neumáticos"
+      ],
+      a: "II y III",
+      b: "I, II, III",
+      c: "I y II",
+      correct: "b",
+      image: null,
+    },{
+      q: "Cuando una persona conductora es la primera en llegar al sitio de un siniestro, ¿Qué debería hacer?",
+      statements:[
+        "Encender sus luces de advertencia de peligro para alertar a las demás personas conductoras",
+        "Asegurarse de que los motores de los vehículos a combustión involucrados estén apagados ",
+        "Abandonar el lugar tan pronto llegue otra persona conductora",
+        "Ayudar a salir a las personas de los vehículos en caso riesgo de incendio o explosión "
+      ],
+      a: "I, II y III",
+      b: "I y II",
+      c: "I, II y IV",
+      correct: "c",
+      image: null,
+    },{
+      q: "A causa de un siniestro, una persona se encuentra con una fuerte hemorragia en la parte inferior de una pierna. En esta situación, ¿Qué es importante hacer para ayudar a la persona herida?",
+      a: "Mantener presión directa y firme sobre la herida con un material limpio",
+      b: "Mantener a la persona sentada mientras se espera a que llegue una ambulancia",
+      c: "Tranquilizar a la persona herida y darle algo calienta para beber",
+      correct: "a",
+      image: null,
+    },{
+      q: "¿Qué debería hacer una persona conductora si es la primera en llegar al sitio de un siniestro? ",
+      statements:[
+        "Asegurarse de que los motores de los vehículos a combustión involucrados estén apagados ",
+        "Ayudar a salir a las personas de los vehículos en caso de peligros de incendio o explosión",
+        "Tranquilizar a los heridos dándoles a beber agua ",
+      ],
+      a: "II y III",
+      b: "I y III",
+      c: "I y II",
+      correct: "c",
+      image: null,
+    },{
+      q: "¿Qué debe hacer una persona conductora al detenerse para prestar ayuda en un siniestro?",
+      a: "Mantener abrigadas a las personas heridas, asegurándose que no queden solas ",
+      b: "Mantener a las personas lesionadas en movimiento para que no pierdan el conocimiento, asegurándose que no queden solas",
+      c: "Dar a las personas heridas algo caliente para beber, ayudarlas a tranquilizarse y trasladarlas a un centro asistencial lo más rápido posible",
+      correct: "a",
+      image: null,
+    },{
+      q: "Respecto a los cruces ferroviarios, ¿Cuál de las siguientes opciones es VERDADERA?",
+      a: "Está permitido estacionar a una distancia mínima de 10 metros de un cruce ferroviario",
+      b: "Si ya se ha ingresado a un cruce ferroviario y se aproxima un tren a lo lejos, se recomienda continuar avanzando",
+      c: "Si no se siente tren alguno en las proximidades es licito efectuar un adelantamiento en un cruce ferroviario",
+      correct: "b",
+      image: null,
+    },{
+      q: "¿Cuál de las siguientes opciones corresponde a uno de los requisitos que debe cumplir quien acompaña a una persona de 17 años que conduce un vehículo con su licencia al día?",
+      a: "Ser mayor de 35 años",
+      b: "La persona debe ir sentada en el asiento delantero",
+      c: "Haber egresado de enseñanza media",
+      correct: "b",
+      image: null,
+    },{
+      q: "¿A qué distancia mínima detrás de otro vehículo debe estacionarse una persona?",
+      a: "60 centímetros",
+      b: "40 centímetros ",
+      c: "20 centímetros",
+      correct: "a",
+      image: null,
+    },{
+      q: "¿Quién debe ceder el paso en la situación que muestra la imagen? ",
+      a: "La persona conductora que más lentamente se acerca al cruce",
+      b: "La persona que conduce el vehículo rojo que pretende virar a la izquierda ",
+      c: "La persona que conduce el vehículo amarillo que se aproxima al cruce por la derecha ",
+      correct: "b",
+      image: "/p87_3ex.jpg",
+    }
+      
+      
 
     
     

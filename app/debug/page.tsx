@@ -62,7 +62,7 @@ function SubscriptionRequired() {
           marginBottom: '32px',
           lineHeight: '1.6'
         }}>
-          Esta es una página de depuración. Necesitas permisos de administrador o suscripción activa.
+          Esta es una página de depuración. Solo disponible para administradores.
         </p>
         <Link
           href="/"
@@ -143,10 +143,12 @@ export default function DebugPage() {
         if (authUser) setUser(authUser as User);
         if (authIsAdmin) setIsAdmin(authIsAdmin);
 
-        setHasActiveSubscription(hasAccess);
+        // Strict Admin Check for Debug Page
+        const isAdminAccess = !!authIsAdmin;
+        setHasActiveSubscription(isAdminAccess);
         setIsCheckingSubscription(false);
 
-        if (hasAccess) {
+        if (isAdminAccess) {
           // INITIALIZE IN DEBUG MODE
           initializeExam('debug');
           // For debug, arguably we could skip instructions and just start?
