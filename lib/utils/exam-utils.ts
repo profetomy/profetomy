@@ -1,21 +1,23 @@
 import { Question, ExamResults, UserAnswer } from '@/lib/types/exam';
 
 export function generateRandomExam(allQuestions: Question[]): Question[] {
-  // Shuffle all questions
-  const shuffled = [...allQuestions].sort(() => 0.5 - Math.random());
+  // Separate questions into double-points and normal pools
+  const doublePointQuestions = allQuestions.filter(q => q.doublePoints);
+  const normalQuestions = allQuestions.filter(q => !q.doublePoints);
+
+  // Shuffle both pools
+  const shuffledDouble = [...doublePointQuestions].sort(() => 0.5 - Math.random());
+  const shuffledNormal = [...normalQuestions].sort(() => 0.5 - Math.random());
+
+  // Select exactly 3 double-point questions (or fewer if not available)
+  const selectedDouble = shuffledDouble.slice(0, 3);
   
-  // Take first 35
-  const examQuestions = shuffled.slice(0, 35);
-  
-  // Select 3 random questions for double points
-  const doublePointsIndices: number[] = [];
-  while (doublePointsIndices.length < 3) {
-    const randomIndex = Math.floor(Math.random() * 35);
-    if (!doublePointsIndices.includes(randomIndex)) {
-      doublePointsIndices.push(randomIndex);
-      examQuestions[randomIndex].doublePoints = true;
-    }
-  }
+  // Select remaining needed to reach 35 total (usually 32)
+  const neededNormal = 35 - selectedDouble.length;
+  const selectedNormal = shuffledNormal.slice(0, neededNormal);
+
+  // Combine and shuffle the final exam set
+  const examQuestions = [...selectedDouble, ...selectedNormal].sort(() => 0.5 - Math.random());
   
   return examQuestions;
 }
