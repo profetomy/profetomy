@@ -32,6 +32,15 @@ export default function Page() {
           }}>
             Inicia sesión para continuar practicando
           </p>
+          <p style={{
+            color: '#D97706', // Un color naranja suave para advertencia/info
+            fontSize: '0.9rem',
+            marginTop: '12px',
+            marginBottom: '0',
+            fontWeight: '600'
+          }}>
+            Solo se puede iniciar sesión con cuentas creadas por el Profe Tomy.
+          </p>
         </div>
 
         {/* Login Form */}
