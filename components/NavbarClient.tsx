@@ -228,11 +228,20 @@ export function NavbarClient({
           ) : (
             <>
               {/* Usuario no logueado */}
+              {/* Botón de Registro oculto temporalmente
+              <Link
+                href="/auth/signup"
+                className="bg-transparent text-[#FCD442] border-2 border-[#FCD442] px-2 py-1.5 sm:px-4 sm:py-2 rounded-md no-underline text-xs sm:text-sm font-bold shadow-sm hover:bg-[#FCD442]/10 transition-colors"
+              >
+                <span className="sm:hidden">Registro</span>
+                <span className="hidden sm:inline">Registrarse</span>
+              </Link>
+              */}
               <Link
                 href="/auth/login"
                 className="bg-[#FCD442] text-[#033E8C] px-2 py-1.5 sm:px-4 sm:py-2 rounded-md no-underline text-xs sm:text-sm font-extrabold shadow-sm transform transition-transform hover:scale-105"
               >
-                <span className="sm:hidden">Iniciar Sesión</span>
+                <span className="sm:hidden">Ingresar</span>
                 <span className="hidden sm:inline">Iniciar Sesión</span>
               </Link>
             </>

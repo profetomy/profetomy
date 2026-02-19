@@ -1,4 +1,4 @@
-import { LoginForm } from "@/components/login-form";
+import { SignUpForm } from "@/components/signup-form";
 import Link from "next/link";
 
 export default function Page() {
@@ -30,13 +30,12 @@ export default function Page() {
             color: '#4B5563',
             fontSize: '1.05rem'
           }}>
-            Inicia sesión para continuar practicando
+            Crea una cuenta para comenzar
           </p>
-
         </div>
 
-        {/* Login Form */}
-        <LoginForm />
+        {/* Signup Form */}
+        <SignUpForm />
 
         {/* Footer Links */}
         <div className="text-center mt-8" style={{

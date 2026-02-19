@@ -2197,7 +2197,7 @@ export const allQuestions: Question[] = [
       b: "Que se debe mantener una velocidad inferior a 70 kilómetros por hora",
       c: "Que se debe conducir a un máximo de 70 kilómetros por hora, excepto al adelantar por la izquierda, situación en la que puede aumentar la velocidad",
       correct: "a",
-      image: null,
+      image: "/p63_3ex.png",
       doublePoints: true
     },{
       q: "¿Cómo se puede evitar que el vehículo patine cuando la calzada está cubierta con una capa de hielo? ",
@@ -2340,7 +2340,7 @@ export const allQuestions: Question[] = [
       b: "La persona que conduce el vehículo rojo que pretende virar a la izquierda ",
       c: "La persona que conduce el vehículo amarillo que se aproxima al cruce por la derecha ",
       correct: "b",
-      image: "/p87_3ex.jpg",
+      image: "/p87_3ex.png",
     }
       
       
