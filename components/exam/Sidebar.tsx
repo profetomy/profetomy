@@ -15,6 +15,7 @@ interface SidebarProps {
   onShowInstructions: () => void;
   onCancelExam: () => void;
   onFinishExam: () => void;
+  onEditQuestion?: () => void;
 }
 
 export function Sidebar({
@@ -27,7 +28,8 @@ export function Sidebar({
   onQuestionClick,
   onShowInstructions,
   onCancelExam,
-  onFinishExam
+  onFinishExam,
+  onEditQuestion
 }: SidebarProps) {
   return (
     <div className="flex flex-col h-full" style={{
@@ -79,6 +81,23 @@ export function Sidebar({
         >
           Instrucciones
         </button>
+
+        {onEditQuestion && (
+          <button
+            onClick={onEditQuestion}
+            className="text-white rounded-lg font-bold cursor-pointer transition-opacity hover:opacity-90"
+            style={{
+              backgroundColor: '#fbbf24', // Amber/Yellow for attention
+              color: '#033E8C',
+              padding: '12px',
+              borderRadius: '6px',
+              fontSize: '0.9rem',
+              border: 'none'
+            }}
+          >
+            Editar Esta Pregunta
+          </button>
+        )}
       </div>
 
       {/* Question Grid */}

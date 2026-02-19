@@ -13,14 +13,39 @@ export function useExam() {
   const [isFinished, setIsFinished] = useState(false);
   const [results, setResults] = useState<ExamResults | null>(null);
 
-  const initializeExam = useCallback((mode: 'random' | 'debug' = 'random') => {
-    const newExam = mode === 'debug' ? [...allQuestions] : generateRandomExam(allQuestions);
-    setExamQuestions(newExam);
-    setUserAnswers(new Array(newExam.length).fill(null));
-    setCurrentQuestionIndex(0);
-    setMode('exam');
-    setIsFinished(false);
-    setResults(null);
+  const [loading, setLoading] = useState(false);
+
+  const initializeExam = useCallback(async (mode: 'random' | 'debug' = 'random') => {
+    setLoading(true);
+    try {
+      let questionsData = null;
+      
+      if (mode === 'debug') {
+        const { getAllQuestions } = await import('@/app/actions/getAllQuestions');
+        const { data, error } = await getAllQuestions();
+        if (error) throw new Error(error);
+        questionsData = data;
+      } else {
+        const { getRandomExamQuestions } = await import('@/app/actions/getExamQuestions');
+        const { data, error } = await getRandomExamQuestions();
+        if (error) throw new Error(error);
+        questionsData = data;
+      }
+      
+      if (questionsData) {
+        setExamQuestions(questionsData);
+        setUserAnswers(new Array(questionsData.length).fill(null));
+      }
+      
+      setCurrentQuestionIndex(0);
+      setMode('exam');
+      setIsFinished(false);
+      setResults(null);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
   const saveAnswer = useCallback((answer: UserAnswer) => {
@@ -73,6 +98,7 @@ export function useExam() {
     mode,
     isFinished,
     results,
+    loading,
     currentQuestion: examQuestions[currentQuestionIndex],
     initializeExam,
     saveAnswer,

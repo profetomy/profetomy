@@ -107,7 +107,8 @@ export default function ExamPage() {
     nextQuestion,
     prevQuestion,
     switchMode,
-    finishExam
+    finishExam,
+    loading: isLoadingQuestions
   } = useExam();
 
   const handleFinishExam = () => {
@@ -214,7 +215,7 @@ export default function ExamPage() {
   }
 
   // Show loading state
-  if (examQuestions.length === 0) {
+  if (isLoadingQuestions || examQuestions.length === 0) {
     return (
       <div className="min-h-screen flex items-center justify-center" style={{
         background: '#033E8C',

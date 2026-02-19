@@ -11,6 +11,7 @@ import { NavigationButtons } from '@/components/exam/NavigationButtons';
 import { Sidebar } from '@/components/exam/Sidebar';
 import { ResultsModal } from '@/components/exam/ResultsModal';
 import { InstructionsModal } from '@/components/exam/InstructionsModal';
+import { EditQuestionModal } from "@/components/adminPage/edit-question-modal";
 import { NavbarClient } from '@/components/NavbarClient';
 import Link from 'next/link';
 import { Lock, Bug } from 'lucide-react';
@@ -89,6 +90,7 @@ export default function DebugPage() {
   const [hasActiveSubscription, setHasActiveSubscription] = useState(false);
   const [showInstructions, setShowInstructions] = useState(false); // Maybe skip instructions for debug?
   const [showResultsModal, setShowResultsModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
   const [user, setUser] = useState<User | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
 
@@ -106,7 +108,8 @@ export default function DebugPage() {
     nextQuestion,
     prevQuestion,
     switchMode,
-    finishExam
+    finishExam,
+    loading: isLoadingQuestions
   } = useExam();
 
   const handleFinishExam = () => {
@@ -210,7 +213,7 @@ export default function DebugPage() {
   }
 
   // Show loading state
-  if (examQuestions.length === 0) {
+  if (isLoadingQuestions || examQuestions.length === 0) {
     return (
       <div className="min-h-screen flex items-center justify-center" style={{
         background: '#033E8C',
@@ -312,10 +315,23 @@ export default function DebugPage() {
               onShowInstructions={() => setShowInstructions(true)}
               onCancelExam={handleCancelExam}
               onFinishExam={handleFinishExam}
+              onEditQuestion={() => setShowEditModal(true)}
             />
           </div>
         </div>
       </div>
+
+      {/* Edit Modal */}
+      {showEditModal && currentQuestion && (
+        <EditQuestionModal
+          question={currentQuestion}
+          onClose={() => setShowEditModal(false)}
+          onSuccess={() => {
+            // Refresh questions to show changes
+            initializeExam('debug');
+          }}
+        />
+      )}
 
       {/* Results Modal */}
       {showResultsModal && results && (
