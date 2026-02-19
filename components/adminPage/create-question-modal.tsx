@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { PlusCircle, Save, X } from "lucide-react";
+import { PlusCircle, Save, X, Trash } from "lucide-react";
 import { createQuestion } from "@/app/actions/createQuestion";
 
 interface CreateQuestionModalProps {
@@ -11,6 +11,7 @@ interface CreateQuestionModalProps {
 
 export function CreateQuestionModal({ onClose, onSuccess }: CreateQuestionModalProps) {
   const [question, setQuestion] = useState("");
+  const [statements, setStatements] = useState<string[]>([]);
   const [optionA, setOptionA] = useState("");
   const [optionB, setOptionB] = useState("");
   const [optionC, setOptionC] = useState("");
@@ -28,6 +29,9 @@ export function CreateQuestionModal({ onClose, onSuccess }: CreateQuestionModalP
     try {
       const formData = new FormData();
       formData.append('question', question);
+      if (statements.length > 0) {
+        formData.append('statements', JSON.stringify(statements));
+      }
       formData.append('optionA', optionA);
       formData.append('optionB', optionB);
       formData.append('optionC', optionC);
@@ -85,6 +89,46 @@ export function CreateQuestionModal({ onClose, onSuccess }: CreateQuestionModalP
                 className="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#63AEBF] focus:border-transparent min-h-[100px]"
                 placeholder="Escribe aquí la pregunta..."
               />
+            </div>
+
+            {/* Statements */}
+            <div>
+              <label className="block text-gray-700 font-bold mb-2">Enunciados / Contexto (Opcional)</label>
+              <div className="space-y-3">
+                {statements.map((stmt, idx) => (
+                  <div key={idx} className="flex gap-2 items-start">
+                    <textarea
+                      value={stmt}
+                      onChange={(e) => {
+                        const newStmts = [...statements];
+                        newStmts[idx] = e.target.value;
+                        setStatements(newStmts);
+                      }}
+                      className="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#63AEBF] min-h-[80px]"
+                      placeholder={`Enunciado ${idx + 1}...`}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const newStmts = statements.filter((_, i) => i !== idx);
+                        setStatements(newStmts);
+                      }}
+                      className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors mt-1"
+                      title="Eliminar enunciado"
+                    >
+                      <Trash size={20} />
+                    </button>
+                  </div>
+                ))}
+                <button
+                  type="button"
+                  onClick={() => setStatements([...statements, ""])}
+                  className="text-sm font-bold text-[#63AEBF] hover:text-[#033E8C] flex items-center gap-1 transition-colors"
+                >
+                  <PlusCircle size={16} />
+                  Agregar Enunciado
+                </button>
+              </div>
             </div>
 
             {/* Options */}

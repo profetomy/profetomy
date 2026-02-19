@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { Edit2, Save, X } from "lucide-react";
+import { Edit2, Save, X, Trash, PlusCircle } from "lucide-react";
 import { Question } from "@/lib/types/exam";
 import { updateQuestion } from "@/app/actions/updateQuestion";
+import { deleteQuestion } from "@/app/actions/deleteQuestion";
 
 interface EditQuestionModalProps {
   question: Question;
@@ -13,6 +14,7 @@ interface EditQuestionModalProps {
 
 export function EditQuestionModal({ question, onClose, onSuccess }: EditQuestionModalProps) {
   const [q, setQ] = useState(question.q);
+  const [statements, setStatements] = useState<string[]>(question.statements || []);
   const [optionA, setOptionA] = useState(question.a);
   const [optionB, setOptionB] = useState(question.b);
   const [optionC, setOptionC] = useState(question.c);
@@ -21,6 +23,7 @@ export function EditQuestionModal({ question, onClose, onSuccess }: EditQuestion
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,6 +35,9 @@ export function EditQuestionModal({ question, onClose, onSuccess }: EditQuestion
 
       const formData = new FormData();
       formData.append('question', q);
+      if (statements.length > 0) {
+        formData.append('statements', JSON.stringify(statements));
+      }
       formData.append('optionA', optionA);
       formData.append('optionB', optionB);
       formData.append('optionC', optionC);
@@ -51,12 +57,37 @@ export function EditQuestionModal({ question, onClose, onSuccess }: EditQuestion
         throw new Error(result.error);
       }
 
+      console.log(`[Edit Question Modal] Question updated successfully!`);
       onSuccess();
       onClose();
     } catch (err: any) {
       setError(err.message);
     } finally {
       setIsSubmitting(false);
+    }
+  };
+
+  const handleDelete = async () => {
+    if (!confirm("¿Estás seguro de que quieres eliminar esta pregunta? Esta acción no se puede deshacer.")) return;
+    
+    setIsDeleting(true);
+    setError(null);
+
+    try {
+      if (!question.id) throw new Error("ID de pregunta faltante");
+
+      const result = await deleteQuestion(question.id);
+
+      if (result.error) {
+        throw new Error(result.error);
+      }
+
+      console.log(`[Edit Question Modal] Question deleted successfully!`);
+      onSuccess();
+      onClose();
+    } catch (err: any) {
+      setError(err.message);
+      setIsDeleting(false);
     }
   };
 
@@ -89,6 +120,46 @@ export function EditQuestionModal({ question, onClose, onSuccess }: EditQuestion
                 onChange={(e) => setQ(e.target.value)}
                 className="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#63AEBF] min-h-[100px]"
               />
+            </div>
+
+            {/* Statements */}
+            <div>
+              <label className="block text-gray-700 font-bold mb-2">Enunciados / Contexto (Opcional)</label>
+              <div className="space-y-3">
+                {statements.map((stmt, idx) => (
+                  <div key={idx} className="flex gap-2 items-start">
+                    <textarea
+                      value={stmt}
+                      onChange={(e) => {
+                        const newStmts = [...statements];
+                        newStmts[idx] = e.target.value;
+                        setStatements(newStmts);
+                      }}
+                      className="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#63AEBF] min-h-[80px]"
+                      placeholder={`Enunciado ${idx + 1}...`}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const newStmts = statements.filter((_, i) => i !== idx);
+                        setStatements(newStmts);
+                      }}
+                      className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors mt-1"
+                      title="Eliminar enunciado"
+                    >
+                      <Trash size={20} />
+                    </button>
+                  </div>
+                ))}
+                <button
+                  type="button"
+                  onClick={() => setStatements([...statements, ""])}
+                  className="text-sm font-bold text-[#63AEBF] hover:text-[#033E8C] flex items-center gap-1 transition-colors"
+                >
+                  <PlusCircle size={16} />
+                  Agregar Enunciado
+                </button>
+              </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -167,24 +238,37 @@ export function EditQuestionModal({ question, onClose, onSuccess }: EditQuestion
               </div>
             </div>
 
-            <div className="flex justify-end gap-3 pt-4 border-t border-gray-100">
-              <button
-                type="button"
-                onClick={onClose}
-                className="px-6 py-2 rounded-lg font-bold text-gray-600 hover:bg-gray-100 transition-colors"
-              >
-                Cancelar
-              </button>
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className={`px-6 py-2 rounded-lg text-white font-bold flex items-center gap-2 shadow-sm transition-all ${
-                  isSubmitting ? 'bg-gray-400 cursor-not-allowed' : 'bg-[#033E8C] hover:bg-[#022c63]'
-                }`}
-              >
-                <Save size={20} />
-                {isSubmitting ? 'Guardando...' : 'Guardar Cambios'}
-              </button>
+            {/* Footer Buttons */}
+            <div className="pt-4 border-t border-gray-100 flex justify-between gap-3">
+              <div>
+                <button
+                  type="button"
+                  onClick={handleDelete}
+                  disabled={isDeleting || isSubmitting}
+                  className="px-4 py-2 rounded-lg font-bold text-red-600 hover:bg-red-50 border border-red-200 hover:border-red-300 transition-colors flex items-center gap-2"
+                >
+                  {isDeleting ? 'Eliminando...' : <> <Trash size={20} /> Eliminar Pregunta </>}
+                </button>
+              </div>
+              <div className="flex gap-3">
+                <button
+                  type="button"
+                  onClick={onClose}
+                  className="px-6 py-2 rounded-lg font-bold text-gray-600 hover:bg-gray-100 transition-colors"
+                >
+                  Cancelar
+                </button>
+                <button
+                  type="submit"
+                  disabled={isSubmitting || isDeleting}
+                  className={`px-6 py-2 rounded-lg text-white font-bold flex items-center gap-2 shadow-sm transition-all ${
+                    isSubmitting ? 'bg-gray-400 cursor-not-allowed' : 'bg-[#033E8C] hover:bg-[#022c63]'
+                  }`}
+                >
+                  <Save size={20} />
+                  {isSubmitting ? 'Guardando...' : 'Guardar Cambios'}
+                </button>
+               </div>
             </div>
           </form>
         </div>

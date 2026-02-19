@@ -22,9 +22,37 @@ export async function updateQuestion(questionId: string, formData: FormData) {
       return { error: 'Access Denied: Solo administradores pueden editar preguntas' };
     }
 
+    // Initialize Admin Client to bypass RLS for Storage and DB inserts
+    // This requires SUPABASE_SERVICE_ROLE_KEY in .env
+    const { createClient: createAdminClient } = await import('@supabase/supabase-js');
+    const adminClient = createAdminClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!,
+      {
+        auth: {
+          autoRefreshToken: false,
+          persistSession: false
+        }
+      }
+    );
+
     // 2. Extract Data
     // 2. Extract Data
-    const question = formData.get('question') as string;
+    // 2. Extract Data
+    let question = formData.get('question') as string;
+    const statementsJson = formData.get('statements') as string;
+
+    if (statementsJson) {
+      try {
+        const statements = JSON.parse(statementsJson) as string[];
+        if (Array.isArray(statements) && statements.length > 0) {
+           question = `${question}\n\n${statements.join('\n')}`;
+        }
+      } catch (e) {
+        console.error("Error parsing statements:", e);
+      }
+    }
+
     const optionA = formData.get('optionA') as string;
     const optionB = formData.get('optionB') as string;
     const optionC = formData.get('optionC') as string;
@@ -37,15 +65,18 @@ export async function updateQuestion(questionId: string, formData: FormData) {
     let imageUrl = formData.get('imageUrl') as string | null;
     if (imageUrl === 'null' || imageUrl === '') imageUrl = null;
 
-    // 3. Upload New Image if provided
+    // 3. Upload New Image if provided using Admin Client
     if (imageFile && imageFile instanceof File && imageFile.size > 0) {
       const fileExt = imageFile.name.split('.').pop();
       const fileName = `${Math.random().toString(36).substring(2, 15)}_${Date.now()}.${fileExt}`;
       const filePath = `questions/${fileName}`;
 
-      const { error: uploadError } = await supabase.storage
+      const { error: uploadError } = await adminClient.storage
         .from('questions-images')
-        .upload(filePath, imageFile);
+        .upload(filePath, imageFile, {
+            contentType: imageFile.type,
+            upsert: false
+        });
 
       if (uploadError) {
         console.error("Storage upload error:", uploadError);
@@ -55,8 +86,8 @@ export async function updateQuestion(questionId: string, formData: FormData) {
       imageUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/questions-images/${filePath}`;
     }
 
-    // 4. Update Question
-    const { error: updateError } = await supabase
+    // 4. Update Question using Admin Client
+    const { error: updateError } = await adminClient
       .from('questions')
       .update({
         question: question,
@@ -75,6 +106,7 @@ export async function updateQuestion(questionId: string, formData: FormData) {
       return { error: `Error actualizando pregunta: ${updateError.message}` };
     }
 
+    console.log(`[Update Question] Question ${questionId} updated successfully.`);
     return { success: true };
 
   } catch (error: any) {

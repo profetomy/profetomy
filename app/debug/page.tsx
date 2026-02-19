@@ -245,7 +245,9 @@ export default function DebugPage() {
   }
 
   // Show loading state
-  if (isLoadingQuestions || examQuestions.length === 0) {
+  // Only show if loading OR (no questions AND no search term)
+  // If we have a search term and 0 questions, it means "No results found", so we should fall through to main render.
+  if (isLoadingQuestions || (examQuestions.length === 0 && searchTerm === "")) {
     return (
       <div className="min-h-screen flex items-center justify-center text-white" style={{
         background: '#033E8C',
@@ -256,7 +258,6 @@ export default function DebugPage() {
             <div className="text-xl font-bold text-white">
               Cargando preguntas de {mode}...
             </div>
-            {searchTerm && <button onClick={() => setSearchTerm("")} className="underline">Limpiar búsqueda</button>}
          </div>
       </div>
     );
