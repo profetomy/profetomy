@@ -7,7 +7,7 @@ import { createClient } from "@/lib/supabase/client";
 import { Search, ChevronLeft, ChevronRight } from "lucide-react";
 import { getAdminUsers } from "@/app/actions/getAdminUsers";
 import { manageSubscription } from "@/app/actions/manageSubscription";
-import CreateQuestionForm from "@/components/adminPage/create-question-form";
+// import CreateQuestionForm from "@/components/adminPage/create-question-form";
 
 export default function AdminPage() {
   const [users, setUsers] = useState<AdminUser[]>([]);
@@ -271,9 +271,7 @@ export default function AdminPage() {
             Panel de administración - Simulador Profe Tomy
           </div>
 
-          <div className="border-t border-gray-200 my-8"></div>
           
-          <CreateQuestionForm />
         </div>
       </div>
     </div>

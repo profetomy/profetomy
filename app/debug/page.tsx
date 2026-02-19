@@ -12,9 +12,10 @@ import { Sidebar } from '@/components/exam/Sidebar';
 import { ResultsModal } from '@/components/exam/ResultsModal';
 import { InstructionsModal } from '@/components/exam/InstructionsModal';
 import { EditQuestionModal } from "@/components/adminPage/edit-question-modal";
+import { CreateQuestionModal } from "@/components/adminPage/create-question-modal";
 import { NavbarClient } from '@/components/NavbarClient';
 import Link from 'next/link';
-import { Lock, Bug } from 'lucide-react';
+import { Lock, Bug, Search, Plus } from 'lucide-react';
 import type { User } from '@supabase/supabase-js';
 import { checkExamAccess } from '@/app/actions/checkExamAccess';
 
@@ -88,9 +89,13 @@ export default function DebugPage() {
   const router = useRouter();
   const [isCheckingSubscription, setIsCheckingSubscription] = useState(true);
   const [hasActiveSubscription, setHasActiveSubscription] = useState(false);
-  const [showInstructions, setShowInstructions] = useState(false); // Maybe skip instructions for debug?
+  const [showInstructions, setShowInstructions] = useState(false);
   const [showResultsModal, setShowResultsModal] = useState(false);
+
   const [showEditModal, setShowEditModal] = useState(false);
+  const [showCreateModal, setShowCreateModal] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [originalQuestions, setOriginalQuestions] = useState<any[]>([]);
   const [user, setUser] = useState<User | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
 
@@ -109,7 +114,8 @@ export default function DebugPage() {
     prevQuestion,
     switchMode,
     finishExam,
-    loading: isLoadingQuestions
+    loading: isLoadingQuestions,
+    setExamQuestions
   } = useExam();
 
   const handleFinishExam = () => {
@@ -135,7 +141,6 @@ export default function DebugPage() {
         const { hasAccess, user: authUser, isAdmin: authIsAdmin, error } = await checkExamAccess();
 
         if (error) {
-           // If "User not authenticated", redirect to login
            if (error === 'User not authenticated') {
              router.push('/auth/login');
              return;
@@ -146,18 +151,13 @@ export default function DebugPage() {
         if (authUser) setUser(authUser as User);
         if (authIsAdmin) setIsAdmin(authIsAdmin);
 
-        // Strict Admin Check for Debug Page
         const isAdminAccess = !!authIsAdmin;
         setHasActiveSubscription(isAdminAccess);
         setIsCheckingSubscription(false);
 
         if (isAdminAccess) {
-          // INITIALIZE IN DEBUG MODE
           initializeExam('debug');
-          // For debug, arguably we could skip instructions and just start?
-          // But let's keep consistency or allow start.
-          // setShowInstructions(true); 
-          start(); // Auto-start for debug
+          start();
         }
       } catch (error) {
         console.error('Unexpected error:', error);
@@ -168,6 +168,35 @@ export default function DebugPage() {
 
     checkSubscription();
   }, [router, initializeExam]);
+
+  // Capture original questions when loaded
+  useEffect(() => {
+    if (examQuestions.length > 0 && originalQuestions.length === 0) {
+      setOriginalQuestions(examQuestions);
+    } else if (examQuestions.length > originalQuestions.length && searchTerm === "") {
+        setOriginalQuestions(examQuestions);
+    }
+  }, [examQuestions]);
+
+  // Handle Search
+  useEffect(() => {
+    if (!setExamQuestions) return;
+
+    if (searchTerm.trim() === "") {
+      if (originalQuestions.length > 0) {
+         if (examQuestions.length !== originalQuestions.length) {
+             setExamQuestions(originalQuestions);
+         }
+      }
+    } else {
+      const term = searchTerm.toLowerCase();
+      const filtered = originalQuestions.filter(q => 
+        q.q.toLowerCase().includes(term) || 
+        (q.id && q.id.includes(term))
+      );
+      setExamQuestions(filtered);
+    }
+  }, [searchTerm, originalQuestions, setExamQuestions]);
 
   const handleAnswerSelect = (option: 'a' | 'b' | 'c') => {
     saveAnswer(option);
@@ -190,6 +219,9 @@ export default function DebugPage() {
       router.push('/');
     }
   };
+
+  // --- Early Returns (Conditionals) ---
+  // Must be AFTER all hooks
 
   // Show subscription required if no active subscription
   if (isCheckingSubscription) {
@@ -215,16 +247,17 @@ export default function DebugPage() {
   // Show loading state
   if (isLoadingQuestions || examQuestions.length === 0) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{
+      <div className="min-h-screen flex items-center justify-center text-white" style={{
         background: '#033E8C',
         backgroundAttachment: 'fixed'
       }}>
-        <div className="flex flex-col items-center gap-4">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#63AEBF]"></div>
-          <div className="text-xl font-bold text-white">
-            Cargando todas las preguntas...
-          </div>
-        </div>
+         <div className="flex flex-col items-center gap-4">
+            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#63AEBF]"></div>
+            <div className="text-xl font-bold text-white">
+              Cargando preguntas de {mode}...
+            </div>
+            {searchTerm && <button onClick={() => setSearchTerm("")} className="underline">Limpiar búsqueda</button>}
+         </div>
       </div>
     );
   }
@@ -250,11 +283,35 @@ export default function DebugPage() {
         MODO DEBUG - MOSTRANDO {examQuestions.length} PREGUNTAS
       </div>
 
-      <div className="flex justify-center p-2 lg:p-5 items-start lg:items-center min-h-[calc(100vh-80px)] lg:h-[calc(100vh-80px)] overflow-y-auto lg:overflow-visible">
+      {/* DEBUG TOOLBAR: Search & Add */}
+      <div className="w-full max-w-7xl mx-auto px-4 mt-4 flex flex-col md:flex-row gap-4 items-center justify-between">
+         <div className="relative w-full max-w-md">
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <Search size={18} className="text-gray-400" />
+            </div>
+            <input
+              type="text"
+              placeholder="Filtrar por texto de pregunta..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-600 bg-gray-700 text-white placeholder-gray-400 focus:ring-2 focus:ring-[#FCD442] outline-none"
+            />
+         </div>
+         
+         <button
+            onClick={() => setShowCreateModal(true)}
+            className="flex items-center gap-2 bg-[#FCD442] text-[#033E8C] px-4 py-2 rounded-lg font-bold hover:bg-[#eec531] transition-colors"
+         >
+            <Plus size={20} />
+            Nueva Pregunta
+         </button>
+      </div>
+
+      <div className="flex justify-center p-2 lg:p-5 items-start lg:items-center flex-1 overflow-y-auto lg:overflow-visible">
         {/* Main Single Card Container */}
         <div 
           className={`bg-white rounded-lg shadow-lg w-full lg:w-[95%] flex flex-col lg:flex-row overflow-hidden ${
-            currentQuestion?.image 
+             currentQuestion?.image 
               ? 'h-auto lg:h-full lg:max-h-[800px]' 
               : 'h-auto lg:max-h-[800px] lg:min-h-[400px]'
           }`} 
@@ -264,6 +321,15 @@ export default function DebugPage() {
           
           {/* Left Column: Question Area */}
           <div className="flex-1 p-5 lg:p-10 flex flex-col border-b lg:border-b-0 lg:border-r border-gray-100 w-full">
+            {/* If no questions found */}
+            {examQuestions.length === 0 && (
+                <div className="flex-1 flex flex-col items-center justify-center text-gray-400">
+                    <p className="text-lg font-medium">No se encontraron preguntas</p>
+                    <button onClick={() => setSearchTerm("")} className="mt-2 text-[#033E8C] underline">Limpiar filtro</button>
+                </div>
+            )}
+
+            {examQuestions.length > 0 && (
             <div className={`flex-1 flex flex-col w-full min-h-0 ${
               currentQuestion?.image ? 'justify-start lg:justify-between gap-6 lg:gap-0' : 'justify-center gap-6'
             }`}>
@@ -298,6 +364,7 @@ export default function DebugPage() {
                 />
               </div>
             </div>
+            )}
           </div>
 
           {/* Right Column: Sidebar content */}
@@ -320,6 +387,18 @@ export default function DebugPage() {
           </div>
         </div>
       </div>
+
+      {/* Create Modal */}
+      {showCreateModal && (
+        <CreateQuestionModal
+          onClose={() => setShowCreateModal(false)}
+          onSuccess={() => {
+            setSearchTerm(""); // Clear search to see new question
+            setOriginalQuestions([]); // Clear original so it refreshes
+            initializeExam('debug');
+          }}
+        />
+      )}
 
       {/* Edit Modal */}
       {showEditModal && currentQuestion && (

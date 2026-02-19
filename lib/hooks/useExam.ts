@@ -106,6 +106,7 @@ export function useExam() {
     nextQuestion,
     prevQuestion,
     switchMode,
-    finishExam
+    finishExam,
+    setExamQuestions // Exposed for advanced debug functionality
   };
 }
