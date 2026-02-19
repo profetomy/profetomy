@@ -233,9 +233,9 @@ export const allQuestions: Question[] = [
     image: null,
   },
   {
-    q: "En la imagen, el vehículo blanco no puede continuar porque el transito esta congestionado más allá de la intersección. ¿Por qué la persona que conduce el vehículo ha efectuado una maniobra incorrecta?",
+    q: "En la imagen, el vehículo blanco no puede continuar porque el tránsito está congestionado más allá de la intersección. ¿Por qué la persona que conduce el vehículo ha efectuado una maniobra incorrecta?",
     a: "Porque debió constatar que no venían autos en sentido contrario",
-    b: "Porque obstaculiza el tránsito de los vehículos que vienen detrás de el",
+    b: "Porque obstaculiza el tránsito de los vehículos que vienen detrás de él",
     c: "Porque debió asegurarse antes que tendría espacio suficiente para cruzar sin bloquear la intersección",
     correct: "c",
     image: "/p27_ex.jpg",
@@ -1977,7 +1977,7 @@ export const allQuestions: Question[] = [
       doublePoints: true
     },
     {
-      q: "¿En qué medica se ve afectado el tiempo de reacción de una persona conductora por la ingesta de alcohol?",
+      q: "¿En qué medida se ve afectado el tiempo de reacción de una persona conductora por la ingesta de alcohol?",
       a: "De ninguna manera, dado que el alcohol no afecta al tiempo de reacción",
       b: "Aumenta, debido a que la comunicación en el sistema nervioso se hace más lenta",
       c: "Disminuye, debido a que la comunicación en el sistema nervioso se acelera",
