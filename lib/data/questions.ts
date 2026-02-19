@@ -2158,7 +2158,7 @@ export const allQuestions: Question[] = [
       b: "La obligación de detenerse a la altura de la señal",
       c: "La obligación de ceder el paso a los vehículos que se aproximen por la otra vía",
       correct: "c",
-      image: "/p58_3ex.jpg",
+      image: "/p58_3ex.png",
     },
     {
       q: "¿Cuál de las imágenes muestra un correcto adelantamiento efectuado en una calzada bidireccional?",
@@ -2166,7 +2166,7 @@ export const allQuestions: Question[] = [
       b: "La imagen B",
       c: "La imagen C",
       correct: "b",
-      image: "/p59_3ex.jpg",
+      image: "/p59_3ex.png",
     },
     {
       q: "En la situación que muestra la imagen, ¿Qué debería hacer la persona que conduce si va circulando a 70 km/h? ",
@@ -2180,7 +2180,7 @@ export const allQuestions: Question[] = [
       b: "II y III",
       c: "II y IV",
       correct: "b",
-      image: "/p60_3ex.jpg",
+      image: "/p60_3ex.png",
     },
     {
       q: "¿Cuál es la velocidad máxima permitida en una carretera en zona rural al conducir un automóvil de día por una calzada en buen estado y transito bidireccional con una pista por sentido?",
