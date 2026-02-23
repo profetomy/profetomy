@@ -15,7 +15,7 @@ export function useExam() {
 
   const [loading, setLoading] = useState(false);
 
-  const initializeExam = useCallback(async (mode: 'random' | 'debug' = 'random') => {
+  const initializeExam = useCallback(async (mode: 'random' | 'debug' | 'senaleticas' = 'random') => {
     setLoading(true);
     try {
       let questionsData = null;
@@ -23,6 +23,11 @@ export function useExam() {
       if (mode === 'debug') {
         const { getAllQuestions } = await import('@/app/actions/getAllQuestions');
         const { data, error } = await getAllQuestions();
+        if (error) throw new Error(error);
+        questionsData = data;
+      } else if (mode === 'senaleticas') {
+        const { getSenaleticasQuestions } = await import('@/app/actions/getSenaleticasQuestions');
+        const { data, error } = await getSenaleticasQuestions();
         if (error) throw new Error(error);
         questionsData = data;
       } else {

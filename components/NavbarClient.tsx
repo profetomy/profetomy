@@ -203,14 +203,24 @@ export function NavbarClient({
               )}
               
               {!isExam && (
-                <Link
-                  href="/exam"
-                  className="bg-[#63AEBF] text-white px-2 py-1.5 sm:px-4 sm:py-2 rounded-md no-underline text-xs sm:text-sm font-bold flex items-center gap-1.5 shadow-sm hover:brightness-105 transition-all"
-                >
-                  <GraduationCap size={16} className="sm:w-[18px] sm:h-[18px]" />
-                  <span className="sm:hidden">Examen</span>
-                  <span className="hidden sm:inline">Ir a Examen</span>
-                </Link>
+                <div className="flex gap-2">
+                  <Link
+                    href="/exam"
+                    className="bg-[#63AEBF] text-white px-2 py-1.5 sm:px-4 sm:py-2 rounded-md no-underline text-xs sm:text-sm font-bold flex items-center gap-1.5 shadow-sm hover:brightness-105 transition-all"
+                  >
+                    <GraduationCap size={16} className="sm:w-[18px] sm:h-[18px]" />
+                    <span className="sm:hidden">Examen</span>
+                    <span className="hidden sm:inline">Ir a Examen</span>
+                  </Link>
+                  <Link
+                    href="/examen-senaleticas"
+                    className="bg-[#FCD442] text-[#033E8C] px-2 py-1.5 sm:px-4 sm:py-2 rounded-md no-underline text-xs sm:text-sm font-bold flex items-center gap-1.5 shadow-sm hover:brightness-105 transition-all"
+                  >
+                    <GraduationCap size={16} className="sm:w-[18px] sm:h-[18px]" />
+                    <span className="sm:hidden">Señales</span>
+                    <span className="hidden sm:inline">Examen de Señales</span>
+                  </Link>
+                </div>
               )}
               
               {/* Botón Cerrar Sesión (o Salir en examen) */}
