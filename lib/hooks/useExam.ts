@@ -15,7 +15,7 @@ export function useExam() {
 
   const [loading, setLoading] = useState(false);
 
-  const initializeExam = useCallback(async (mode: 'random' | 'debug' | 'senaleticas' = 'random') => {
+  const initializeExam = useCallback(async (mode: 'random' | 'debug' | 'senaleticas' | 'doble-puntaje' = 'random') => {
     setLoading(true);
     try {
       let questionsData = null;
@@ -28,6 +28,11 @@ export function useExam() {
       } else if (mode === 'senaleticas') {
         const { getSenaleticasQuestions } = await import('@/app/actions/getSenaleticasQuestions');
         const { data, error } = await getSenaleticasQuestions();
+        if (error) throw new Error(error);
+        questionsData = data;
+      } else if (mode === 'doble-puntaje') {
+        const { getDoublePointsQuestions } = await import('@/app/actions/getDoublePointsQuestions');
+        const { data, error } = await getDoublePointsQuestions();
         if (error) throw new Error(error);
         questionsData = data;
       } else {
