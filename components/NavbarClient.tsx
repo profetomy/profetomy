@@ -228,6 +228,14 @@ export function NavbarClient({
                     <span className="sm:hidden">Doble P.</span>
                     <span className="hidden sm:inline">Examen Doble Puntaje</span>
                   </Link>
+                  <Link
+                    href="/examen-matematicas"
+                    className="bg-[#9B59B6] text-white px-2 py-1.5 sm:px-4 sm:py-2 rounded-md no-underline text-xs sm:text-sm font-bold flex items-center gap-1.5 shadow-sm hover:brightness-105 transition-all"
+                  >
+                    <GraduationCap size={16} className="sm:w-[18px] sm:h-[18px]" />
+                    <span className="sm:hidden">Mates</span>
+                    <span className="hidden sm:inline">Examen Matemáticas</span>
+                  </Link>
                 </div>
               )}
               

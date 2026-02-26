@@ -15,7 +15,7 @@ export function useExam() {
 
   const [loading, setLoading] = useState(false);
 
-  const initializeExam = useCallback(async (mode: 'random' | 'debug' | 'senaleticas' | 'doble-puntaje' = 'random') => {
+  const initializeExam = useCallback(async (mode: 'random' | 'debug' | 'senaleticas' | 'matematicas' | 'doble-puntaje' = 'random') => {
     setLoading(true);
     try {
       let questionsData = null;
@@ -28,6 +28,11 @@ export function useExam() {
       } else if (mode === 'senaleticas') {
         const { getSenaleticasQuestions } = await import('@/app/actions/getSenaleticasQuestions');
         const { data, error } = await getSenaleticasQuestions();
+        if (error) throw new Error(error);
+        questionsData = data;
+      } else if (mode === 'matematicas') {
+        const { getMatematicasQuestions } = await import('@/app/actions/getMatematicasQuestions');
+        const { data, error } = await getMatematicasQuestions();
         if (error) throw new Error(error);
         questionsData = data;
       } else if (mode === 'doble-puntaje') {
