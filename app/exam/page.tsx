@@ -2,24 +2,13 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { createClient } from '@/lib/supabase/client';
-import { useExam } from '@/lib/hooks/useExam';
-import { useTimer } from '@/lib/hooks/useTimer';
-import { QuestionDisplay } from '@/components/exam/QuestionDisplay';
-import { OptionsList } from '@/components/exam/OptionsList';
-import { NavigationButtons } from '@/components/exam/NavigationButtons';
-import { Sidebar } from '@/components/exam/Sidebar';
-import { ResultsModal } from '@/components/exam/ResultsModal';
-import { InstructionsModal } from '@/components/exam/InstructionsModal';
 import { NavbarClient } from '@/components/NavbarClient';
 import Link from 'next/link';
-import { Lock } from 'lucide-react';
+import { Lock, FileText } from 'lucide-react';
 import type { User } from '@supabase/supabase-js';
 import { checkExamAccess } from '@/app/actions/checkExamAccess';
+import { getExamCount } from '@/app/actions/getSpecificExam';
 
-const EXAM_DURATION = 45 * 60; // 45 minutes in seconds
-
-// Componente de acceso denegado
 function SubscriptionRequired() {
   return (
     <div className="min-h-screen flex items-center justify-center" style={{
@@ -61,9 +50,7 @@ function SubscriptionRequired() {
           marginBottom: '32px',
           lineHeight: '1.6'
         }}>
-          Necesitas una suscripción activa para acceder al simulador de exámenes.
-          <br />
-          Contacta al Profe Tomy para obtener acceso.
+          Necesitas una suscripción activa para acceder a los exámenes oficiales.
         </p>
         <Link
           href="/"
@@ -84,74 +71,38 @@ function SubscriptionRequired() {
   );
 }
 
-export default function ExamPage() {
+export default function ExamIndexPage() {
   const router = useRouter();
   const [isCheckingSubscription, setIsCheckingSubscription] = useState(true);
   const [hasActiveSubscription, setHasActiveSubscription] = useState(false);
-  const [showInstructions, setShowInstructions] = useState(false);
-  const [showResultsModal, setShowResultsModal] = useState(false);
   const [user, setUser] = useState<User | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
+  
+  const [examCount, setExamCount] = useState(0);
 
-  const {
-    examQuestions,
-    currentQuestionIndex,
-    userAnswers,
-    mode,
-    isFinished,
-    results,
-    currentQuestion,
-    initializeExam,
-    saveAnswer,
-    goToQuestion,
-    nextQuestion,
-    prevQuestion,
-    switchMode,
-    finishExam,
-    loading: isLoadingQuestions
-  } = useExam();
-
-  const handleFinishExam = () => {
-    finishExam();
-    setShowResultsModal(true);
-  };
-
-  const { formattedTime, start, reset } = useTimer(EXAM_DURATION, () => {
-    handleFinishExam();
-  });
-
-  const handleStartExam = () => {
-    setShowInstructions(false);
-    start();
-  };
-
-  // Check subscription status
   useEffect(() => {
-    const checkSubscription = async () => {
+    const checkAccessAndFetchExams = async () => {
       try {
-        console.log("Verifying exam access via Server Action...");
-        // @ts-ignore
         const { hasAccess, user: authUser, isAdmin: authIsAdmin, error } = await checkExamAccess();
 
         if (error) {
-           // If "User not authenticated", redirect to login
            if (error === 'User not authenticated') {
              router.push('/auth/login');
              return;
            }
-           console.error("Access check error:", error);
         }
 
         if (authUser) setUser(authUser as User);
         if (authIsAdmin) setIsAdmin(authIsAdmin);
 
         setHasActiveSubscription(hasAccess);
-        setIsCheckingSubscription(false);
-
+        
         if (hasAccess) {
-          initializeExam();
-          setShowInstructions(true);
+          const { count } = await getExamCount();
+          setExamCount(count);
         }
+        
+        setIsCheckingSubscription(false);
       } catch (error) {
         console.error('Unexpected error:', error);
         setHasActiveSubscription(false);
@@ -159,43 +110,17 @@ export default function ExamPage() {
       }
     };
 
-    checkSubscription();
-  }, [router, initializeExam]);
+    checkAccessAndFetchExams();
+  }, [router]);
 
-  const handleAnswerSelect = (option: 'a' | 'b' | 'c') => {
-    saveAnswer(option);
-  };
-
-  const handleRetakeExam = () => {
-    initializeExam();
-    reset();
-    setShowResultsModal(false);
-    setShowInstructions(true);
-  };
-
-  const handleViewCorrection = () => {
-    switchMode('correction');
-    setShowResultsModal(false);
-  };
-
-  const handleCancelExam = () => {
-    if (confirm('¿Estás seguro de que deseas anular el examen? Volverás al inicio.')) {
-      router.push('/');
-    }
-  };
-
-  // Show subscription required if no active subscription
   if (isCheckingSubscription) {
     return (
       <div className="min-h-screen flex items-center justify-center" style={{
         background: '#033E8C',
-        backgroundAttachment: 'fixed'
       }}>
         <div className="flex flex-col items-center gap-4">
           <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#FCD442]"></div>
-          <div className="text-xl font-bold text-white">
-            Verificando acceso...
-          </div>
+          <div className="text-xl font-bold text-white">Cargando...</div>
         </div>
       </div>
     );
@@ -205,128 +130,71 @@ export default function ExamPage() {
     return <SubscriptionRequired />;
   }
 
-  // Show instructions modal before starting
-  if (showInstructions) {
-    return (
-      <InstructionsModal
-        onClose={handleStartExam}
-      />
-    );
-  }
-
-  // Show loading state
-  if (isLoadingQuestions || examQuestions.length === 0) {
-    return (
-      <div className="min-h-screen flex items-center justify-center" style={{
-        background: '#033E8C',
-        backgroundAttachment: 'fixed'
-      }}>
-        <div className="flex flex-col items-center gap-4">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#63AEBF]"></div>
-          <div className="text-xl font-bold text-white">
-            Preparando tu examen...
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className="min-h-screen flex flex-col" style={{
-      fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
-      background: '#F7F7F7',
-      backgroundAttachment: 'fixed',
-      height: '100vh'
-    }}>
+    <div className="min-h-screen flex flex-col bg-gray-50">
       <NavbarClient 
-        isExam={true}
-        mode={mode}
-        onModeChange={switchMode}
-        answeredCount={userAnswers.filter(a => a !== null).length}
-        totalQuestions={examQuestions.length}
+        isExam={false}
         initialUser={user}
         initialIsAdmin={isAdmin}
       />
-
-      <div className="flex justify-center p-2 lg:p-5 items-start lg:items-center min-h-[calc(100vh-80px)] lg:h-[calc(100vh-80px)] overflow-y-auto lg:overflow-visible">
-        {/* Main Single Card Container */}
-        <div 
-          className={`bg-white rounded-lg shadow-lg w-full lg:w-[95%] flex flex-col lg:flex-row overflow-hidden ${
-            currentQuestion?.image 
-              ? 'h-auto lg:h-full lg:max-h-[800px]' 
-              : 'h-auto lg:max-h-[800px] lg:min-h-[400px]'
-          }`} 
-          style={{
-          boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
-        }}>
-          
-          {/* Left Column: Question Area */}
-          <div className="flex-1 p-5 lg:p-10 flex flex-col border-b lg:border-b-0 lg:border-r border-gray-100 w-full">
-            <div className={`flex-1 flex flex-col w-full min-h-0 ${
-              currentQuestion?.image ? 'justify-start lg:justify-between gap-6 lg:gap-0' : 'justify-center gap-6'
-            }`}>
-              <div className={`w-full min-h-0 flex flex-col ${
-                currentQuestion?.image ? 'flex-1' : 'flex-initial'
-              }`}>
-                <QuestionDisplay
-                  question={currentQuestion}
-                  questionNumber={currentQuestionIndex + 1}
-                  userAnswer={userAnswers[currentQuestionIndex]}
-                  mode={mode}
-                  isFinished={isFinished}
-                />
-              </div>
-
-              <div className="my-4 w-full max-w-3xl mx-auto flex flex-col items-center">
-                <OptionsList
-                  question={currentQuestion}
-                  userAnswer={userAnswers[currentQuestionIndex]}
-                  mode={mode}
-                  isFinished={isFinished}
-                  onAnswerSelect={handleAnswerSelect}
-                />
-              </div>
-
-              <div className="mt-8 pb-4 w-full">
-                <NavigationButtons
-                  currentIndex={currentQuestionIndex}
-                  totalQuestions={examQuestions.length}
-                  onPrevious={prevQuestion}
-                  onNext={nextQuestion}
-                />
-              </div>
-            </div>
-          </div>
-
-          {/* Right Column: Sidebar content */}
-          <div className={`w-full lg:w-[320px] shrink-0 p-5 pb-0 flex flex-col bg-gray-50/30 overflow-y-auto ${
-            !currentQuestion?.image ? 'lg:max-h-[800px]' : ''
-          }`}> 
-            <Sidebar
-              questions={examQuestions}
-              userAnswers={userAnswers}
-              currentIndex={currentQuestionIndex}
-              mode={mode}
-              isFinished={isFinished}
-              formattedTime={formattedTime}
-              onQuestionClick={goToQuestion}
-              onShowInstructions={() => setShowInstructions(true)}
-              onCancelExam={handleCancelExam}
-              onFinishExam={handleFinishExam}
-            />
-          </div>
+      
+      <main className="flex-1 w-full max-w-7xl mx-auto px-4 py-8 md:py-12">
+        <div className="mb-8">
+          <h1 className="text-3xl md:text-5xl font-extrabold text-[#033E8C] mb-4">
+            Simuladores Oficiales
+          </h1>
+          <p className="text-lg text-gray-600 max-w-2xl">
+            Cada uno de estos exámenes está estructurado con preguntas únicas que no se repiten entre sí. Cumplen con la regla oficial de 35 preguntas: 3 de doble puntaje y 32 normales.
+          </p>
         </div>
-      </div>
 
-      {/* Results Modal */}
-      {showResultsModal && results && (
-        <ResultsModal
-          results={results}
-          onNewExam={handleRetakeExam}
-          onViewCorrection={handleViewCorrection}
-          onClose={() => setShowResultsModal(false)}
-        />
-      )}
+        {examCount === 0 ? (
+          <div className="text-center py-12 text-gray-500">
+            No hay suficientes preguntas en la base de datos para generar un examen completo.
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {/* Random Exam Card */}
+            <Link 
+              href={`/exam/random`}
+              className="group relative bg-[#033E8C] border border-[#033E8C] rounded-xl p-6 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+            >
+               <div className="absolute top-0 left-0 w-full h-1 bg-[#FCD442] rounded-t-xl transition-colors"></div>
+               <div className="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center text-[#FCD442] mb-4">
+                  <FileText size={24} />
+               </div>
+               <h3 className="text-xl font-bold text-white mb-2">Examen Aleatorio</h3>
+               <p className="text-sm text-blue-100 font-medium">
+                 Test con preguntas al azar
+               </p>
+               <div className="mt-4 flex items-center text-[#FCD442] font-semibold text-sm group-hover:underline">
+                  Iniciar Examen →
+               </div>
+            </Link>
+            
+            {/* Specific Exams Cards */}
+            {Array.from({ length: examCount }).map((_, i) => (
+              <Link 
+                key={i} 
+                href={`/exam/${i + 1}`}
+                className="group relative bg-white border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+              >
+                 <div className="absolute top-0 left-0 w-full h-1 bg-[#63AEBF] rounded-t-xl group-hover:bg-[#FCD442] transition-colors"></div>
+                 <div className="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center text-[#033E8C] mb-4 group-hover:bg-[#033E8C] group-hover:text-white transition-colors">
+                    <FileText size={24} />
+                 </div>
+                 <h3 className="text-xl font-bold text-gray-800 mb-2">Examen Oficial {i + 1}</h3>
+                 <p className="text-sm text-gray-500 font-medium">
+                   35 Preguntas (3 dobles)
+                 </p>
+                 <div className="mt-4 flex items-center text-[#63AEBF] font-semibold text-sm group-hover:text-[#FCD442]">
+                    Iniciar Examen →
+                 </div>
+              </Link>
+            ))}
+          </div>
+        )}
+      </main>
     </div>
   );
 }

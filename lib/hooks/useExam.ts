@@ -15,7 +15,7 @@ export function useExam() {
 
   const [loading, setLoading] = useState(false);
 
-  const initializeExam = useCallback(async (mode: 'random' | 'debug' | 'senaleticas' | 'matematicas' | 'doble-puntaje' = 'random') => {
+  const initializeExam = useCallback(async (mode: 'random' | 'debug' | 'senaleticas' | 'matematicas' | 'doble-puntaje' = 'random', examId?: number) => {
     setLoading(true);
     try {
       let questionsData = null;
@@ -41,10 +41,20 @@ export function useExam() {
         if (error) throw new Error(error);
         questionsData = data;
       } else {
-        const { getRandomExamQuestions } = await import('@/app/actions/getExamQuestions');
-        const { data, error } = await getRandomExamQuestions();
-        if (error) throw new Error(error);
-        questionsData = data;
+        if (examId !== undefined) {
+          const { getSpecificExamQuestions } = await import('@/app/actions/getSpecificExam');
+          const { data, error } = await getSpecificExamQuestions(examId);
+          if (error) throw new Error(error);
+          questionsData = data;
+        } else {
+          const { getRandomExamQuestions } = await import('@/app/actions/getExamQuestions');
+          // Usar getRandomExamQuestions y mostrar las estadísticas en consola
+          const response = await getRandomExamQuestions();
+          const { data, error, logStr } = response;
+          if (error) throw new Error(error);
+          if (logStr) console.log(logStr);
+          questionsData = data;
+        }
       }
       
       if (questionsData) {

@@ -3,7 +3,10 @@
 import { createClient } from "@/lib/supabase/server";
 import { Question } from "@/lib/types/exam";
 
-export async function getRandomExamQuestions(): Promise<{ data: Question[] | null, error: string | null }> {
+// Cache global para recordar el último examen emitido y calcular variabilidad
+let lastExamIds: string[] = [];
+
+export async function getRandomExamQuestions(): Promise<{ data: Question[] | null, error: string | null, logStr?: string }> {
   try {
     const supabase = await createClient();
 
@@ -44,6 +47,35 @@ export async function getRandomExamQuestions(): Promise<{ data: Question[] | nul
     // 3. Combine & Shuffle Final Exam
     const finalExam = [...selectedDouble, ...selectedNormal].sort(() => 0.5 - Math.random());
 
+    // 3.5 Log variabilidad
+    const selectedIds = finalExam.map(q => q.id);
+    const totalPool = (doubleData?.length || 0) + (normalData?.length || 0);
+    
+    let logStr = '';
+    // Comparar con el último examen si existe
+    if (lastExamIds.length > 0) {
+      const repetidas = selectedIds.filter(id => lastExamIds.includes(id)).length;
+      const nuevas = selectedIds.length - repetidas;
+      const variabilidad = Math.round((nuevas / selectedIds.length) * 100);
+      
+      logStr = `\n--- ESTADÍSTICAS DEL EXAMEN ALEATORIO ---\n` +
+               `Pool total en base de datos: ${totalPool} preguntas\n` +
+               `Se repiten del intento anterior: ${repetidas} preguntas\n` +
+               `Preguntas nuevas vs anterior: ${nuevas} preguntas\n` +
+               `Tasa de Variabilidad inmediata: ${variabilidad}%\n` +
+               `-----------------------------------------\n`;
+      console.log(logStr);
+    } else {
+      logStr = `\n--- ESTADÍSTICAS DEL EXAMEN ALEATORIO ---\n` +
+               `Primer intento de examen registrado.\n` +
+               `Pool total en base de datos: ${totalPool} preguntas\n` +
+               `Se entregaron 35 preguntas.\n`;
+      console.log(logStr);
+    }
+
+    // Actualizar el cache
+    lastExamIds = selectedIds;
+
     // 4. Map to Question interface
     const mappedQuestions: Question[] = finalExam.map(q => {
       // Logic to recreate statements structure if present
@@ -64,7 +96,7 @@ export async function getRandomExamQuestions(): Promise<{ data: Question[] | nul
       };
     });
 
-    return { data: mappedQuestions, error: null };
+    return { data: mappedQuestions, error: null, logStr };
 
     return { data: mappedQuestions, error: null };
 
