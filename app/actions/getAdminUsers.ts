@@ -3,6 +3,8 @@
 import { createClient } from "@/lib/supabase/server";
 import { AdminUser } from "@/lib/types/adminUser";
 
+import { createClient as createSupabaseAdmin } from '@supabase/supabase-js';
+
 export async function getAdminUsers(): Promise<{ data: AdminUser[] | null, error: string | null }> {
   try {
     const supabase = await createClient();
@@ -24,9 +26,14 @@ export async function getAdminUsers(): Promise<{ data: AdminUser[] | null, error
       return { data: null, error: 'Access Denied: Admin role required' };
     }
 
-    // Fetch users from admin_users view/table
-    // If admin_users is a view with security_invoker, this should work as the admin user
-    const { data, error } = await supabase
+    // Fetch users from admin_users view/table using Service Role Key
+    // since public access should be revoked to fix the security vulnerability.
+    const supabaseAdmin = createSupabaseAdmin(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
+    );
+
+    const { data, error } = await supabaseAdmin
       .from("admin_users")
       .select("*")
       .order("created_at", { ascending: false });
