@@ -32,31 +32,14 @@ export function Sidebar({
   onEditQuestion
 }: SidebarProps) {
   return (
-    <div className="flex flex-col h-full" style={{
-      // background: '#E0E0E0',
-      padding: '20px', 
-      paddingLeft: '20px', 
-      gap: '15px',
-      borderRadius: '0 8px 8px 0'
-    }}>
+    <div className="flex flex-col h-full p-5 gap-4 rounded-r-lg">
       {/* Timer */}
       {mode === 'exam' && (
-        <div className="text-center rounded-lg w-full" style={{
-          background: '#FCD442',
-          border: '2px solid #033E8C',
-          padding: '8px', 
-          borderRadius: '6px',
-          color: '#033E8C', // Color texto igual al borde
-          // boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
-          marginTop: '0px'
-        }}>
-          <div style={{ fontSize: '0.9rem', marginBottom: '2px', color: '#2E7D32', fontWeight: 'bold' }}>
+        <div className="text-center rounded-lg w-full bg-[#FCD442] dark:bg-yellow-500/10 border-2 border-[#033E8C] dark:border-yellow-500/80 p-2 text-[#033E8C] dark:text-yellow-500 transition-colors mt-0">
+          <div className="text-xs mb-0.5 text-green-700 dark:text-yellow-600/90 font-bold">
             Tiempo restante
           </div>
-          <div className="font-bold flex items-center justify-center" style={{
-            fontSize: '1.5rem',
-            gap: '8px'
-          }}>
+          <div className="font-bold flex items-center justify-center text-2xl gap-2">
             <Clock size={24} />
             <span>{formattedTime}</span>
           </div>
@@ -64,20 +47,10 @@ export function Sidebar({
       )}
 
       {/* Action Buttons */}
-      <div className="grid" style={{
-        gridTemplateColumns: '1fr',
-        gap: '10px'
-      }}>
+      <div className="grid grid-cols-1 gap-2.5">
         <button
           onClick={onShowInstructions}
-          className="text-white rounded-lg font-bold cursor-pointer transition-opacity hover:opacity-90"
-          style={{
-            backgroundColor: '#033E8C',
-            padding: '12px',
-            borderRadius: '6px',
-            fontSize: '0.9rem',
-            border: 'none'
-          }}
+          className="text-white bg-[#033E8C] dark:bg-zinc-800 hover:bg-[#022c63] dark:hover:bg-zinc-700 font-bold py-3 px-4 rounded-lg text-sm transition-colors border-none cursor-pointer"
         >
           Instrucciones
         </button>
@@ -85,15 +58,7 @@ export function Sidebar({
         {onEditQuestion && (
           <button
             onClick={onEditQuestion}
-            className="text-white rounded-lg font-bold cursor-pointer transition-opacity hover:opacity-90"
-            style={{
-              backgroundColor: '#fbbf24', // Amber/Yellow for attention
-              color: '#033E8C',
-              padding: '12px',
-              borderRadius: '6px',
-              fontSize: '0.9rem',
-              border: 'none'
-            }}
+            className="text-[#033E8C] dark:text-yellow-400 bg-amber-400 dark:bg-amber-400/20 hover:bg-amber-500 dark:hover:bg-amber-400/30 font-bold py-3 px-4 rounded-lg text-sm transition-colors border-none cursor-pointer"
           >
             Editar Esta Pregunta
           </button>
@@ -114,15 +79,7 @@ export function Sidebar({
       {mode === 'exam' && (
         <button
           onClick={onFinishExam}
-          className="text-white rounded-lg font-bold cursor-pointer transition-opacity hover:opacity-90"
-          style={{
-            backgroundColor: '#033E8C',
-            padding: '15px',
-            border: 'none',
-            borderRadius: '6px',
-            fontSize: '1.1rem',
-            marginTop: 'auto'
-          }}
+          className="text-white bg-[#033E8C] dark:bg-blue-600 hover:bg-[#022c63] dark:hover:bg-blue-700 font-bold py-3.5 px-6 rounded-lg text-base transition-colors border-none cursor-pointer mt-auto"
         >
           Terminar examen
         </button>

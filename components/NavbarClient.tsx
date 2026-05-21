@@ -8,6 +8,7 @@ import type { User } from '@supabase/supabase-js';
 import { useRouter } from 'next/navigation';
 import { GraduationCap, Shield, LogOut, CheckCircle2 } from 'lucide-react';
 import { ExamMode } from '@/lib/types/exam';
+import { ThemeSwitcher } from './theme-switcher';
 
 interface NavbarClientProps {
   // Props opcionales para modo examen
@@ -184,6 +185,7 @@ export function NavbarClient({
 
         {/* Menú de Usuario (Desktop & Mobile) */}
         <div className="flex gap-2 items-center justify-end shrink-0">
+          <ThemeSwitcher className="text-[#E0F2F5] hover:text-[#FCD442] hover:bg-white/10 p-2 rounded-md transition-colors" />
           {user ? (
             <>
               {/* Usuario logueado */}

@@ -131,7 +131,7 @@ export default function ExamIndexPage() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50">
+    <div className="min-h-screen flex flex-col bg-background text-foreground transition-colors duration-300">
       <NavbarClient 
         isExam={false}
         initialUser={user}
@@ -140,16 +140,16 @@ export default function ExamIndexPage() {
       
       <main className="flex-1 w-full max-w-7xl mx-auto px-4 py-8 md:py-12">
         <div className="mb-8">
-          <h1 className="text-3xl md:text-5xl font-extrabold text-[#033E8C] mb-4">
+          <h1 className="text-3xl md:text-5xl font-extrabold text-[#033E8C] dark:text-[#63AEBF] mb-4">
             Simuladores Oficiales
           </h1>
-          <p className="text-lg text-gray-600 max-w-2xl">
+          <p className="text-lg text-gray-600 dark:text-zinc-300 max-w-2xl">
             Cada uno de estos exámenes está estructurado con preguntas únicas que no se repiten entre sí. Cumplen con la regla oficial de 35 preguntas: 3 de doble puntaje y 32 normales.
           </p>
         </div>
 
         {examCount === 0 ? (
-          <div className="text-center py-12 text-gray-500">
+          <div className="text-center py-12 text-gray-500 dark:text-zinc-400">
             No hay suficientes preguntas en la base de datos para generar un examen completo.
           </div>
         ) : (
@@ -177,14 +177,14 @@ export default function ExamIndexPage() {
               <Link 
                 key={i} 
                 href={`/exam/${i + 1}`}
-                className="group relative bg-white border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+                className="group relative bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 rounded-xl p-6 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
               >
                  <div className="absolute top-0 left-0 w-full h-1 bg-[#63AEBF] rounded-t-xl group-hover:bg-[#FCD442] transition-colors"></div>
-                 <div className="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center text-[#033E8C] mb-4 group-hover:bg-[#033E8C] group-hover:text-white transition-colors">
+                 <div className="w-12 h-12 bg-blue-50 dark:bg-zinc-800 rounded-full flex items-center justify-center text-[#033E8C] dark:text-[#63AEBF] mb-4 group-hover:bg-[#033E8C] group-hover:text-white transition-colors">
                     <FileText size={24} />
                  </div>
-                 <h3 className="text-xl font-bold text-gray-800 mb-2">Examen Oficial {i + 1}</h3>
-                 <p className="text-sm text-gray-500 font-medium">
+                 <h3 className="text-xl font-bold text-gray-800 dark:text-zinc-100 mb-2">Examen Oficial {i + 1}</h3>
+                 <p className="text-sm text-gray-500 dark:text-zinc-400 font-medium">
                    35 Preguntas (3 dobles)
                  </p>
                  <div className="mt-4 flex items-center text-[#63AEBF] font-semibold text-sm group-hover:text-[#FCD442]">

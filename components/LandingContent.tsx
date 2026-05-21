@@ -20,7 +20,7 @@ export function LandingContent() {
   };
 
   return (
-    <div className="flex-1 flex flex-col font-sans selection:bg-[#FCD442] selection:text-[#033E8C] bg-[#033E8C]">
+    <div className="flex-1 flex flex-col font-sans selection:bg-[#FCD442] selection:text-[#033E8C] bg-[#033E8C] dark:bg-zinc-950 transition-colors duration-300">
       {/* 1. HERO PRINCIPAL */}
       <section className="w-full px-4 pt-8 pb-12 md:pt-16 md:pb-20 text-center flex flex-col items-center justify-center min-h-[70vh]">
         <div className="max-w-4xl mx-auto space-y-8">
@@ -73,7 +73,7 @@ export function LandingContent() {
       </div>
 
       {/* 2. BLOQUE EMOCIONAL */}
-      <section className="py-20 px-4 bg-[#022c63] text-center">
+      <section className="py-20 px-4 bg-[#022c63] dark:bg-zinc-900 text-center transition-colors">
         <div className="max-w-3xl mx-auto space-y-6">
           <h2 className="text-3xl md:text-5xl font-bold text-white leading-tight">
             No vendemos preguntas.<br />
@@ -92,18 +92,18 @@ export function LandingContent() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[
             { icon: <CheckCircle className="w-8 h-8 text-[#25D366]" />, text: "Simulación con formato tipo examen real" },
-            { icon: <InfinityIcon className="w-8 h-8 text-[#033E8C]" />, text: "35 preguntas aleatorias cada intento" },
-            { icon: <Clock className="w-8 h-8 text-[#033E8C]" />, text: "Tiempo real de 45 minutos" },
+            { icon: <InfinityIcon className="w-8 h-8 text-[#033E8C] dark:text-[#63AEBF]" />, text: "35 preguntas aleatorias cada intento" },
+            { icon: <Clock className="w-8 h-8 text-[#033E8C] dark:text-[#63AEBF]" />, text: "Tiempo real de 45 minutos" },
             { icon: <Zap className="w-8 h-8 text-[#FCD442] fill-[#FCD442]" />, text: "Resultados inmediatos", bgIcon: "bg-[#033E8C]" },
-            { icon: <BookOpen className="w-8 h-8 text-[#033E8C]" />, text: "Explicación clara en cada respuesta" },
-            { icon: <InfinityIcon className="w-8 h-8 text-[#033E8C]" />, text: "Práctica ilimitada durante tu acceso" },
+            { icon: <BookOpen className="w-8 h-8 text-[#033E8C] dark:text-[#63AEBF]" />, text: "Explicación clara en cada respuesta" },
+            { icon: <InfinityIcon className="w-8 h-8 text-[#033E8C] dark:text-[#63AEBF]" />, text: "Práctica ilimitada durante tu acceso" },
             { icon: <MessageCircle className="w-8 h-8 text-[#25D366]" />, text: "Activación rápida por WhatsApp" },
           ].map((item, index) => (
-            <div key={index} className="bg-white p-6 rounded-2xl shadow-xl border-b-4 border-transparent hover:border-[#FCD442] flex items-center gap-4 transition-all hover:-translate-y-1">
-              <div className="bg-gray-100 p-3 rounded-full shrink-0">
+            <div key={index} className="bg-white dark:bg-zinc-900 p-6 rounded-2xl shadow-xl border-b-4 border-transparent hover:border-[#FCD442] flex items-center gap-4 transition-all hover:-translate-y-1 border border-transparent dark:border-zinc-800">
+              <div className="bg-gray-100 dark:bg-zinc-800 p-3 rounded-full shrink-0">
                 {item.icon}
               </div>
-              <p className="font-bold text-lg text-[#033E8C]">{item.text}</p>
+              <p className="font-bold text-lg text-[#033E8C] dark:text-zinc-100">{item.text}</p>
             </div>
           ))}
         </div>
@@ -115,18 +115,18 @@ export function LandingContent() {
       </div>
 
       {/* 4. PLANES (PRECIOS) */}
-      <section id="planes" className="py-20 px-4 bg-[#033E8C]">
+      <section id="planes" className="py-20 px-4 bg-[#033E8C] dark:bg-zinc-950 transition-colors">
         <div className="max-w-5xl mx-auto">
           <h2 className="text-3xl md:text-5xl font-bold text-center mb-16 text-white">Elige tu plan de entrenamiento</h2>
           
           <div className="flex flex-col md:flex-row gap-8 justify-center items-stretch">
             {/* Plan 1 */}
-            <div className="bg-white rounded-3xl shadow-2xl overflow-hidden border-4 border-transparent flex-1 max-w-md transform hover:scale-[1.02] transition-transform relative flex flex-col">
+            <div className="bg-white dark:bg-zinc-900 rounded-3xl shadow-2xl overflow-hidden border-4 border-transparent dark:border-zinc-800 flex-1 max-w-md transform hover:scale-[1.02] transition-transform relative flex flex-col">
               <div className="h-3 bg-[#25D366]"></div>
               <div className="p-8 text-center flex flex-col h-full">
-                <h3 className="text-2xl font-black text-[#033E8C] mb-2 uppercase tracking-wide">Modo Intensivo 24H</h3>
-                <p className="text-gray-500 mb-6 font-medium">Ideal si das el examen pronto</p>
-                <div className="text-6xl font-black text-[#033E8C] mb-8 tracking-tight">$2.990</div>
+                <h3 className="text-2xl font-black text-[#033E8C] dark:text-[#63AEBF] mb-2 uppercase tracking-wide">Modo Intensivo 24H</h3>
+                <p className="text-gray-500 dark:text-zinc-400 mb-6 font-medium">Ideal si das el examen pronto</p>
+                <div className="text-6xl font-black text-[#033E8C] dark:text-zinc-100 mb-8 tracking-tight">$2.990</div>
                 
                 <div className="flex-grow"></div>
 
@@ -140,14 +140,14 @@ export function LandingContent() {
             </div>
 
             {/* Plan 2 (Recomendado) */}
-            <div className="bg-white rounded-3xl shadow-2xl overflow-hidden border-4 border-[#FCD442] flex-1 max-w-md transform hover:scale-[1.02] transition-transform relative flex flex-col ring-4 ring-[#FCD442]/30">
+            <div className="bg-white dark:bg-zinc-900 rounded-3xl shadow-2xl overflow-hidden border-4 border-[#FCD442] flex-1 max-w-md transform hover:scale-[1.02] transition-transform relative flex flex-col ring-4 ring-[#FCD442]/30">
               <div className="bg-[#FCD442] text-[#033E8C] text-center font-black py-2 text-sm tracking-widest uppercase">
                 Recomendado
               </div>
               <div className="p-8 text-center flex flex-col h-full">
-                <h3 className="text-2xl font-black text-[#033E8C] mb-2 uppercase tracking-wide">Preparación 15 Días</h3>
-                <p className="text-gray-500 mb-6 font-medium">Practica con calma y seguridad</p>
-                <div className="text-6xl font-black text-[#033E8C] mb-8 tracking-tight">$4.990</div>
+                <h3 className="text-2xl font-black text-[#033E8C] dark:text-[#63AEBF] mb-2 uppercase tracking-wide">Preparación 15 Días</h3>
+                <p className="text-gray-500 dark:text-zinc-400 mb-6 font-medium">Practica con calma y seguridad</p>
+                <div className="text-6xl font-black text-[#033E8C] dark:text-zinc-100 mb-8 tracking-tight">$4.990</div>
                 
                 <div className="flex-grow"></div>
 
@@ -164,14 +164,14 @@ export function LandingContent() {
       </section>
 
       {/* Frase de apoyo 4 */}
-      <div className="bg-[#022c63] py-6 text-center text-white/80 text-sm md:text-base border-t border-white/10">
+      <div className="bg-[#022c63] dark:bg-zinc-900 py-6 text-center text-white/80 text-sm md:text-base border-t border-white/10 transition-colors">
         <div className="flex items-center justify-center gap-2 font-semibold">
            • Entrena como si ya estuvieras en la municipalidad •
         </div>
       </div>
 
       {/* Footer simple */}
-      <footer className="bg-[#022c63] pb-10 pt-4 text-center text-white/40 text-sm">
+      <footer className="bg-[#022c63] dark:bg-zinc-900 pb-10 pt-4 text-center text-white/40 text-sm transition-colors">
         <p>© {new Date().getFullYear()} Simulador Profe Tomy. Todos los derechos reservados.</p>
       </footer>
 

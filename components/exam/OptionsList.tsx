@@ -20,68 +20,40 @@ export function OptionsList({
   const options: Array<'a' | 'b' | 'c'> = ['a', 'b', 'c'];
 
   return (
-    <div className="flex flex-col" style={{ gap: '2px' }}>
+    <div className="flex flex-col gap-2 w-full">
       {options.map(option => {
         const isSelected = userAnswer === option;
         const isCorrectAnswer = option === question.correct;
         const isIncorrect = isSelected && !isCorrectAnswer;
         const isDisabled = mode === 'correction';
 
-        let styles: React.CSSProperties = {
-          display: 'flex',
-          alignItems: 'flex-start',
-          gap: '8px',
-          fontSize: '1.1rem',
-          cursor: 'pointer',
-          padding: '6px', // Reducido de 12px
-          borderRadius: '6px',
-          transition: 'all 0.2s',
-          border: '2px solid transparent',
-          color: '#000' // Color negro por defecto como en el HTML original
-        };
-        
-        // Solo aplicar colores en modo corrección
+        // Determinar clases de contenedor según estado
+        let containerClasses = "flex items-start gap-2 text-base md:text-lg cursor-pointer p-3 rounded-lg transition-all border-2 border-transparent text-foreground select-none w-full ";
+
         if (mode === 'correction' && isFinished) {
           if (isCorrectAnswer) {
-            styles.backgroundColor = '#E8F5E8';
-            styles.borderColor = '#4CAF50';
-            styles.color = '#2E7D32';
+            containerClasses += "bg-green-50 dark:bg-green-950/30 border-green-500 text-green-800 dark:text-green-300 font-semibold";
           } else if (isIncorrect) {
-            styles.backgroundColor = '#FFEBEE';
-            styles.borderColor = '#F44336';
-            styles.color = '#C62828';
+            containerClasses += "bg-red-50 dark:bg-red-950/30 border-red-500 text-red-800 dark:text-red-300 font-semibold";
+          } else {
+            containerClasses += "opacity-60";
           }
-          if (isSelected) {
-            styles.fontWeight = 'bold';
-          }
+        } else {
+          containerClasses += "hover:bg-gray-100 dark:hover:bg-zinc-800/60";
         }
 
         return (
           <label 
             key={option} 
-            style={styles}
-            onMouseEnter={(e) => {
-              if (mode !== 'correction' || !isFinished) {
-                e.currentTarget.style.backgroundColor = '#f5f5f5';
-              }
-            }}
-            onMouseLeave={(e) => {
-              if (mode !== 'correction' || !isFinished) {
-                e.currentTarget.style.backgroundColor = 'transparent';
-              } else if (isCorrectAnswer) {
-                e.currentTarget.style.backgroundColor = '#E8F5E8';
-              } else if (isIncorrect) {
-                e.currentTarget.style.backgroundColor = '#FFEBEE';
-              }
-            }}
+            className={containerClasses}
           >
             {/* Letra de la opción antes del input/radio */}
-            <span style={{ fontWeight: 'bold', marginRight: '8px', minWidth: '20px' }}>
+            <span className="font-bold mr-2 min-w-[20px]">
               {option})
             </span>
 
             {/* Radio personalizado */}
-            <div style={{ position: 'relative', marginRight: '12px', display: 'flex', alignItems: 'center' }}>
+            <div className="relative mr-3 flex items-center pt-1 md:pt-0.5">
               <input
                 type="radio"
                 name="answer"
@@ -89,33 +61,26 @@ export function OptionsList({
                 checked={isSelected}
                 disabled={isDisabled}
                 onChange={() => onAnswerSelect(option)}
-                style={{
-                  opacity: 0,
-                  position: 'absolute',
-                  width: '100%',
-                  height: '100%',
-                  cursor: 'pointer',
-                  zIndex: 1
-                }}
+                className="opacity-0 absolute w-full h-full cursor-pointer z-10"
               />
-              <div style={{
-                width: '20px',
-                height: '20px',
-                borderRadius: '50%',
-                border: isSelected ? '6px solid #3F51B5' : '2px solid #ccc',
-                backgroundColor: 'white',
-                transition: 'all 0.2s',
-                boxSizing: 'border-box'
-              }}></div>
+              <div className={`w-5 h-5 rounded-full border-2 transition-all flex items-center justify-center bg-white dark:bg-zinc-800 ${
+                isSelected 
+                  ? 'border-[#3F51B5] dark:border-blue-500' 
+                  : 'border-gray-300 dark:border-zinc-600'
+              }`}>
+                {isSelected && (
+                  <div className="w-2.5 h-2.5 rounded-full bg-[#3F51B5] dark:bg-blue-500 animate-in zoom-in-50 duration-200"></div>
+                )}
+              </div>
             </div>
 
-            <span style={{ flex: 1 }}>
+            <span className="flex-1">
               {question[option]}
               {mode === 'correction' && isFinished && isCorrectAnswer && (
-                <span style={{ marginLeft: 'auto', color: '#4CAF50', fontWeight: 'bold' }}> ✓ CORRECTA</span>
+                <span className="ml-2 text-green-600 dark:text-green-400 font-bold text-sm block md:inline-block"> ✓ CORRECTA</span>
               )}
               {mode === 'correction' && isFinished && isIncorrect && (
-                <span style={{ marginLeft: 'auto', color: '#F44336', fontWeight: 'bold' }}> ✗ TU RESPUESTA</span>
+                <span className="ml-2 text-red-600 dark:text-red-400 font-bold text-sm block md:inline-block"> ✗ TU RESPUESTA</span>
               )}
             </span>
           </label>

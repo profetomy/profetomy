@@ -236,10 +236,8 @@ export default function ExamPage() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col" style={{
+    <div className="min-h-screen flex flex-col bg-background text-foreground transition-colors duration-300" style={{
       fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
-      background: '#F7F7F7',
-      backgroundAttachment: 'fixed',
       height: '100vh'
     }}>
       <NavbarClient 
@@ -255,7 +253,7 @@ export default function ExamPage() {
       <div className="flex justify-center p-2 lg:p-5 items-start lg:items-center min-h-[calc(100vh-80px)] lg:h-[calc(100vh-80px)] overflow-y-auto lg:overflow-visible">
         {/* Main Single Card Container */}
         <div 
-          className={`bg-white rounded-lg shadow-lg w-full lg:w-[95%] flex flex-col lg:flex-row overflow-hidden ${
+          className={`bg-card text-card-foreground border border-border/80 rounded-lg shadow-lg w-full lg:w-[95%] flex flex-col lg:flex-row overflow-hidden dark:bg-zinc-900 ${
             currentQuestion?.image 
               ? 'h-auto lg:h-full lg:max-h-[800px]' 
               : 'h-auto lg:max-h-[800px] lg:min-h-[400px]'
@@ -265,7 +263,7 @@ export default function ExamPage() {
         }}>
           
           {/* Left Column: Question Area */}
-          <div className="flex-1 p-5 lg:p-10 flex flex-col border-b lg:border-b-0 lg:border-r border-gray-100 w-full">
+          <div className="flex-1 p-5 lg:p-10 flex flex-col border-b lg:border-b-0 lg:border-r border-gray-100 dark:border-zinc-800 w-full">
             <div className={`flex-1 flex flex-col w-full min-h-0 ${
               currentQuestion?.image ? 'justify-start lg:justify-between gap-6 lg:gap-0' : 'justify-center gap-6'
             }`}>
@@ -303,7 +301,7 @@ export default function ExamPage() {
           </div>
 
           {/* Right Column: Sidebar content */}
-          <div className={`w-full lg:w-[320px] shrink-0 p-5 pb-0 flex flex-col bg-gray-50/30 overflow-y-auto ${
+          <div className={`w-full lg:w-[320px] shrink-0 p-5 pb-0 flex flex-col bg-gray-50/30 dark:bg-zinc-950/40 overflow-y-auto ${
             !currentQuestion?.image ? 'lg:max-h-[800px]' : ''
           }`}> 
             <Sidebar

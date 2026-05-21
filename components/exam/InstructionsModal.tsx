@@ -6,60 +6,39 @@ interface InstructionsModalProps {
 
 export function InstructionsModal({ onClose }: InstructionsModalProps) {
   return (
-    <div className="fixed inset-0 flex items-center justify-center p-4" style={{
-      zIndex: 1000,
-      backgroundColor: 'rgba(0,0,0,0.5)'
-    }}>
-      <div className="bg-white rounded-lg text-center" style={{
-        margin: '15% auto',
-        padding: '30px',
-        borderRadius: '8px',
-        width: '80%',
-        maxWidth: '500px',
-        boxShadow: '0 4px 20px rgba(0,0,0,0.3)'
-      }}>
-        <h2 className="font-bold" style={{
-          color: '#3F51B5',
-          marginBottom: '20px',
-          fontSize: '1.5rem'
-        }}>
+    <div className="fixed inset-0 flex items-center justify-center p-4 z-[1000] bg-black/60 backdrop-blur-sm">
+      <div className="bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 rounded-xl p-8 w-full max-w-md shadow-2xl transition-all">
+        <h2 className="font-extrabold text-2xl mb-6 text-[#033E8C] dark:text-blue-400 text-center">
           Instrucciones del Examen
         </h2>
         
-        <div style={{ marginBottom: '24px', textAlign: 'left' }}>
-          <p style={{ marginBottom: '15px', fontSize: '1.1rem', color: '#333' }}>
+        <div className="mb-8 text-left space-y-3.5">
+          <p className="text-base text-gray-700 dark:text-zinc-300">
             <strong>• Tiempo:</strong> 45 minutos
           </p>
-          <p style={{ marginBottom: '15px', fontSize: '1.1rem', color: '#333' }}>
+          <p className="text-base text-gray-700 dark:text-zinc-300">
             <strong>• Preguntas:</strong> 35 preguntas aleatorias
           </p>
-          <p style={{ marginBottom: '15px', fontSize: '1.1rem', color: '#333' }}>
+          <p className="text-base text-gray-700 dark:text-zinc-300">
             <strong>• Puntuación:</strong> 3 preguntas valen doble puntaje
           </p>
-          <p style={{ marginBottom: '15px', fontSize: '1.1rem', color: '#333' }}>
+          <p className="text-base text-gray-700 dark:text-zinc-300">
             <strong>• Aprobación:</strong> Menos de 6 puntos incorrectos
           </p>
-          <p style={{ marginBottom: '15px', fontSize: '1.1rem', color: '#333' }}>
+          <p className="text-base text-gray-700 dark:text-zinc-300">
             <strong>• Navegación:</strong> Puedes ir a cualquier pregunta usando la cuadrícula
           </p>
-          <p style={{ marginBottom: '15px', fontSize: '1.1rem', color: '#333' }}>
+          <p className="text-base text-gray-700 dark:text-zinc-300">
             <strong>• Colores:</strong> Borde naranja = doble puntaje, Borde negro = respondida
           </p>
-          <p style={{ marginBottom: '15px', fontSize: '1.1rem', color: '#333' }}>
+          <p className="text-base text-gray-700 dark:text-zinc-300">
             <strong>• Modo Corrección:</strong> Disponible después de finalizar el examen
           </p>
         </div>
 
         <button
           onClick={onClose}
-          className="text-white rounded cursor-pointer"
-          style={{
-            background: '#3F51B5',
-            padding: '10px 20px',
-            border: 'none',
-            borderRadius: '4px',
-            margin: '5px'
-          }}
+          className="w-full bg-[#033E8C] dark:bg-blue-600 hover:bg-[#022c63] dark:hover:bg-blue-700 text-white font-bold py-2.5 px-6 rounded-lg transition-colors cursor-pointer"
         >
           Entendido
         </button>

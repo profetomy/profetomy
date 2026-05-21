@@ -18,52 +18,14 @@ export function NavigationButtons({
       <button
         onClick={onPrevious}
         disabled={currentIndex === 0}
-        className="rounded font-bold transition-all disabled:opacity-50 disabled:cursor-not-allowed px-6 py-2 sm:px-8 sm:py-3"
-        style={{
-          border: '2px solid #ADCEF7',
-          background: 'white',
-          color: '#3F51B5',
-          borderRadius: '6px',
-          fontSize: '1rem'
-        }}
-        onMouseEnter={(e) => {
-          if (currentIndex !== 0) {
-            e.currentTarget.style.background = '#3F51B5';
-            e.currentTarget.style.color = 'white';
-          }
-        }}
-        onMouseLeave={(e) => {
-          if (currentIndex !== 0) {
-            e.currentTarget.style.background = 'white';
-            e.currentTarget.style.color = '#3F51B5';
-          }
-        }}
+        className="border-2 border-[#ADCEF7] dark:border-zinc-700 bg-white dark:bg-zinc-800 text-[#3F51B5] dark:text-blue-400 hover:bg-[#3F51B5] dark:hover:bg-blue-600 hover:text-white dark:hover:text-white rounded-lg font-bold transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-white dark:disabled:hover:bg-zinc-800 disabled:hover:text-[#3F51B5] dark:disabled:hover:text-blue-400 px-6 py-2 sm:px-8 sm:py-3 text-base select-none cursor-pointer"
       >
-        ← Anterior
+         ← Anterior
       </button>
       <button
         onClick={onNext}
         disabled={currentIndex === totalQuestions - 1}
-        className="rounded font-bold transition-all disabled:opacity-50 disabled:cursor-not-allowed px-6 py-2 sm:px-8 sm:py-3"
-        style={{
-          border: '2px solid #ADCEF7',
-          background: 'white',
-          color: '#3F51B5',
-          borderRadius: '6px',
-          fontSize: '1rem'
-        }}
-        onMouseEnter={(e) => {
-          if (currentIndex !== totalQuestions - 1) {
-            e.currentTarget.style.background = '#3F51B5';
-            e.currentTarget.style.color = 'white';
-          }
-        }}
-        onMouseLeave={(e) => {
-          if (currentIndex !== totalQuestions - 1) {
-            e.currentTarget.style.background = 'white';
-            e.currentTarget.style.color = '#3F51B5';
-          }
-        }}
+        className="border-2 border-[#ADCEF7] dark:border-zinc-700 bg-white dark:bg-zinc-800 text-[#3F51B5] dark:text-blue-400 hover:bg-[#3F51B5] dark:hover:bg-blue-600 hover:text-white dark:hover:text-white rounded-lg font-bold transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-white dark:disabled:hover:bg-zinc-800 disabled:hover:text-[#3F51B5] dark:disabled:hover:text-blue-400 px-6 py-2 sm:px-8 sm:py-3 text-base select-none cursor-pointer"
       >
         Siguiente →
       </button>

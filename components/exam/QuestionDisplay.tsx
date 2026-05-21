@@ -24,14 +24,13 @@ export function QuestionDisplay({
 
   return (
     <div className="flex flex-col h-full overflow-hidden">
-      <div className="text-lg font-bold mb-3 shrink-0" style={{ color: '#333' }}>
+      <div className="text-lg font-bold mb-3 shrink-0 text-foreground/80">
         Pregunta N° {questionNumber}{doublePointsText}:
       </div>
       
-      <div className="font-bold mb-4 shrink-0" style={{ 
+      <div className="font-bold mb-4 shrink-0 text-foreground" style={{ 
         fontSize: '1.3rem',
-        lineHeight: '1.4',
-        color: '#222'
+        lineHeight: '1.4'
       }}>
         {question.q}
       </div>
@@ -42,10 +41,9 @@ export function QuestionDisplay({
             src={question.image}
             alt="Imagen de la pregunta"
             fill
-            className="border rounded"
+            className="border border-[#ddd] dark:border-zinc-800 rounded"
             style={{ 
-              objectFit: 'contain',
-              borderColor: '#ddd'
+              objectFit: 'contain'
             }}
           />
         </div>
@@ -53,7 +51,7 @@ export function QuestionDisplay({
 
       {question.statements && question.statements.length > 0 && (
         <div className="mb-6 shrink-0 px-2">
-          <ol className="list-inside space-y-2 font-medium text-gray-800" style={{ listStyleType: 'upper-roman' }}>
+          <ol className="list-inside space-y-2 font-medium text-gray-800 dark:text-zinc-200" style={{ listStyleType: 'upper-roman' }}>
             {question.statements.map((statement, index) => (
               <li key={index} className="pl-1">
                 <span className="ml-1">{statement}</span>
@@ -64,28 +62,19 @@ export function QuestionDisplay({
       )}
 
       {mode === 'correction' && isFinished && (
-        <div className="p-4 rounded-lg mb-6 shrink-0 overflow-y-auto max-h-[150px]" style={{ 
-          background: '#f5f5f5',
-          padding: '15px',
-          borderRadius: '6px',
-          marginBottom: '20px',
-          borderLeft: '4px solid #3F51B5'
-        }}>
-          <h3 className="font-bold" style={{ 
-            color: '#3F51B5',
-            marginBottom: '10px'
-          }}>
+        <div className="p-4 rounded-lg mb-6 shrink-0 overflow-y-auto max-h-[150px] bg-gray-100 dark:bg-zinc-800 border-l-4 border-[#3F51B5] dark:border-blue-500">
+          <h3 className="font-bold text-[#3F51B5] dark:text-blue-400 mb-2">
             Resultado de esta pregunta:
           </h3>
-          <p style={{ margin: '5px 0', fontSize: '0.95rem', color: '#333' }}>
+          <p className="text-foreground/90" style={{ margin: '5px 0', fontSize: '0.95rem' }}>
             <strong>Tu respuesta:</strong>{' '}
             {userAnswer ? `${userAnswer.toUpperCase()}) ${question[userAnswer]}` : 'Sin responder'}
           </p>
-          <p style={{ margin: '5px 0', fontSize: '0.95rem', color: '#333' }}>
+          <p className="text-foreground/90" style={{ margin: '5px 0', fontSize: '0.95rem' }}>
             <strong>Respuesta correcta:</strong>{' '}
             {question.correct.toUpperCase()}) {question[question.correct]}
           </p>
-          <p style={{ margin: '5px 0', fontSize: '0.95rem', color: '#333' }}>
+          <p className="text-foreground/90" style={{ margin: '5px 0', fontSize: '0.95rem' }}>
             <strong>Resultado:</strong>{' '}
             {isCorrect ? '✅ CORRECTA' : '❌ INCORRECTA'} ({points} punto{points > 1 ? 's' : ''})
           </p>
