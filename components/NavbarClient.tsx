@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import type { User } from '@supabase/supabase-js';
 import { useRouter } from 'next/navigation';
-import { GraduationCap, Shield, LogOut, CheckCircle2, Eye, EyeOff } from 'lucide-react';
+import { GraduationCap, Shield, LogOut, CheckCircle2, Eye, EyeOff, ChevronDown } from 'lucide-react';
 import { ExamMode } from '@/lib/types/exam';
 import { ThemeSwitcher } from './theme-switcher';
 
@@ -34,7 +34,15 @@ export function NavbarClient({
   const [user, setUser] = useState<User | null>(initialUser);
   const [isAdmin, setIsAdmin] = useState(initialIsAdmin);
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
   const router = useRouter();
+
+  useEffect(() => {
+    if (!dropdownOpen) return;
+    const handleOutsideClick = () => setDropdownOpen(false);
+    document.addEventListener('click', handleOutsideClick);
+    return () => document.removeEventListener('click', handleOutsideClick);
+  }, [dropdownOpen]);
 
   useEffect(() => {
     const supabase = createClient();
@@ -102,6 +110,13 @@ export function NavbarClient({
       window.location.href = '/';
     }
   };
+
+  const examTypes = [
+    { name: 'Simulador Oficial', path: '/exam', color: 'border-l-4 border-[#63AEBF]', desc: '35 preguntas con tiempo límite' },
+    { name: 'Examen de Señales', path: '/examen-senaleticas', color: 'border-l-4 border-[#FCD442]', desc: 'Preguntas sobre señalética vial' },
+    { name: 'Examen Doble Puntaje', path: '/examen-doble-puntaje', color: 'border-l-4 border-[#25D366]', desc: 'Preguntas con valor de 2 puntos' },
+    { name: 'Examen Matemáticas', path: '/examen-matematicas', color: 'border-l-4 border-[#9B59B6]', desc: 'Cálculos y física de tránsito' },
+  ];
 
   return (
     <>
@@ -205,39 +220,38 @@ export function NavbarClient({
                 )}
                 
                 {!isExam && (
-                  <div className="flex gap-2">
-                    <Link
-                      href="/exam"
-                      className="bg-[#63AEBF] dark:bg-blue-600/30 text-white dark:text-blue-400 border border-transparent dark:border-blue-900/30 px-2 py-1.5 sm:px-4 sm:py-2 rounded-md no-underline text-xs sm:text-sm font-bold flex items-center gap-1.5 shadow-sm hover:brightness-105 transition-all"
+                  <div className="relative">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setDropdownOpen(!dropdownOpen);
+                      }}
+                      className="bg-[#63AEBF] dark:bg-zinc-800 text-white dark:text-zinc-200 px-3 py-1.5 sm:px-4 sm:py-2 rounded-md no-underline text-xs sm:text-sm font-bold flex items-center gap-1.5 shadow-sm hover:brightness-105 border border-transparent dark:border-zinc-700 cursor-pointer select-none transition-all"
                     >
-                      <GraduationCap size={16} className="sm:w-[18px] sm:h-[18px]" />
-                      <span className="sm:hidden">Examen</span>
-                      <span className="hidden sm:inline">Ir a Examen</span>
-                    </Link>
-                    <Link
-                      href="/examen-senaleticas"
-                      className="bg-[#FCD442] dark:bg-amber-500/20 text-[#033E8C] dark:text-amber-400 border border-transparent dark:border-amber-900/20 px-2 py-1.5 sm:px-4 sm:py-2 rounded-md no-underline text-xs sm:text-sm font-bold flex items-center gap-1.5 shadow-sm hover:brightness-105 transition-all"
-                    >
-                      <GraduationCap size={16} className="sm:w-[18px] sm:h-[18px]" />
-                      <span className="sm:hidden">Señales</span>
-                      <span className="hidden sm:inline">Examen de Señales</span>
-                    </Link>
-                    <Link
-                      href="/examen-doble-puntaje"
-                      className="bg-[#25D366] dark:bg-green-600/20 text-white dark:text-green-400 border border-transparent dark:border-green-900/20 px-2 py-1.5 sm:px-4 sm:py-2 rounded-md no-underline text-xs sm:text-sm font-bold flex items-center gap-1.5 shadow-sm hover:brightness-105 transition-all"
-                    >
-                      <GraduationCap size={16} className="sm:w-[18px] sm:h-[18px]" />
-                      <span className="sm:hidden">Doble P.</span>
-                      <span className="hidden sm:inline">Examen Doble Puntaje</span>
-                    </Link>
-                    <Link
-                      href="/examen-matematicas"
-                      className="bg-[#9B59B6] dark:bg-purple-600/20 text-white dark:text-purple-400 border border-transparent dark:border-purple-900/20 px-2 py-1.5 sm:px-4 sm:py-2 rounded-md no-underline text-xs sm:text-sm font-bold flex items-center gap-1.5 shadow-sm hover:brightness-105 transition-all"
-                    >
-                      <GraduationCap size={16} className="sm:w-[18px] sm:h-[18px]" />
-                      <span className="sm:hidden">Mates</span>
-                      <span className="hidden sm:inline">Examen Matemáticas</span>
-                    </Link>
+                      <GraduationCap size={16} />
+                      <span>Simuladores</span>
+                      <ChevronDown size={14} className={`transition-transform duration-200 ${dropdownOpen ? 'rotate-180' : ''}`} />
+                    </button>
+                    
+                    {dropdownOpen && (
+                      <div className="absolute right-0 mt-2 w-64 bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 rounded-lg shadow-xl py-1.5 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
+                        {examTypes.map((exam) => (
+                          <Link
+                            key={exam.path}
+                            href={exam.path}
+                            onClick={() => setDropdownOpen(false)}
+                            className={`block px-4 py-2.5 text-left hover:bg-gray-50 dark:hover:bg-zinc-800 transition-colors ${exam.color}`}
+                          >
+                            <div className="text-sm font-bold text-gray-800 dark:text-zinc-200 leading-snug">
+                              {exam.name}
+                            </div>
+                            <div className="text-xs text-gray-500 dark:text-zinc-400 mt-0.5 leading-normal">
+                              {exam.desc}
+                            </div>
+                          </Link>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 )}
                 
@@ -272,7 +286,7 @@ export function NavbarClient({
       {isCollapsed && (
         <button
           onClick={() => setIsCollapsed(false)}
-          className="fixed top-3 right-3 md:top-4 md:right-10 z-[60] bg-[#033E8C] dark:bg-zinc-900 hover:bg-[#022c63] dark:hover:bg-zinc-800 text-[#FCD442] dark:text-yellow-500 border border-[#FCD442] dark:border-zinc-800 rounded-full p-2.5 shadow-lg cursor-pointer transition-all hover:scale-105 active:scale-95 flex items-center justify-center animate-in fade-in slide-in-from-top-4 duration-300"
+          className="fixed top-3 right-3 md:top-4 md:right-10 z-[60] bg-zinc-900 hover:bg-zinc-800 text-zinc-100 border border-zinc-800 rounded-full p-2.5 shadow-lg cursor-pointer transition-all hover:scale-105 active:scale-95 flex items-center justify-center animate-in fade-in slide-in-from-top-4 duration-300"
           title="Mostrar barra de navegación"
         >
           <Eye size={20} />
