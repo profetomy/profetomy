@@ -232,9 +232,8 @@ export default function ExamPage() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-background text-foreground transition-colors duration-300" style={{
-      fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
-      height: '100vh'
+    <div className="h-screen w-screen flex flex-col overflow-hidden bg-background text-foreground transition-colors duration-300" style={{
+      fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif"
     }}>
       <NavbarClient 
         isExam={true}
@@ -246,7 +245,7 @@ export default function ExamPage() {
         initialIsAdmin={isAdmin}
       />
 
-      <div className="flex justify-center p-2 lg:p-5 items-start lg:items-center min-h-[calc(100vh-80px)] lg:h-[calc(100vh-80px)] overflow-y-auto lg:overflow-visible">
+      <div className="flex-grow overflow-y-auto p-2 lg:p-5 flex justify-center items-start lg:items-center w-full">
         {/* Main Single Card Container */}
         <div 
           className={`bg-card text-card-foreground border border-border/80 rounded-lg shadow-lg w-full lg:w-[95%] flex flex-col lg:flex-row overflow-hidden dark:bg-zinc-900 ${

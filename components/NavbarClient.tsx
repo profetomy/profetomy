@@ -136,7 +136,7 @@ export function NavbarClient({
                   priority
                 />
               </div>
-              <span className="text-white dark:text-zinc-200 font-bold text-lg md:text-xl hidden sm:block">
+              <span className={`text-white dark:text-zinc-200 font-bold text-lg md:text-xl ${isExam ? 'hidden lg:block' : 'hidden sm:block'}`}>
                 Simulador Profe Tomy
               </span>
             </div>
@@ -262,7 +262,7 @@ export function NavbarClient({
                   title={isExam ? 'Salir' : 'Cerrar Sesión'}
                 >
                   <LogOut size={16} />
-                  <span className={`hidden sm:inline`}>
+                  <span className={isExam ? 'hidden md:inline' : 'hidden sm:inline'}>
                     {isExam ? 'Salir' : 'Cerrar Sesión'}
                   </span>
                 </button>
