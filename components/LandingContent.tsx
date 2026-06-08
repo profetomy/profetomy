@@ -119,40 +119,26 @@ export function LandingContent() {
         <div className="max-w-5xl mx-auto">
           <h2 className="text-3xl md:text-5xl font-bold text-center mb-16 text-white">Elige tu plan de entrenamiento</h2>
           
-          <div className="flex flex-col md:flex-row gap-8 justify-center items-stretch">
-            {/* Plan 1 */}
-            <div className="bg-white dark:bg-zinc-900 rounded-3xl shadow-2xl overflow-hidden border-4 border-transparent dark:border-zinc-800 flex-1 max-w-md transform hover:scale-[1.02] transition-transform relative flex flex-col">
-              <div className="h-3 bg-[#25D366]"></div>
-              <div className="p-8 text-center flex flex-col h-full">
-                <h3 className="text-2xl font-black text-[#033E8C] dark:text-[#63AEBF] mb-2 uppercase tracking-wide">Modo Intensivo 24H</h3>
-                <p className="text-gray-500 dark:text-zinc-400 mb-6 font-medium">Ideal si das el examen pronto</p>
-                <div className="text-6xl font-black text-[#033E8C] dark:text-zinc-100 mb-8 tracking-tight">$2.990</div>
-                
-                <div className="flex-grow"></div>
-
-                <button 
-                  onClick={() => openWhatsApp("Hola Profe Tomy, quiero activar el Modo Intensivo 24h.")}
-                  className="w-full bg-[#033E8C] hover:bg-[#022c63] text-white font-bold py-4 rounded-xl shadow-lg transition-all text-lg flex items-center justify-center gap-2"
-                >
-                  QUIERO ESTE PLAN
-                </button>
-              </div>
-            </div>
-
-            {/* Plan 2 (Recomendado) */}
+          <div className="flex flex-col md:flex-row gap-8 justify-center items-center">
+            {/* Plan Único */}
             <div className="bg-white dark:bg-zinc-900 rounded-3xl shadow-2xl overflow-hidden border-4 border-[#FCD442] flex-1 max-w-md transform hover:scale-[1.02] transition-transform relative flex flex-col ring-4 ring-[#FCD442]/30">
               <div className="bg-[#FCD442] text-[#033E8C] text-center font-black py-2 text-sm tracking-widest uppercase">
                 Recomendado
               </div>
               <div className="p-8 text-center flex flex-col h-full">
-                <h3 className="text-2xl font-black text-[#033E8C] dark:text-[#63AEBF] mb-2 uppercase tracking-wide">Preparación 15 Días</h3>
+                <h3 className="text-2xl font-black text-[#033E8C] dark:text-[#63AEBF] mb-2 uppercase tracking-wide">Preparación 10 Días</h3>
                 <p className="text-gray-500 dark:text-zinc-400 mb-6 font-medium">Practica con calma y seguridad</p>
-                <div className="text-6xl font-black text-[#033E8C] dark:text-zinc-100 mb-8 tracking-tight">$4.990</div>
+                <div className="text-6xl font-black text-[#033E8C] dark:text-zinc-100 mb-4 tracking-tight">$5.990</div>
                 
+                <div className="flex items-center justify-center gap-2 mb-8 text-[#25D366] font-semibold">
+                  <MessageCircle size={20} />
+                  <span>Incluye grupo de WhatsApp</span>
+                </div>
+
                 <div className="flex-grow"></div>
 
                 <button 
-                  onClick={() => openWhatsApp("Hola Profe Tomy, quiero activar la Preparación Completa 15 días.")}
+                  onClick={() => openWhatsApp("Hola Profe Tomy, quiero activar la Preparación Completa 10 días.")}
                   className="w-full bg-[#033E8C] hover:bg-[#022c63] text-white font-bold py-4 rounded-xl shadow-lg transition-all text-lg flex items-center justify-center gap-2"
                 >
                   QUIERO ESTE PLAN
