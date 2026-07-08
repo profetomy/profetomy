@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { CheckCircle, Clock, Zap, BookOpen, Infinity as InfinityIcon, MessageCircle, ChevronDown, ArrowDown } from 'lucide-react';
 
 export function LandingContent() {
-  const whatsappNumber = "56926932373";
+  const whatsappNumber = "56949148601";
   const whatsappBaseUrl = `https://wa.me/${whatsappNumber}?text=`;
 
   const openWhatsApp = (message: string) => {
