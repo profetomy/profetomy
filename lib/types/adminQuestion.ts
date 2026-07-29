@@ -7,14 +7,12 @@ export interface AdminQuestion extends Question {
 }
 
 export type QuestionStatusFilter = 'todas' | 'publicadas' | 'borradores';
-export type QuestionDifficultyFilter = 'todas' | 'facil' | 'media' | 'dificil';
 
 export interface AdminQuestionFilters {
   search: string;
   /** slug de categoria, 'todas', o las derivadas 'senaleticas'/'matematicas' */
   category: string;
   status: QuestionStatusFilter;
-  difficulty: QuestionDifficultyFilter;
   page: number;
   pageSize: number;
 }

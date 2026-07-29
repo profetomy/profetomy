@@ -29,10 +29,6 @@ export async function getAdminQuestions(
     if (filters.status === 'publicadas') query = query.eq('is_published', true);
     if (filters.status === 'borradores') query = query.eq('is_published', false);
 
-    if (filters.difficulty !== 'todas') {
-      query = query.eq('difficulty', filters.difficulty);
-    }
-
     if (filters.category === 'doble-puntaje') {
       query = query.eq('double_points', true);
     } else if (filters.category === 'senaleticas') {
@@ -70,7 +66,6 @@ export async function getAdminQuestions(
         doublePoints: q.double_points,
         isPublished: q.is_published,
         category: q.category,
-        difficulty: q.difficulty,
         explanation: q.explanation,
         createdAt: q.created_at
       };

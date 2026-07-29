@@ -12,7 +12,6 @@ export interface Question {
   isPublished?: boolean;
   /** Categoria guardada en la base (hoy solo 'examen-final') */
   category?: string | null;
-  difficulty?: string | null;
   explanation?: string | null;
 }
 

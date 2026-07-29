@@ -47,7 +47,6 @@ export async function createQuestion(formData: FormData) {
         image_url: imageUrl,
         double_points: formData.get('doublePoints') === 'true',
         category: (formData.get('category') as string) || null,
-        difficulty: (formData.get('difficulty') as string) || null,
         explanation: (formData.get('explanation') as string) || null,
         category_id: categoryId,
         is_published: formData.get('isPublished') === 'true',
@@ -61,8 +60,8 @@ export async function createQuestion(formData: FormData) {
 
     return { success: true };
 
-  } catch (error: any) {
+  } catch (error) {
     console.error('Server action error:', error);
-    return { error: error.message };
+    return { error: error instanceof Error ? error.message : 'Error inesperado' };
   }
 }

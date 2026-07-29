@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from 'react';
 import { getAdminQuestions } from '@/app/actions/getAdminQuestions';
-import { AdminQuestion, QuestionDifficultyFilter, QuestionStatusFilter } from '@/lib/types/adminQuestion';
+import { AdminQuestion, QuestionStatusFilter } from '@/lib/types/adminQuestion';
 
 const PAGE_SIZE = 12;
 const SEARCH_DEBOUNCE_MS = 300;
@@ -16,7 +16,6 @@ export function useAdminQuestions() {
   const [debouncedSearch, setDebouncedSearch] = useState('');
   const [category, setCategory] = useState('todas');
   const [status, setStatus] = useState<QuestionStatusFilter>('todas');
-  const [difficulty, setDifficulty] = useState<QuestionDifficultyFilter>('todas');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -28,7 +27,7 @@ export function useAdminQuestions() {
   // Cualquier cambio de filtro vuelve a la primera pagina.
   useEffect(() => {
     setPage(1);
-  }, [debouncedSearch, category, status, difficulty]);
+  }, [debouncedSearch, category, status]);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -38,7 +37,6 @@ export function useAdminQuestions() {
       search: debouncedSearch,
       category,
       status,
-      difficulty,
       page,
       pageSize: PAGE_SIZE
     });
@@ -53,7 +51,7 @@ export function useAdminQuestions() {
     }
 
     setLoading(false);
-  }, [debouncedSearch, category, status, difficulty, page]);
+  }, [debouncedSearch, category, status, page]);
 
   useEffect(() => {
     load();
@@ -73,8 +71,6 @@ export function useAdminQuestions() {
     setCategory,
     status,
     setStatus,
-    difficulty,
-    setDifficulty,
     loading,
     error,
     reload: load

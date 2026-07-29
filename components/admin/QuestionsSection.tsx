@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { ChevronLeft, ChevronRight, Loader2, Plus, Search } from 'lucide-react';
 import { useAdminQuestions } from '@/lib/hooks/useAdminQuestions';
-import { AdminQuestion, QuestionDifficultyFilter, QuestionStatusFilter } from '@/lib/types/adminQuestion';
+import { AdminQuestion, QuestionStatusFilter } from '@/lib/types/adminQuestion';
 import { Category } from '@/lib/types/category';
 import { getCategories } from '@/app/actions/getCategories';
 import { duplicateQuestion } from '@/app/actions/duplicateQuestion';
@@ -19,7 +19,7 @@ export function QuestionsSection() {
   const {
     items, total, totalPages, page, setPage,
     search, setSearch, category, setCategory, status, setStatus,
-    difficulty, setDifficulty, loading, error, reload
+    loading, error, reload
   } = useAdminQuestions();
 
   const [categories, setCategories] = useState<Category[]>([]);
@@ -108,17 +108,6 @@ export function QuestionsSection() {
           {categories.map(cat => (
             <option key={cat.id} value={cat.slug}>{cat.name}</option>
           ))}
-        </select>
-
-        <select
-          value={difficulty}
-          onChange={(e) => setDifficulty(e.target.value as QuestionDifficultyFilter)}
-          className={selectClass}
-        >
-          <option value="todas">Toda dificultad</option>
-          <option value="facil">Fácil</option>
-          <option value="media">Media</option>
-          <option value="dificil">Difícil</option>
         </select>
 
         <select

@@ -33,7 +33,6 @@ export function QuestionFormModal({ question, onClose, onSaved }: QuestionFormMo
   const [doublePoints, setDoublePoints] = useState(question?.doublePoints ?? false);
   const [category, setCategory] = useState(question?.category ?? '');
   const [isPublished, setIsPublished] = useState(question?.isPublished ?? true);
-  const [difficulty, setDifficulty] = useState(question?.difficulty ?? '');
   const [explanation, setExplanation] = useState(question?.explanation ?? '');
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [categories, setCategories] = useState<Category[]>([]);
@@ -57,7 +56,6 @@ export function QuestionFormModal({ question, onClose, onSaved }: QuestionFormMo
     formData.append('correct', correct);
     formData.append('doublePoints', String(doublePoints));
     formData.append('category', category ?? '');
-    formData.append('difficulty', difficulty);
     formData.append('explanation', explanation);
     formData.append('isPublished', String(isPublished));
     formData.append('imageUrl', question?.image || '');
@@ -245,29 +243,14 @@ export function QuestionFormModal({ question, onClose, onSaved }: QuestionFormMo
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className={labelClass}>Dificultad</label>
-              <select
-                value={difficulty ?? ''}
-                onChange={(e) => setDifficulty(e.target.value)}
-                className={inputClass}
-              >
-                <option value="">Sin definir</option>
-                <option value="facil">Fácil</option>
-                <option value="media">Media</option>
-                <option value="dificil">Difícil</option>
-              </select>
-            </div>
-            <div>
-              <label className={labelClass}>Explicación (opcional)</label>
-              <textarea
-                value={explanation ?? ''}
-                onChange={(e) => setExplanation(e.target.value)}
-                className={`${inputClass} min-h-[80px]`}
-                placeholder="Por qué la respuesta correcta es la correcta"
-              />
-            </div>
+          <div>
+            <label className={labelClass}>Explicación (opcional)</label>
+            <textarea
+              value={explanation ?? ''}
+              onChange={(e) => setExplanation(e.target.value)}
+              className={`${inputClass} min-h-[80px]`}
+              placeholder="Por qué la respuesta correcta es la correcta"
+            />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
