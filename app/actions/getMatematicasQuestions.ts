@@ -11,6 +11,7 @@ export async function getMatematicasQuestions(): Promise<{ data: Question[] | nu
     const { data: qData, error: qError } = await supabase
       .from('questions')
       .select('*')
+      .eq('is_published', true)
       .ilike('question', '%distancia%');
 
     if (qError) throw new Error(qError.message);

@@ -116,6 +116,7 @@ export function NavbarClient({
     { name: 'Examen de Señales', path: '/examen-senaleticas', color: 'border-l-4 border-[#FCD442]', desc: 'Preguntas sobre señalética vial' },
     { name: 'Examen Doble Puntaje', path: '/examen-doble-puntaje', color: 'border-l-4 border-[#25D366]', desc: 'Preguntas con valor de 2 puntos' },
     { name: 'Examen Matemáticas', path: '/examen-matematicas', color: 'border-l-4 border-[#9B59B6]', desc: 'Cálculos y física de tránsito' },
+    { name: 'Examen Final', path: '/examen-final', color: 'border-l-4 border-[#E74C3C]', desc: '35 preguntas del examen final' },
   ];
 
   return (

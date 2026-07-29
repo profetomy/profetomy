@@ -21,6 +21,7 @@ export async function getRandomExamQuestions(): Promise<{ data: Question[] | nul
     const { data: doubleData, error: doubleError } = await supabase
       .from('questions')
       .select('*')
+      .eq('is_published', true)
       .eq('double_points', true);
 
     if (doubleError) throw new Error(doubleError.message);
@@ -29,8 +30,9 @@ export async function getRandomExamQuestions(): Promise<{ data: Question[] | nul
     const { data: normalData, error: normalError } = await supabase
       .from('questions')
       .select('*')
+      .eq('is_published', true)
       .eq('double_points', false);
-      
+
     if (normalError) throw new Error(normalError.message);
 
     // --- Random Selection Logic ---

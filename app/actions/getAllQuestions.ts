@@ -28,7 +28,8 @@ export async function getAllQuestions(): Promise<{ data: Question[] | null, erro
         correct: q.correct as 'a' | 'b' | 'c',
         image: q.image_url,
         doublePoints: q.double_points,
-        statements: statements
+        statements: statements,
+        isPublished: q.is_published
       };
     });
 

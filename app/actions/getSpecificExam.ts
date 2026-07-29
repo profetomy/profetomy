@@ -11,6 +11,7 @@ export async function getExamCount(): Promise<{ count: number, error: string | n
     const { count: doubleCount, error: doubleError } = await supabase
       .from('questions')
       .select('*', { count: 'exact', head: true })
+      .eq('is_published', true)
       .eq('double_points', true);
 
     if (doubleError) throw new Error(doubleError.message);
@@ -19,6 +20,7 @@ export async function getExamCount(): Promise<{ count: number, error: string | n
     const { count: normalCount, error: normalError } = await supabase
       .from('questions')
       .select('*', { count: 'exact', head: true })
+      .eq('is_published', true)
       .eq('double_points', false);
       
     if (normalError) throw new Error(normalError.message);
@@ -45,6 +47,7 @@ export async function getSpecificExamQuestions(examId: number): Promise<{ data: 
     const { data: doubleData, error: doubleError } = await supabase
       .from('questions')
       .select('*')
+      .eq('is_published', true)
       .eq('double_points', true)
       .order('id', { ascending: true })
       .range(doubleOffset, doubleOffset + doubleLimit - 1);
@@ -57,6 +60,7 @@ export async function getSpecificExamQuestions(examId: number): Promise<{ data: 
     const { data: normalData, error: normalError } = await supabase
       .from('questions')
       .select('*')
+      .eq('is_published', true)
       .eq('double_points', false)
       .order('id', { ascending: true })
       .range(normalOffset, normalOffset + normalLimit - 1);

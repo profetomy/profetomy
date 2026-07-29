@@ -45,3 +45,10 @@ next-env.d.ts
 test_login.js
 test_frontend.js
 load_test.js
+
+# material de origen de las preguntas
+*.pdf
+
+# herramientas locales (Claude Code / graphify)
+CLAUDE.md
+graphify-out/

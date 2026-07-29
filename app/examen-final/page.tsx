@@ -11,18 +11,15 @@ import { NavigationButtons } from '@/components/exam/NavigationButtons';
 import { Sidebar } from '@/components/exam/Sidebar';
 import { ResultsModal } from '@/components/exam/ResultsModal';
 import { InstructionsModal } from '@/components/exam/InstructionsModal';
-import { EditQuestionModal } from "@/components/adminPage/edit-question-modal";
-import { CreateQuestionModal } from "@/components/adminPage/create-question-modal";
 import { NavbarClient } from '@/components/NavbarClient';
 import Link from 'next/link';
-import { Lock, Bug, Search, Plus } from 'lucide-react';
+import { Lock } from 'lucide-react';
 import type { User } from '@supabase/supabase-js';
 import { checkExamAccess } from '@/app/actions/checkExamAccess';
 
-// Modo Debug puede no tener tiempo límite, o usar el mismo
-const EXAM_DURATION = 120 * 60; // 120 minutes for debug (plenty of time)
+const EXAM_DURATION = 45 * 60; // 45 minutes in seconds
 
-// Componente de acceso denegado (Reusado con cambios de texto)
+// Componente de acceso denegado
 function SubscriptionRequired() {
   return (
     <div className="min-h-screen flex items-center justify-center" style={{
@@ -56,7 +53,7 @@ function SubscriptionRequired() {
           marginBottom: '16px',
           letterSpacing: '-0.01em'
         }}>
-          Acceso Restringido
+          Suscripción Requerida
         </h1>
         <p style={{
           fontSize: '1.1rem',
@@ -64,7 +61,9 @@ function SubscriptionRequired() {
           marginBottom: '32px',
           lineHeight: '1.6'
         }}>
-          Esta es una página de depuración. Solo disponible para administradores.
+          Necesitas una suscripción activa para acceder al simulador de exámenes.
+          <br />
+          Contacta al Profe Tomy para obtener acceso.
         </p>
         <Link
           href="/"
@@ -85,18 +84,12 @@ function SubscriptionRequired() {
   );
 }
 
-export default function DebugPage() {
+export default function ExamPage() {
   const router = useRouter();
   const [isCheckingSubscription, setIsCheckingSubscription] = useState(true);
   const [hasActiveSubscription, setHasActiveSubscription] = useState(false);
   const [showInstructions, setShowInstructions] = useState(false);
   const [showResultsModal, setShowResultsModal] = useState(false);
-
-  const [showEditModal, setShowEditModal] = useState(false);
-  const [showCreateModal, setShowCreateModal] = useState(false);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [onlyDrafts, setOnlyDrafts] = useState(false);
-  const [originalQuestions, setOriginalQuestions] = useState<any[]>([]);
   const [user, setUser] = useState<User | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
 
@@ -115,8 +108,7 @@ export default function DebugPage() {
     prevQuestion,
     switchMode,
     finishExam,
-    loading: isLoadingQuestions,
-    setExamQuestions
+    loading: isLoadingQuestions
   } = useExam();
 
   const handleFinishExam = () => {
@@ -142,6 +134,7 @@ export default function DebugPage() {
         const { hasAccess, user: authUser, isAdmin: authIsAdmin, error } = await checkExamAccess();
 
         if (error) {
+           // If "User not authenticated", redirect to login
            if (error === 'User not authenticated') {
              router.push('/auth/login');
              return;
@@ -152,13 +145,12 @@ export default function DebugPage() {
         if (authUser) setUser(authUser as User);
         if (authIsAdmin) setIsAdmin(authIsAdmin);
 
-        const isAdminAccess = !!authIsAdmin;
-        setHasActiveSubscription(isAdminAccess);
+        setHasActiveSubscription(hasAccess);
         setIsCheckingSubscription(false);
 
-        if (isAdminAccess) {
-          initializeExam('debug');
-          start();
+        if (hasAccess) {
+          initializeExam('examen-final');
+          setShowInstructions(true);
         }
       } catch (error) {
         console.error('Unexpected error:', error);
@@ -170,38 +162,15 @@ export default function DebugPage() {
     checkSubscription();
   }, [router, initializeExam]);
 
-  // Capture original questions when loaded
-  useEffect(() => {
-    if (examQuestions.length > 0 && originalQuestions.length === 0) {
-      setOriginalQuestions(examQuestions);
-    } else if (examQuestions.length > originalQuestions.length && searchTerm === "") {
-        setOriginalQuestions(examQuestions);
-    }
-  }, [examQuestions]);
-
-  // Handle Search + draft filter
-  useEffect(() => {
-    if (!setExamQuestions || originalQuestions.length === 0) return;
-
-    const term = searchTerm.trim().toLowerCase();
-    const filtered = originalQuestions.filter(q => {
-      if (onlyDrafts && q.isPublished !== false) return false;
-      if (!term) return true;
-      return q.q.toLowerCase().includes(term) || (q.id && q.id.includes(term));
-    });
-
-    setExamQuestions(filtered);
-  }, [searchTerm, onlyDrafts, originalQuestions, setExamQuestions]);
-
   const handleAnswerSelect = (option: 'a' | 'b' | 'c') => {
     saveAnswer(option);
   };
 
   const handleRetakeExam = () => {
-    initializeExam('debug');
+    initializeExam('examen-final');
     reset();
     setShowResultsModal(false);
-    start();
+    setShowInstructions(true);
   };
 
   const handleViewCorrection = () => {
@@ -210,13 +179,10 @@ export default function DebugPage() {
   };
 
   const handleCancelExam = () => {
-    if (confirm('¿Salir del modo debug?')) {
+    if (confirm('¿Estás seguro de que deseas anular el examen? Volverás al inicio.')) {
       router.push('/');
     }
   };
-
-  // --- Early Returns (Conditionals) ---
-  // Must be AFTER all hooks
 
   // Show subscription required if no active subscription
   if (isCheckingSubscription) {
@@ -228,7 +194,7 @@ export default function DebugPage() {
         <div className="flex flex-col items-center gap-4">
           <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#FCD442]"></div>
           <div className="text-xl font-bold text-white">
-            Cargando modo debug...
+            Verificando acceso...
           </div>
         </div>
       </div>
@@ -239,33 +205,36 @@ export default function DebugPage() {
     return <SubscriptionRequired />;
   }
 
-  // Show loading state
-  // Only show if loading OR (no questions AND no search term)
-  // If we have a search term and 0 questions, it means "No results found", so we should fall through to main render.
-  if (isLoadingQuestions || (examQuestions.length === 0 && searchTerm === "" && !onlyDrafts)) {
+  // Show instructions modal before starting
+  if (showInstructions) {
     return (
-      <div className="min-h-screen flex items-center justify-center text-white" style={{
+      <InstructionsModal
+        onClose={handleStartExam}
+      />
+    );
+  }
+
+  // Show loading state
+  if (isLoadingQuestions || examQuestions.length === 0) {
+    return (
+      <div className="min-h-screen flex items-center justify-center" style={{
         background: '#033E8C',
         backgroundAttachment: 'fixed'
       }}>
-         <div className="flex flex-col items-center gap-4">
-            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#63AEBF]"></div>
-            <div className="text-xl font-bold text-white">
-              Cargando preguntas de {mode}...
-            </div>
-         </div>
+        <div className="flex flex-col items-center gap-4">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#63AEBF]"></div>
+          <div className="text-xl font-bold text-white">
+            Preparando tu examen...
+          </div>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen flex flex-col" style={{
-      fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
-      background: '#2c3e50', // Different background for debug
-      backgroundAttachment: 'fixed',
-      height: '100vh'
+    <div className="h-screen w-screen flex flex-col overflow-hidden bg-background text-foreground transition-colors duration-300" style={{
+      fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif"
     }}>
-      {/* Navbar with Debug Indicator */}
       <NavbarClient 
         isExam={true}
         mode={mode}
@@ -275,49 +244,12 @@ export default function DebugPage() {
         initialUser={user}
         initialIsAdmin={isAdmin}
       />
-      <div className="bg-red-500 text-white text-center text-xs font-bold py-1">
-        MODO DEBUG - MOSTRANDO {examQuestions.length} PREGUNTAS
-      </div>
 
-      {/* DEBUG TOOLBAR: Search & Add */}
-      <div className="w-full max-w-7xl mx-auto px-4 mt-4 flex flex-col md:flex-row gap-4 items-center justify-between">
-         <div className="relative w-full max-w-md">
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <Search size={18} className="text-gray-400" />
-            </div>
-            <input
-              type="text"
-              placeholder="Filtrar por texto de pregunta..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-600 bg-gray-700 text-white placeholder-gray-400 focus:ring-2 focus:ring-[#FCD442] outline-none"
-            />
-         </div>
-         
-         <label className="flex items-center gap-2 text-white text-sm font-medium cursor-pointer select-none">
-            <input
-              type="checkbox"
-              checked={onlyDrafts}
-              onChange={(e) => setOnlyDrafts(e.target.checked)}
-              className="w-4 h-4 accent-[#FCD442]"
-            />
-            Solo borradores
-         </label>
-
-         <button
-            onClick={() => setShowCreateModal(true)}
-            className="flex items-center gap-2 bg-[#FCD442] text-[#033E8C] px-4 py-2 rounded-lg font-bold hover:bg-[#eec531] transition-colors"
-         >
-            <Plus size={20} />
-            Nueva Pregunta
-         </button>
-      </div>
-
-      <div className="flex justify-center p-2 lg:p-5 items-start lg:items-center flex-1 overflow-y-auto lg:overflow-visible">
+      <div className="flex-grow overflow-y-auto p-2 lg:p-5 flex justify-center items-start lg:items-center w-full">
         {/* Main Single Card Container */}
         <div 
-          className={`bg-white rounded-lg shadow-lg w-full lg:w-[95%] flex flex-col lg:flex-row overflow-hidden ${
-             currentQuestion?.image 
+          className={`bg-card text-card-foreground border border-border/80 rounded-lg shadow-lg w-full lg:w-[95%] flex flex-col lg:flex-row overflow-hidden dark:bg-zinc-900 ${
+            currentQuestion?.image 
               ? 'h-auto lg:h-full lg:max-h-[800px]' 
               : 'h-auto lg:max-h-[800px] lg:min-h-[400px]'
           }`} 
@@ -326,21 +258,7 @@ export default function DebugPage() {
         }}>
           
           {/* Left Column: Question Area */}
-          <div className="flex-1 p-5 lg:p-10 flex flex-col border-b lg:border-b-0 lg:border-r border-gray-100 w-full">
-            {/* If no questions found */}
-            {examQuestions.length === 0 && (
-                <div className="flex-1 flex flex-col items-center justify-center text-gray-400">
-                    <p className="text-lg font-medium">No se encontraron preguntas</p>
-                    <button
-                      onClick={() => { setSearchTerm(""); setOnlyDrafts(false); }}
-                      className="mt-2 text-[#033E8C] underline"
-                    >
-                      Limpiar filtro
-                    </button>
-                </div>
-            )}
-
-            {examQuestions.length > 0 && (
+          <div className="flex-1 p-5 lg:p-10 flex flex-col border-b lg:border-b-0 lg:border-r border-gray-100 dark:border-zinc-800 w-full">
             <div className={`flex-1 flex flex-col w-full min-h-0 ${
               currentQuestion?.image ? 'justify-start lg:justify-between gap-6 lg:gap-0' : 'justify-center gap-6'
             }`}>
@@ -375,11 +293,10 @@ export default function DebugPage() {
                 />
               </div>
             </div>
-            )}
           </div>
 
           {/* Right Column: Sidebar content */}
-          <div className={`w-full lg:w-[320px] shrink-0 p-5 pb-0 flex flex-col bg-gray-50/30 overflow-y-auto ${
+          <div className={`w-full lg:w-[320px] shrink-0 p-5 pb-0 flex flex-col bg-gray-50/30 dark:bg-zinc-950/40 overflow-y-auto ${
             !currentQuestion?.image ? 'lg:max-h-[800px]' : ''
           }`}> 
             <Sidebar
@@ -393,35 +310,10 @@ export default function DebugPage() {
               onShowInstructions={() => setShowInstructions(true)}
               onCancelExam={handleCancelExam}
               onFinishExam={handleFinishExam}
-              onEditQuestion={() => setShowEditModal(true)}
             />
           </div>
         </div>
       </div>
-
-      {/* Create Modal */}
-      {showCreateModal && (
-        <CreateQuestionModal
-          onClose={() => setShowCreateModal(false)}
-          onSuccess={() => {
-            setSearchTerm(""); // Clear search to see new question
-            setOriginalQuestions([]); // Clear original so it refreshes
-            initializeExam('debug');
-          }}
-        />
-      )}
-
-      {/* Edit Modal */}
-      {showEditModal && currentQuestion && (
-        <EditQuestionModal
-          question={currentQuestion}
-          onClose={() => setShowEditModal(false)}
-          onSuccess={() => {
-            // Refresh questions to show changes
-            initializeExam('debug');
-          }}
-        />
-      )}
 
       {/* Results Modal */}
       {showResultsModal && results && (

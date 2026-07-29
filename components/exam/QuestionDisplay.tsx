@@ -24,8 +24,13 @@ export function QuestionDisplay({
 
   return (
     <div className="flex flex-col h-full overflow-hidden">
-      <div className="text-lg font-bold mb-3 shrink-0 text-foreground/80">
-        Pregunta N° {questionNumber}{doublePointsText}:
+      <div className="text-lg font-bold mb-3 shrink-0 text-foreground/80 flex items-center gap-2">
+        <span>Pregunta N° {questionNumber}{doublePointsText}:</span>
+        {question.isPublished === false && (
+          <span className="text-xs font-bold px-2 py-0.5 rounded bg-amber-400 text-amber-950">
+            BORRADOR
+          </span>
+        )}
       </div>
       
       <div className="font-bold mb-4 shrink-0 text-foreground" style={{ 

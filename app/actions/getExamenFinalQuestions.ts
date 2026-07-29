@@ -3,31 +3,30 @@
 import { createClient } from "@/lib/supabase/server";
 import { Question } from "@/lib/types/exam";
 
-export async function getSenaleticasQuestions(): Promise<{ data: Question[] | null, error: string | null }> {
+/**
+ * Set curado del examen final. A diferencia de las otras categorias, no se
+ * baraja: se entrega en el orden original del examen.
+ */
+export async function getExamenFinalQuestions(): Promise<{ data: Question[] | null, error: string | null }> {
   try {
     const supabase = await createClient();
 
-    // Fetch questions where image_url is not null and question contains "señal"
     const { data: qData, error: qError } = await supabase
       .from('questions')
       .select('*')
       .eq('is_published', true)
-      .not('image_url', 'is', null)
-      .ilike('question', '%señal%');
+      .eq('category', 'examen-final')
+      .order('created_at', { ascending: true });
 
     if (qError) throw new Error(qError.message);
 
-    // Shuffle and Select up to 35 questions
-    const shuffledData = (qData || []).sort(() => 0.5 - Math.random());
-    const selectedData = shuffledData.slice(0, 35);
-    
-    // Map to Question interface
-    const mappedQuestions: Question[] = selectedData.map(q => {
+    const mappedQuestions: Question[] = (qData || []).map(q => {
       const parts = q.question.split('\n\n');
       const mainQ = parts[0];
       const statements = parts.length > 1 ? parts[1].split('\n') : undefined;
 
       return {
+        id: q.id,
         q: mainQ,
         a: q.option_a,
         b: q.option_b,
@@ -42,7 +41,7 @@ export async function getSenaleticasQuestions(): Promise<{ data: Question[] | nu
     return { data: mappedQuestions, error: null };
 
   } catch (err: any) {
-    console.error('Error getting senaleticas questions:', err);
+    console.error('Error getting examen final questions:', err);
     return { data: null, error: err.message };
   }
 }

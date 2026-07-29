@@ -8,6 +8,8 @@ export interface Question {
   image: string | null;
   statements?: string[];
   doublePoints?: boolean;
+  /** Solo llega con valor en vistas de admin: false = borrador, no visible para usuarios */
+  isPublished?: boolean;
 }
 
 export type UserAnswer = 'a' | 'b' | 'c' | null;

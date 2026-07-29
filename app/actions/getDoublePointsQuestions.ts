@@ -11,6 +11,7 @@ export async function getDoublePointsQuestions(): Promise<{ data: Question[] | n
     const { data: qData, error: qError } = await supabase
       .from('questions')
       .select('*')
+      .eq('is_published', true)
       .eq('double_points', true);
 
     if (qError) throw new Error(qError.message);
