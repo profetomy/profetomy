@@ -54,11 +54,14 @@ export function QuestionsTable({
                 {question.isPublished ? 'PUBLICADA' : 'BORRADOR'}
               </span>
 
-              {question.category && (
-                <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-100 text-blue-700 dark:bg-blue-900/50 dark:text-blue-300">
-                  {question.category.toUpperCase()}
+              {question.categorySlugs?.map(slug => (
+                <span
+                  key={slug}
+                  className="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-100 text-blue-700 dark:bg-blue-900/50 dark:text-blue-300"
+                >
+                  {slug.toUpperCase()}
                 </span>
-              )}
+              ))}
 
               {question.doublePoints && (
                 <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-purple-100 text-purple-700 dark:bg-purple-900/50 dark:text-purple-300">

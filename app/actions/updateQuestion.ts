@@ -2,6 +2,7 @@
 
 import { requireAdmin } from "@/lib/auth/requireAdmin";
 import { uploadQuestionImage } from "@/lib/services/questionImage.service";
+import { guardarCategoriasDePregunta, leerSlugsDelFormulario } from "@/lib/services/questionCategories.service";
 
 export async function updateQuestion(questionId: string, formData: FormData) {
   try {
@@ -31,16 +32,6 @@ export async function updateQuestion(questionId: string, formData: FormData) {
     if (uploadError) return { error: uploadError };
     if (nuevaImagen) imageUrl = nuevaImagen;
 
-    // La categoria se guarda por slug y por FK: el slug es lo que consultan los
-    // examenes, la FK mantiene la integridad con la tabla categories.
-    const slug = (formData.get('category') as string) || null;
-    let categoryId: string | null = null;
-    if (slug) {
-      const { data: cat } = await adminClient
-        .from('categories').select('id').eq('slug', slug).maybeSingle();
-      categoryId = cat?.id ?? null;
-    }
-
     const { error: updateError } = await adminClient
       .from('questions')
       .update({
@@ -51,9 +42,7 @@ export async function updateQuestion(questionId: string, formData: FormData) {
         correct: formData.get('correct') as string,
         image_url: imageUrl,
         double_points: formData.get('doublePoints') === 'true',
-        category: (formData.get('category') as string) || null,
         explanation: (formData.get('explanation') as string) || null,
-        category_id: categoryId,
         is_published: formData.get('isPublished') === 'true'
       })
       .eq('id', questionId);
@@ -62,6 +51,10 @@ export async function updateQuestion(questionId: string, formData: FormData) {
       console.error("DB update error:", updateError);
       return { error: `Error actualizando pregunta: ${updateError.message}` };
     }
+
+    const slugs = leerSlugsDelFormulario(formData.get('categorySlugs'));
+    const { error: categoriasError } = await guardarCategoriasDePregunta(adminClient, questionId, slugs);
+    if (categoriasError) return { error: categoriasError };
 
     return { success: true };
 

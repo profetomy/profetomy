@@ -2,7 +2,6 @@ import { Question } from '@/lib/types/exam';
 
 export interface AdminQuestion extends Question {
   id: string;
-  category: string | null;
   createdAt: string;
 }
 

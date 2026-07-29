@@ -2,13 +2,14 @@
 
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { Save, X, Trash, PlusCircle, Loader2 } from 'lucide-react';
+import { Save, X, Trash, PlusCircle, Loader2, Sparkles } from 'lucide-react';
 import { Question } from '@/lib/types/exam';
 import { createQuestion } from '@/app/actions/createQuestion';
 import { updateQuestion } from '@/app/actions/updateQuestion';
 import { deleteQuestion } from '@/app/actions/deleteQuestion';
 import { getCategories } from '@/app/actions/getCategories';
 import { Category } from '@/lib/types/category';
+import { detectarCategorias } from '@/lib/utils/detectarCategorias';
 
 interface QuestionFormModalProps {
   /** null = crear una pregunta nueva */
@@ -31,7 +32,7 @@ export function QuestionFormModal({ question, onClose, onSaved }: QuestionFormMo
   const [optionC, setOptionC] = useState(question?.c ?? '');
   const [correct, setCorrect] = useState<'a' | 'b' | 'c'>(question?.correct ?? 'a');
   const [doublePoints, setDoublePoints] = useState(question?.doublePoints ?? false);
-  const [category, setCategory] = useState(question?.category ?? '');
+  const [categorySlugs, setCategorySlugs] = useState<string[]>(question?.categorySlugs ?? []);
   const [isPublished, setIsPublished] = useState(question?.isPublished ?? true);
   const [explanation, setExplanation] = useState(question?.explanation ?? '');
   const [imageFile, setImageFile] = useState<File | null>(null);
@@ -40,6 +41,17 @@ export function QuestionFormModal({ question, onClose, onSaved }: QuestionFormMo
   useEffect(() => {
     getCategories().then(({ data }) => setCategories(data ?? []));
   }, []);
+
+  // Las reglas de contenido ya no clasifican solas: proponen y el admin decide.
+  const sugeridas = detectarCategorias({
+    enunciado: q,
+    alternativas: [optionA, optionB, optionC],
+    tieneImagen: Boolean(question?.image) || Boolean(imageFile)
+  });
+
+  const sugerenciasPendientes = categories.filter(
+    cat => sugeridas.includes(cat.slug) && !categorySlugs.includes(cat.slug)
+  );
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -55,7 +67,7 @@ export function QuestionFormModal({ question, onClose, onSaved }: QuestionFormMo
     formData.append('optionC', optionC);
     formData.append('correct', correct);
     formData.append('doublePoints', String(doublePoints));
-    formData.append('category', category ?? '');
+    formData.append('categorySlugs', JSON.stringify(categorySlugs));
     formData.append('explanation', explanation);
     formData.append('isPublished', String(isPublished));
     formData.append('imageUrl', question?.image || '');
@@ -200,7 +212,54 @@ export function QuestionFormModal({ question, onClose, onSaved }: QuestionFormMo
             ))}
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div>
+            <label className={labelClass}>Categorías</label>
+            <div className="flex flex-wrap gap-2">
+              {categories.map(cat => {
+                const marcada = categorySlugs.includes(cat.slug);
+                return (
+                  <button
+                    key={cat.id}
+                    type="button"
+                    onClick={() => setCategorySlugs(prev =>
+                      marcada ? prev.filter(s => s !== cat.slug) : [...prev, cat.slug]
+                    )}
+                    className={`px-3 py-1.5 rounded-lg text-sm font-bold border transition-colors ${
+                      marcada
+                        ? 'bg-[#033E8C] text-white border-[#033E8C]'
+                        : 'bg-transparent text-gray-600 dark:text-zinc-400 border-gray-300 dark:border-zinc-700 hover:border-[#033E8C]'
+                    }`}
+                  >
+                    {cat.name}
+                  </button>
+                );
+              })}
+            </div>
+            {sugerenciasPendientes.length > 0 && (
+              <div className="flex flex-wrap items-center gap-2 mt-2">
+                <span className="text-xs text-gray-500 dark:text-zinc-400 flex items-center gap-1">
+                  <Sparkles size={12} />
+                  Por el contenido, parece de:
+                </span>
+                {sugerenciasPendientes.map(cat => (
+                  <button
+                    key={cat.id}
+                    type="button"
+                    onClick={() => setCategorySlugs(prev => [...prev, cat.slug])}
+                    className="px-2 py-1 rounded-lg text-xs font-bold border border-dashed border-[#63AEBF] text-[#033E8C] dark:text-[#63AEBF] hover:bg-[#63AEBF]/10 transition-colors"
+                  >
+                    + {cat.name}
+                  </button>
+                ))}
+              </div>
+            )}
+
+            <p className="text-xs text-gray-500 dark:text-zinc-400 mt-2">
+              Una pregunta puede estar en varias a la vez. El doble puntaje se marca abajo: no es una categoría.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className={labelClass}>Respuesta correcta</label>
               <select
@@ -214,21 +273,6 @@ export function QuestionFormModal({ question, onClose, onSaved }: QuestionFormMo
               </select>
             </div>
 
-            <div>
-              <label className={labelClass}>Categoría</label>
-              <select
-                value={category ?? ''}
-                onChange={(e) => setCategory(e.target.value)}
-                className={inputClass}
-              >
-                <option value="">Sin categoría asignada</option>
-                {categories.map(cat => (
-                  <option key={cat.id} value={cat.slug}>
-                    {cat.name}{cat.isActive ? '' : ' (inactiva)'}
-                  </option>
-                ))}
-              </select>
-            </div>
 
             <div>
               <label className={labelClass}>Estado</label>

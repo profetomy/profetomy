@@ -3,8 +3,9 @@
 import { requireAdmin } from "@/lib/auth/requireAdmin";
 
 /**
- * Borra una categoria. Las preguntas no se borran: la FK es ON DELETE SET NULL,
- * asi que quedan sin categoria y se avisa cuantas fueron.
+ * Borra una categoria. Las preguntas no se borran: solo se pierden sus
+ * asignaciones a esta categoria (cascade sobre question_categories), y se
+ * informa cuantas quedaron afectadas.
  */
 export async function deleteCategory(categoryId: string) {
   try {
@@ -12,7 +13,7 @@ export async function deleteCategory(categoryId: string) {
     if (!adminClient) return { error: authError };
 
     const { count } = await adminClient
-      .from('questions')
+      .from('question_categories')
       .select('*', { count: 'exact', head: true })
       .eq('category_id', categoryId);
 

@@ -108,6 +108,7 @@ export function QuestionsSection() {
           {categories.map(cat => (
             <option key={cat.id} value={cat.slug}>{cat.name}</option>
           ))}
+          <option value="doble-puntaje">Doble puntaje</option>
         </select>
 
         <select

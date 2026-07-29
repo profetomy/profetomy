@@ -28,7 +28,6 @@ export async function duplicateQuestion(questionId: string) {
         correct: original.correct,
         image_url: original.image_url,
         double_points: original.double_points,
-        category: original.category,
         is_published: false,
         created_at: new Date().toISOString()
       })
@@ -37,6 +36,18 @@ export async function duplicateQuestion(questionId: string) {
 
     if (insertError) {
       return { error: `Error duplicando la pregunta: ${insertError.message}` };
+    }
+
+    // La copia hereda las mismas categorias que el original.
+    const { data: asignaciones } = await adminClient
+      .from('question_categories')
+      .select('category_id')
+      .eq('question_id', questionId);
+
+    if (asignaciones?.length) {
+      await adminClient.from('question_categories').insert(
+        asignaciones.map(a => ({ question_id: copia.id, category_id: a.category_id }))
+      );
     }
 
     return { success: true, id: copia.id };

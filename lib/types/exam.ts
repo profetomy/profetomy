@@ -10,8 +10,8 @@ export interface Question {
   doublePoints?: boolean;
   /** Solo llega con valor en vistas de admin: false = borrador, no visible para usuarios */
   isPublished?: boolean;
-  /** Categoria guardada en la base (hoy solo 'examen-final') */
-  category?: string | null;
+  /** Slugs de las categorias a las que pertenece (una pregunta puede estar en varias) */
+  categorySlugs?: string[];
   explanation?: string | null;
 }
 

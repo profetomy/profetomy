@@ -2,6 +2,7 @@
 
 import { requireAdmin } from "@/lib/auth/requireAdmin";
 import { uploadQuestionImage } from "@/lib/services/questionImage.service";
+import { guardarCategoriasDePregunta, leerSlugsDelFormulario } from "@/lib/services/questionCategories.service";
 
 export async function createQuestion(formData: FormData) {
   try {
@@ -26,17 +27,7 @@ export async function createQuestion(formData: FormData) {
     const { url: imageUrl, error: uploadError } = await uploadQuestionImage(adminClient, imageFile);
     if (uploadError) return { error: uploadError };
 
-    // La categoria se guarda por slug y por FK: el slug es lo que consultan los
-    // examenes, la FK mantiene la integridad con la tabla categories.
-    const slug = (formData.get('category') as string) || null;
-    let categoryId: string | null = null;
-    if (slug) {
-      const { data: cat } = await adminClient
-        .from('categories').select('id').eq('slug', slug).maybeSingle();
-      categoryId = cat?.id ?? null;
-    }
-
-    const { error: insertError } = await adminClient
+    const { data: nueva, error: insertError } = await adminClient
       .from('questions')
       .insert({
         question: question,
@@ -46,17 +37,21 @@ export async function createQuestion(formData: FormData) {
         correct: formData.get('correct') as string,
         image_url: imageUrl,
         double_points: formData.get('doublePoints') === 'true',
-        category: (formData.get('category') as string) || null,
         explanation: (formData.get('explanation') as string) || null,
-        category_id: categoryId,
         is_published: formData.get('isPublished') === 'true',
         created_at: new Date().toISOString()
-      });
+      })
+      .select('id')
+      .single();
 
-    if (insertError) {
+    if (insertError || !nueva) {
       console.error("DB insert error:", insertError);
-      return { error: `Error guardando pregunta: ${insertError.message}` };
+      return { error: `Error guardando pregunta: ${insertError?.message ?? 'sin datos'}` };
     }
+
+    const slugs = leerSlugsDelFormulario(formData.get('categorySlugs'));
+    const { error: categoriasError } = await guardarCategoriasDePregunta(adminClient, nueva.id, slugs);
+    if (categoriasError) return { error: categoriasError };
 
     return { success: true };
 

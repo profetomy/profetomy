@@ -9,7 +9,7 @@ export async function getCategories(): Promise<{ data: Category[] | null, error:
 
     const { data, error } = await supabase
       .from('categories')
-      .select('*')
+      .select('*, question_categories(count)')
       .order('sort_order', { ascending: true });
 
     if (error) throw new Error(error.message);
@@ -20,7 +20,8 @@ export async function getCategories(): Promise<{ data: Category[] | null, error:
       name: c.name,
       description: c.description,
       sortOrder: c.sort_order,
-      isActive: c.is_active
+      isActive: c.is_active,
+      questionCount: c.question_categories?.[0]?.count ?? 0
     }));
 
     return { data: categories, error: null };

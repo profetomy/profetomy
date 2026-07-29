@@ -2,7 +2,7 @@
 
 import { createClient } from "@/lib/supabase/server";
 import { Question } from "@/lib/types/exam";
-import { calcularTramo, contarExamenes } from "@/lib/utils/examDistribution";
+import { calcularTramo, contarExamenes, rangosConVuelta } from "@/lib/utils/examDistribution";
 
 const PREGUNTAS_POR_EXAMEN_POR_DEFECTO = 35;
 
@@ -45,12 +45,12 @@ async function contarPublicadas(supabase: Awaited<ReturnType<typeof createClient
 export async function getExamCount(): Promise<{ count: number, error: string | null }> {
   try {
     const supabase = await createClient();
-    const [{ dobles, normales }, tamano] = await Promise.all([
+    const [{ normales }, tamano] = await Promise.all([
       contarPublicadas(supabase),
       leerTamanoExamen(supabase)
     ]);
 
-    return { count: contarExamenes(dobles + normales, tamano), error: null };
+    return { count: contarExamenes(normales, tamano), error: null };
   } catch (err) {
     return { count: 0, error: err instanceof Error ? err.message : 'Error inesperado' };
   }
@@ -64,43 +64,38 @@ export async function getSpecificExamQuestions(examId: number): Promise<{ data: 
       leerTamanoExamen(supabase)
     ]);
 
-    const totalExamenes = contarExamenes(dobles + normales, tamano);
+    const totalExamenes = contarExamenes(normales, tamano);
     if (totalExamenes === 0) return { data: [], error: null };
 
     const indice = Math.min(Math.max(examId, 1), totalExamenes) - 1;
-    const tramo = calcularTramo(indice, totalExamenes, dobles, tamano);
+    const tramo = calcularTramo(indice, tamano);
 
-    const traer = async (esDoble: boolean, offset: number, cantidad: number) => {
-      if (cantidad <= 0) return [];
-      const { data, error } = await supabase
-        .from('questions')
-        .select('*')
-        .eq('is_published', true)
-        .eq('double_points', esDoble)
-        .order('id', { ascending: true })
-        .range(offset, offset + cantidad - 1);
+    /** Trae un tramo dando la vuelta al principio del banco si se acaba. */
+    const traerConVuelta = async (esDoble: boolean, offset: number, cantidad: number, total: number) => {
+      const rangos = rangosConVuelta(offset, cantidad, total);
 
-      if (error) throw new Error(error.message);
-      return (data ?? []) as FilaPregunta[];
+      const respuestas = await Promise.all(rangos.map(async ({ desde, hasta }) => {
+        const { data, error } = await supabase
+          .from('questions')
+          .select('*')
+          .eq('is_published', true)
+          .eq('double_points', esDoble)
+          .order('id', { ascending: true })
+          .range(desde, hasta);
+
+        if (error) throw new Error(error.message);
+        return (data ?? []) as FilaPregunta[];
+      }));
+
+      return respuestas.flat();
     };
 
     const [seleccionDobles, seleccionNormales] = await Promise.all([
-      traer(true, tramo.doubleOffset, tramo.doubleCount),
-      traer(false, tramo.normalOffset, tramo.normalCount)
+      traerConVuelta(true, tramo.doubleOffset, tramo.doubleCount, dobles),
+      traerConVuelta(false, tramo.normalOffset, tramo.normalCount, normales)
     ]);
 
-    const seleccion = [...seleccionDobles, ...seleccionNormales];
-
-    // El ultimo examen puede quedar corto porque el total no es multiplo exacto
-    // del tamano: se completa reciclando desde el principio del banco.
-    const faltan = tamano - seleccion.length;
-    if (faltan > 0) {
-      const relleno = await traer(false, 0, faltan);
-      const yaIncluidas = new Set(seleccion.map(q => q.id));
-      seleccion.push(...relleno.filter(q => !yaIncluidas.has(q.id)));
-    }
-
-    const finalExam = seleccion.sort(() => 0.5 - Math.random());
+    const finalExam = [...seleccionDobles, ...seleccionNormales].sort(() => 0.5 - Math.random());
 
     const mappedQuestions: Question[] = finalExam.map(q => {
       const parts = q.question.split('\n\n');

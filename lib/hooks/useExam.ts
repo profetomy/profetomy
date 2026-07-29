@@ -20,19 +20,10 @@ export function useExam() {
     try {
       let questionsData = null;
 
-      if (mode === 'senaleticas') {
-        const { getSenaleticasQuestions } = await import('@/app/actions/getSenaleticasQuestions');
-        const { data, error } = await getSenaleticasQuestions();
-        if (error) throw new Error(error);
-        questionsData = data;
-      } else if (mode === 'matematicas') {
-        const { getMatematicasQuestions } = await import('@/app/actions/getMatematicasQuestions');
-        const { data, error } = await getMatematicasQuestions();
-        if (error) throw new Error(error);
-        questionsData = data;
-      } else if (mode === 'examen-final') {
-        const { getExamenFinalQuestions } = await import('@/app/actions/getExamenFinalQuestions');
-        const { data, error } = await getExamenFinalQuestions();
+      if (mode === 'senaleticas' || mode === 'matematicas' || mode === 'examen-final') {
+        const { getQuestionsByCategory } = await import('@/app/actions/getQuestionsByCategory');
+        // El examen final es un set curado: se entrega completo y en su orden.
+        const { data, error } = await getQuestionsByCategory(mode, mode === 'examen-final');
         if (error) throw new Error(error);
         questionsData = data;
       } else if (mode === 'doble-puntaje') {

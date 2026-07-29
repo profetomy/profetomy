@@ -57,7 +57,7 @@ export function CategoriesSection() {
   };
 
   const handleDelete = async (category: Category) => {
-    if (!confirm(`¿Eliminar la categoría "${category.name}"? Las preguntas no se borran, quedan sin categoría.`)) return;
+    if (!confirm(`¿Eliminar la categoría "${category.name}"? Las preguntas no se borran: solo dejan de pertenecer a esta categoría.`)) return;
 
     setBusyId(category.id);
     const result = await deleteCategory(category.id);
@@ -65,7 +65,7 @@ export function CategoriesSection() {
 
     if (result.error) return setToast({ mensaje: result.error, tipo: 'error' });
     setToast({
-      mensaje: `Categoría eliminada. ${result.preguntasLiberadas} pregunta(s) quedaron sin categoría.`,
+      mensaje: `Categoría eliminada. ${result.preguntasLiberadas} pregunta(s) dejaron de pertenecer a ella.`,
       tipo: 'exito'
     });
     load();
@@ -82,7 +82,8 @@ export function CategoriesSection() {
         <div>
           <h2 className="text-2xl font-extrabold text-[#033E8C] dark:text-zinc-100">Categorías</h2>
           <p className="text-sm text-gray-500 dark:text-zinc-400">
-            Agrupan las preguntas del simulador
+            Una pregunta puede estar en varias categorías a la vez. El doble puntaje no
+            se maneja acá: es una casilla dentro de cada pregunta.
           </p>
         </div>
 
@@ -143,6 +144,9 @@ export function CategoriesSection() {
                 <code className="text-[10px] px-1.5 py-0.5 rounded bg-gray-100 dark:bg-zinc-800 text-gray-500 dark:text-zinc-400 font-mono">
                   {category.slug}
                 </code>
+                <span className="text-xs font-medium text-gray-500 dark:text-zinc-400">
+                  {category.questionCount} pregunta{category.questionCount === 1 ? '' : 's'}
+                </span>
                 {!category.isActive && (
                   <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-gray-200 dark:bg-zinc-700 text-gray-600 dark:text-zinc-300">
                     INACTIVA

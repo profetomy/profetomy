@@ -2,6 +2,11 @@
 
 import { createClient } from "@/lib/supabase/server";
 import { AdminQuestion, AdminQuestionFilters, AdminQuestionsPage } from "@/lib/types/adminQuestion";
+import { mapQuestionRow, QuestionRow } from "@/lib/utils/mapQuestionRow";
+
+/** Trae las categorias de cada pregunta; con !inner el embed pasa a ser filtro. */
+const SELECT_BASE = '*, question_categories(categories(slug))';
+const SELECT_FILTRADO = '*, question_categories!inner(categories!inner(slug))';
 
 /**
  * Listado paginado del banco de preguntas para el panel de administracion.
@@ -13,9 +18,11 @@ export async function getAdminQuestions(
   try {
     const supabase = await createClient();
 
+    const filtraPorCategoria = filters.category !== 'todas' && filters.category !== 'doble-puntaje';
+
     let query = supabase
       .from('questions')
-      .select('*', { count: 'exact' });
+      .select(filtraPorCategoria ? SELECT_FILTRADO : SELECT_BASE, { count: 'exact' });
 
     if (filters.search.trim()) {
       // El valor va entre comillas: PostgREST usa la coma como separador del
@@ -31,16 +38,8 @@ export async function getAdminQuestions(
 
     if (filters.category === 'doble-puntaje') {
       query = query.eq('double_points', true);
-    } else if (filters.category === 'senaleticas') {
-      // Mismo criterio que getSenaleticasQuestions
-      query = query.not('image_url', 'is', null).ilike('question', '%señal%');
-    } else if (filters.category === 'matematicas') {
-      // Aproximacion del criterio de getMatematicasQuestions: ese ademas exige
-      // "X km/h" y alternativas en metros, que no se pueden evaluar en SQL.
-      query = query.ilike('question', '%distancia%');
-    } else if (filters.category !== 'todas') {
-      // Categorias guardadas en la base (examen-final y las que se creen despues)
-      query = query.eq('category', filters.category);
+    } else if (filtraPorCategoria) {
+      query = query.eq('question_categories.categories.slug', filters.category);
     }
 
     const from = (filters.page - 1) * filters.pageSize;
@@ -51,25 +50,12 @@ export async function getAdminQuestions(
 
     if (error) throw new Error(error.message);
 
-    const items: AdminQuestion[] = (data || []).map(q => {
-      const parts = q.question.split('\n\n');
-
-      return {
-        id: q.id,
-        q: parts[0],
-        a: q.option_a,
-        b: q.option_b,
-        c: q.option_c,
-        correct: q.correct as 'a' | 'b' | 'c',
-        image: q.image_url,
-        statements: parts.length > 1 ? parts[1].split('\n') : undefined,
-        doublePoints: q.double_points,
-        isPublished: q.is_published,
-        category: q.category,
-        explanation: q.explanation,
-        createdAt: q.created_at
-      };
-    });
+    const filas = (data ?? []) as unknown as Array<QuestionRow & { created_at: string }>;
+    const items: AdminQuestion[] = filas.map(row => ({
+      ...mapQuestionRow(row),
+      id: row.id,
+      createdAt: row.created_at
+    }));
 
     return {
       data: { items, total: count ?? 0, page: filters.page, pageSize: filters.pageSize },

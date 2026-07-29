@@ -1,47 +1,59 @@
+/** Todos los examenes fijos llevan la misma cantidad de preguntas de doble puntaje. */
+export const DOBLES_POR_EXAMEN = 3;
+
 export interface ExamSlice {
-  /** cuantas de doble puntaje toma este examen y desde que posicion */
-  doubleCount: number;
   doubleOffset: number;
-  /** cuantas normales toma este examen y desde que posicion */
-  normalCount: number;
+  doubleCount: number;
   normalOffset: number;
+  normalCount: number;
 }
 
 /**
- * Reparte todo el banco entre los examenes fijos, sin dejar preguntas afuera.
+ * Cuantos examenes fijos se pueden armar sin dejar preguntas normales afuera.
  *
- * El criterio anterior era rigido (3 dobles + 32 normales por examen), asi que
- * la cantidad de examenes quedaba limitada por las de doble puntaje y las
- * normales sobrantes no se usaban nunca. Aca las dobles se reparten lo mas
- * parejo posible y las normales completan cada examen.
+ * Las normales mandan porque son las que no queremos repetir: hay muchas mas y
+ * son el grueso del examen. Las de doble puntaje, al ser pocas, se reciclan.
  */
-export function contarExamenes(totalPreguntas: number, preguntasPorExamen: number): number {
-  if (preguntasPorExamen <= 0 || totalPreguntas <= 0) return 0;
-  return Math.ceil(totalPreguntas / preguntasPorExamen);
+export function contarExamenes(totalNormales: number, preguntasPorExamen: number): number {
+  const normalesPorExamen = preguntasPorExamen - DOBLES_POR_EXAMEN;
+  if (normalesPorExamen <= 0 || totalNormales <= 0) return 0;
+  return Math.ceil(totalNormales / normalesPorExamen);
 }
 
 /**
+ * Tramo del banco que le toca a un examen. Los offsets pueden pasarse del total
+ * disponible: quien consulta debe dar la vuelta al principio (ver traerConVuelta).
+ *
  * @param examIndex indice del examen empezando en 0
  */
-export function calcularTramo(
-  examIndex: number,
-  totalExamenes: number,
-  totalDobles: number,
-  preguntasPorExamen: number
-): ExamSlice {
-  // Reparto parejo de las dobles: los primeros examenes se quedan con el resto.
-  const base = Math.floor(totalDobles / totalExamenes);
-  const extra = totalDobles % totalExamenes;
+export function calcularTramo(examIndex: number, preguntasPorExamen: number): ExamSlice {
+  const normalCount = preguntasPorExamen - DOBLES_POR_EXAMEN;
 
-  const doubleCount = Math.min(
-    base + (examIndex < extra ? 1 : 0),
-    preguntasPorExamen
-  );
-  const doubleOffset = base * examIndex + Math.min(examIndex, extra);
+  return {
+    doubleOffset: examIndex * DOBLES_POR_EXAMEN,
+    doubleCount: DOBLES_POR_EXAMEN,
+    normalOffset: examIndex * normalCount,
+    normalCount
+  };
+}
 
-  const normalCount = preguntasPorExamen - doubleCount;
-  // Las normales se consumen en orden: lo que no ocuparon las dobles antes.
-  const normalOffset = preguntasPorExamen * examIndex - doubleOffset;
+/**
+ * Traduce un tramo a rangos concretos sobre una lista de `total` elementos,
+ * dando la vuelta al principio cuando se acaba. Devuelve uno o dos rangos.
+ */
+export function rangosConVuelta(
+  offset: number,
+  cantidad: number,
+  total: number
+): Array<{ desde: number; hasta: number }> {
+  if (total <= 0 || cantidad <= 0) return [];
 
-  return { doubleCount, doubleOffset, normalCount, normalOffset };
+  const inicio = offset % total;
+  const primerTramo = Math.min(cantidad, total - inicio);
+  const rangos = [{ desde: inicio, hasta: inicio + primerTramo - 1 }];
+
+  const resto = Math.min(cantidad - primerTramo, total - primerTramo);
+  if (resto > 0) rangos.push({ desde: 0, hasta: resto - 1 });
+
+  return rangos;
 }
