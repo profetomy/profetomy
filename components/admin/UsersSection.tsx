@@ -1,15 +1,13 @@
 "use client";
 
-// AdminPage.tsx
+// Seccion de usuarios y suscripciones del panel de administracion.
 import { useEffect, useState } from "react";
 import type { AdminUser } from "@/lib/types/adminUser";
-import { createClient } from "@/lib/supabase/client";
 import { Search, ChevronLeft, ChevronRight } from "lucide-react";
 import { getAdminUsers } from "@/app/actions/getAdminUsers";
 import { manageSubscription } from "@/app/actions/manageSubscription";
-// import CreateQuestionForm from "@/components/adminPage/create-question-form";
 
-export default function AdminPage() {
+export function UsersSection() {
   const [users, setUsers] = useState<AdminUser[]>([]);
   const [days, setDays] = useState<number>(30);
   const [loadingUserId, setLoadingUserId] = useState<string | null>(null);

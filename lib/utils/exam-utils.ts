@@ -22,9 +22,12 @@ export function generateRandomExam(allQuestions: Question[]): Question[] {
   return examQuestions;
 }
 
+export const MAX_PUNTOS_INCORRECTOS_POR_DEFECTO = 6;
+
 export function calculateScore(
   questions: Question[],
-  userAnswers: UserAnswer[]
+  userAnswers: UserAnswer[],
+  maxPuntosIncorrectos: number = MAX_PUNTOS_INCORRECTOS_POR_DEFECTO
 ): ExamResults {
   let correctAnswers = 0;
   let totalPoints = 0;
@@ -41,10 +44,11 @@ export function calculateScore(
   });
   
   const incorrectPoints = maxPoints - totalPoints;
-  const passed = incorrectPoints < 6;
-  
+  const passed = incorrectPoints < maxPuntosIncorrectos;
+
   return {
     correct: correctAnswers,
+    total: questions.length,
     points: totalPoints,
     maxPoints,
     incorrect: incorrectPoints,

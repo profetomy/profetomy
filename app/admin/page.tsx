@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import AdminPage from "@/components/adminPage/adminPage";
+import { AdminPanel } from "@/components/admin/AdminPanel";
 import { Navbar } from "@/components/Navbar";
 import Link from "next/link";
 import { ShieldAlert } from "lucide-react";
@@ -121,7 +121,7 @@ export default async function AdminRoute() {
   return (
     <>
       <Navbar />
-      <AdminPage />
+      <AdminPanel />
     </>
   );
 }

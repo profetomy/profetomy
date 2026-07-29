@@ -1,6 +1,8 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { ExamResults } from '@/lib/types/exam';
+import { getAppContent } from '@/app/actions/getAppContent';
 
 interface ResultsModalProps {
   results: ExamResults;
@@ -16,7 +18,23 @@ export function ResultsModal({
   onClose
 }: ResultsModalProps) {
   const statusClass = results.passed ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400';
-  const statusText = results.passed ? '¡APROBADO!' : 'REPROBADO';
+
+  // Titulo y mensaje se editan desde el panel; estos son el respaldo.
+  const [statusText, setStatusText] = useState(results.passed ? '¡APROBADO!' : 'REPROBADO');
+  const [mensaje, setMensaje] = useState(
+    results.passed
+      ? 'Aprobado (menos de 6 puntos incorrectos)'
+      : 'Reprobado (6 o más puntos incorrectos)'
+  );
+
+  useEffect(() => {
+    const clave = results.passed ? 'resultado_aprobado' : 'resultado_reprobado';
+    getAppContent().then(({ data }) => {
+      const item = data?.find(c => c.key === clave);
+      if (item?.title) setStatusText(item.title);
+      if (item?.body?.trim()) setMensaje(item.body);
+    });
+  }, [results.passed]);
 
   return (
     <div className="fixed inset-0 flex items-center justify-center p-4 z-[1000] bg-black/60 backdrop-blur-sm">
@@ -27,7 +45,7 @@ export function ResultsModal({
         
         <div className="mb-6 space-y-3">
           <p className="text-lg text-gray-700 dark:text-zinc-300">
-            <strong>Respuestas correctas:</strong> {results.correct} de 35
+            <strong>Respuestas correctas:</strong> {results.correct} de {results.total}
           </p>
           <p className="text-lg text-gray-700 dark:text-zinc-300">
             <strong>Puntos obtenidos:</strong> {results.points} de {results.maxPoints}
@@ -37,9 +55,7 @@ export function ResultsModal({
           </p>
           <p className="text-base text-gray-500 dark:text-zinc-400 mt-4 leading-relaxed">
             <strong>Resultado:</strong>{' '}
-            {results.passed
-              ? 'Aprobado (menos de 6 puntos incorrectos)'
-              : 'Reprobado (6 o más puntos incorrectos)'}
+            {mensaje}
           </p>
         </div>
 

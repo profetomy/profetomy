@@ -10,6 +10,10 @@ export interface Question {
   doublePoints?: boolean;
   /** Solo llega con valor en vistas de admin: false = borrador, no visible para usuarios */
   isPublished?: boolean;
+  /** Categoria guardada en la base (hoy solo 'examen-final') */
+  category?: string | null;
+  difficulty?: string | null;
+  explanation?: string | null;
 }
 
 export type UserAnswer = 'a' | 'b' | 'c' | null;
@@ -27,6 +31,8 @@ export type ExamMode = 'exam' | 'correction';
 
 export interface ExamResults {
   correct: number;
+  /** cantidad de preguntas del examen rendido */
+  total: number;
   points: number;
   maxPoints: number;
   incorrect: number;

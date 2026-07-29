@@ -27,6 +27,7 @@ export async function getDoublePointsQuestions(): Promise<{ data: Question[] | n
       const statements = parts.length > 1 ? parts[1].split('\n') : undefined;
 
       return {
+        id: q.id,
         q: mainQ,
         a: q.option_a,
         b: q.option_b,

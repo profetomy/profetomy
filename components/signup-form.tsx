@@ -1,5 +1,6 @@
 "use client";
 
+import { linkWhatsapp, mensajeAccesoConCorreo } from '@/lib/constants/whatsappMessage';
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -70,7 +71,7 @@ export function SignUpForm({
             </p>
             <Button 
               className="w-full bg-[#25D366] hover:bg-[#20bd5a] text-white"
-              onClick={() => window.open(`https://wa.me/56926932373?text=Hola%20Profe%20Tomy,%20acabo%20de%20crear%20mi%20cuenta%20con%20el%20correo%20${encodeURIComponent(email)}%20y%20quiero%20activar%20mi%20acceso.`, '_blank')}
+              onClick={() => window.open(linkWhatsapp(mensajeAccesoConCorreo(email)), '_blank')}
             >
               Contactar al Profe Tomy
             </Button>

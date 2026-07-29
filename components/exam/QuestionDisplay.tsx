@@ -2,6 +2,7 @@
 
 import { Question, UserAnswer, ExamMode } from '@/lib/types/exam';
 import Image from 'next/image';
+import { Pencil } from 'lucide-react';
 
 interface QuestionDisplayProps {
   question: Question;
@@ -9,6 +10,9 @@ interface QuestionDisplayProps {
   userAnswer: UserAnswer;
   mode: ExamMode;
   isFinished: boolean;
+  /** Solo true para administradores: muestra el boton de editar */
+  canEdit?: boolean;
+  onEdit?: () => void;
 }
 
 export function QuestionDisplay({
@@ -16,7 +20,9 @@ export function QuestionDisplay({
   questionNumber,
   userAnswer,
   mode,
-  isFinished
+  isFinished,
+  canEdit = false,
+  onEdit
 }: QuestionDisplayProps) {
   const doublePointsText = question.doublePoints ? ' (DOBLE PUNTAJE)' : '';
   const isCorrect = userAnswer === question.correct;
@@ -30,6 +36,17 @@ export function QuestionDisplay({
           <span className="text-xs font-bold px-2 py-0.5 rounded bg-amber-400 text-amber-950">
             BORRADOR
           </span>
+        )}
+        {canEdit && onEdit && question.id && (
+          <button
+            type="button"
+            onClick={onEdit}
+            title="Editar esta pregunta"
+            className="ml-auto flex items-center gap-1 text-xs font-bold px-2 py-1 rounded border border-[#033E8C]/30 text-[#033E8C] dark:text-zinc-200 dark:border-zinc-600 hover:bg-[#FCD442] hover:border-[#FCD442] transition-colors cursor-pointer"
+          >
+            <Pencil size={14} />
+            Editar
+          </button>
         )}
       </div>
       

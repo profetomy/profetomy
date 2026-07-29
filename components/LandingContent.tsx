@@ -2,14 +2,12 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
+import { MENSAJE_ACCESO, linkWhatsapp } from '@/lib/constants/whatsappMessage';
 import { CheckCircle, Clock, Zap, BookOpen, Infinity as InfinityIcon, MessageCircle, ChevronDown, ArrowDown } from 'lucide-react';
 
 export function LandingContent() {
-  const whatsappNumber = "56926932373";
-  const whatsappBaseUrl = `https://wa.me/${whatsappNumber}?text=`;
-
   const openWhatsApp = (message: string) => {
-    window.open(`${whatsappBaseUrl}${encodeURIComponent(message)}`, '_blank');
+    window.open(linkWhatsapp(message), '_blank');
   };
 
   const scrollToPlans = () => {
@@ -49,7 +47,7 @@ export function LandingContent() {
 
           <div className="pt-6 flex flex-col gap-4 items-center justify-center">
             <button 
-              onClick={() => openWhatsApp("Hola Profe Tomy, quiero activar el acceso al simulador.")}
+              onClick={() => openWhatsApp(MENSAJE_ACCESO)}
               className="bg-[#25D366] hover:bg-[#20bd5a] text-white text-lg md:text-xl font-bold py-4 px-8 rounded-full shadow-xl hover:shadow-2xl transition-all transform hover:-translate-y-1 flex items-center justify-center gap-3 w-full md:w-auto animate-pulse-slow"
             >
               <MessageCircle size={28} />
@@ -138,7 +136,7 @@ export function LandingContent() {
                 <div className="flex-grow"></div>
 
                 <button 
-                  onClick={() => openWhatsApp("Hola Profe Tomy, quiero activar la Preparación Completa 10 días.")}
+                  onClick={() => openWhatsApp(MENSAJE_ACCESO)}
                   className="w-full bg-[#033E8C] hover:bg-[#022c63] text-white font-bold py-4 rounded-xl shadow-lg transition-all text-lg flex items-center justify-center gap-2"
                 >
                   QUIERO ESTE PLAN
@@ -163,7 +161,7 @@ export function LandingContent() {
 
       {/* 5. BOTÓN FLOTANTE */}
       <button 
-        onClick={() => openWhatsApp("")}
+        onClick={() => openWhatsApp(MENSAJE_ACCESO)}
         className="fixed bottom-6 right-6 bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold p-4 rounded-full shadow-2xl hover:shadow-[#25D366]/40 transition-all z-50 flex items-center gap-2 group animate-bounce-subtle ring-4 ring-white/20"
       >
         <MessageCircle size={28} className="fill-white text-[#25D366]" />

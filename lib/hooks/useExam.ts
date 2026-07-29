@@ -15,17 +15,12 @@ export function useExam() {
 
   const [loading, setLoading] = useState(false);
 
-  const initializeExam = useCallback(async (mode: 'random' | 'debug' | 'senaleticas' | 'matematicas' | 'doble-puntaje' | 'examen-final' = 'random', examId?: number) => {
+  const initializeExam = useCallback(async (mode: 'random' | 'senaleticas' | 'matematicas' | 'doble-puntaje' | 'examen-final' = 'random', examId?: number) => {
     setLoading(true);
     try {
       let questionsData = null;
-      
-      if (mode === 'debug') {
-        const { getAllQuestions } = await import('@/app/actions/getAllQuestions');
-        const { data, error } = await getAllQuestions();
-        if (error) throw new Error(error);
-        questionsData = data;
-      } else if (mode === 'senaleticas') {
+
+      if (mode === 'senaleticas') {
         const { getSenaleticasQuestions } = await import('@/app/actions/getSenaleticasQuestions');
         const { data, error } = await getSenaleticasQuestions();
         if (error) throw new Error(error);
@@ -112,10 +107,10 @@ export function useExam() {
     setMode(newMode);
   }, [isFinished]);
 
-  const finishExam = useCallback(() => {
+  const finishExam = useCallback((maxPuntosIncorrectos?: number) => {
     if (isFinished) return;
-    
-    const examResults = calculateScore(examQuestions, userAnswers);
+
+    const examResults = calculateScore(examQuestions, userAnswers, maxPuntosIncorrectos);
     setResults(examResults);
     setIsFinished(true);
     return examResults;
@@ -137,6 +132,6 @@ export function useExam() {
     prevQuestion,
     switchMode,
     finishExam,
-    setExamQuestions // Exposed for advanced debug functionality
+    setExamQuestions
   };
 }

@@ -1,44 +1,13 @@
 'use server';
 
-import { createClient } from "@/lib/supabase/server";
+import { requireAdmin } from "@/lib/auth/requireAdmin";
+import { uploadQuestionImage } from "@/lib/services/questionImage.service";
 
 export async function updateQuestion(questionId: string, formData: FormData) {
   try {
-    const supabase = await createClient();
+    const { adminClient, error: authError } = await requireAdmin('editar preguntas');
+    if (!adminClient) return { error: authError };
 
-    // 1. Verify Authentication & Role
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
-    if (authError || !user) {
-      return { error: 'Unauthorized: Debes iniciar sesión' };
-    }
-
-    const { data: profile } = await supabase
-      .from('profiles')
-      .select('role')
-      .eq('id', user.id)
-      .single();
-
-    if (profile?.role?.toLowerCase() !== 'admin') {
-      return { error: 'Access Denied: Solo administradores pueden editar preguntas' };
-    }
-
-    // Initialize Admin Client to bypass RLS for Storage and DB inserts
-    // This requires SUPABASE_SERVICE_ROLE_KEY in .env
-    const { createClient: createAdminClient } = await import('@supabase/supabase-js');
-    const adminClient = createAdminClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.SUPABASE_SERVICE_ROLE_KEY!,
-      {
-        auth: {
-          autoRefreshToken: false,
-          persistSession: false
-        }
-      }
-    );
-
-    // 2. Extract Data
-    // 2. Extract Data
-    // 2. Extract Data
     let question = formData.get('question') as string;
     const statementsJson = formData.get('statements') as string;
 
@@ -46,58 +15,47 @@ export async function updateQuestion(questionId: string, formData: FormData) {
       try {
         const statements = JSON.parse(statementsJson) as string[];
         if (Array.isArray(statements) && statements.length > 0) {
-           question = `${question}\n\n${statements.join('\n')}`;
+          question = `${question}\n\n${statements.join('\n')}`;
         }
       } catch (e) {
         console.error("Error parsing statements:", e);
       }
     }
 
-    const optionA = formData.get('optionA') as string;
-    const optionB = formData.get('optionB') as string;
-    const optionC = formData.get('optionC') as string;
-    const correct = formData.get('correct') as string;
-    const doublePoints = formData.get('doublePoints') === 'true';
-    
-    // Helper to get file safely
-    const imageFile = formData.get('imageFile');
-    // Helper to get string safely
+    // Sin archivo nuevo se conserva la imagen actual que manda el formulario.
     let imageUrl = formData.get('imageUrl') as string | null;
     if (imageUrl === 'null' || imageUrl === '') imageUrl = null;
 
-    // 3. Upload New Image if provided using Admin Client
-    if (imageFile && imageFile instanceof File && imageFile.size > 0) {
-      const fileExt = imageFile.name.split('.').pop();
-      const fileName = `${Math.random().toString(36).substring(2, 15)}_${Date.now()}.${fileExt}`;
-      const filePath = `questions/${fileName}`;
+    const imageFile = formData.get('imageFile') as File | null;
+    const { url: nuevaImagen, error: uploadError } = await uploadQuestionImage(adminClient, imageFile);
+    if (uploadError) return { error: uploadError };
+    if (nuevaImagen) imageUrl = nuevaImagen;
 
-      const { error: uploadError } = await adminClient.storage
-        .from('questions-images')
-        .upload(filePath, imageFile, {
-            contentType: imageFile.type,
-            upsert: false
-        });
-
-      if (uploadError) {
-        console.error("Storage upload error:", uploadError);
-        return { error: `Error subiendo imagen: ${uploadError.message}` };
-      }
-
-      imageUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/questions-images/${filePath}`;
+    // La categoria se guarda por slug y por FK: el slug es lo que consultan los
+    // examenes, la FK mantiene la integridad con la tabla categories.
+    const slug = (formData.get('category') as string) || null;
+    let categoryId: string | null = null;
+    if (slug) {
+      const { data: cat } = await adminClient
+        .from('categories').select('id').eq('slug', slug).maybeSingle();
+      categoryId = cat?.id ?? null;
     }
 
-    // 4. Update Question using Admin Client
     const { error: updateError } = await adminClient
       .from('questions')
       .update({
         question: question,
-        option_a: optionA,
-        option_b: optionB,
-        option_c: optionC,
-        correct: correct,
+        option_a: formData.get('optionA') as string,
+        option_b: formData.get('optionB') as string,
+        option_c: formData.get('optionC') as string,
+        correct: formData.get('correct') as string,
         image_url: imageUrl,
-        double_points: doublePoints,
-        // Don't update created_at usually, maybe updated_at if you have it
+        double_points: formData.get('doublePoints') === 'true',
+        category: (formData.get('category') as string) || null,
+        difficulty: (formData.get('difficulty') as string) || null,
+        explanation: (formData.get('explanation') as string) || null,
+        category_id: categoryId,
+        is_published: formData.get('isPublished') === 'true'
       })
       .eq('id', questionId);
 
@@ -106,7 +64,6 @@ export async function updateQuestion(questionId: string, formData: FormData) {
       return { error: `Error actualizando pregunta: ${updateError.message}` };
     }
 
-    console.log(`[Update Question] Question ${questionId} updated successfully.`);
     return { success: true };
 
   } catch (error: any) {

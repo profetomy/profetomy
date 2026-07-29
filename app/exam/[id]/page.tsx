@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 import { useExam } from '@/lib/hooks/useExam';
+import { useExamConfig } from '@/lib/hooks/useExamConfig';
 import { useTimer } from '@/lib/hooks/useTimer';
 import { QuestionDisplay } from '@/components/exam/QuestionDisplay';
 import { OptionsList } from '@/components/exam/OptionsList';
@@ -12,12 +13,11 @@ import { Sidebar } from '@/components/exam/Sidebar';
 import { ResultsModal } from '@/components/exam/ResultsModal';
 import { InstructionsModal } from '@/components/exam/InstructionsModal';
 import { NavbarClient } from '@/components/NavbarClient';
+import { QuestionFormModal } from '@/components/admin/QuestionFormModal';
 import Link from 'next/link';
 import { Lock } from 'lucide-react';
 import type { User } from '@supabase/supabase-js';
 import { checkExamAccess } from '@/app/actions/checkExamAccess';
-
-const EXAM_DURATION = 45 * 60; // 45 minutes in seconds
 
 // Componente de acceso denegado
 function SubscriptionRequired() {
@@ -96,6 +96,8 @@ export default function ExamPage() {
   const [showResultsModal, setShowResultsModal] = useState(false);
   const [user, setUser] = useState<User | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const { duracionSegundos, maxPuntosIncorrectos } = useExamConfig();
 
   const {
     examQuestions,
@@ -116,11 +118,11 @@ export default function ExamPage() {
   } = useExam();
 
   const handleFinishExam = () => {
-    finishExam();
+    finishExam(maxPuntosIncorrectos);
     setShowResultsModal(true);
   };
 
-  const { formattedTime, start, reset } = useTimer(EXAM_DURATION, () => {
+  const { formattedTime, start, reset } = useTimer(duracionSegundos, () => {
     handleFinishExam();
   });
 
@@ -128,6 +130,11 @@ export default function ExamPage() {
     setShowInstructions(false);
     start();
   };
+
+  // La duracion llega despues del primer render: se ajusta el reloj antes de arrancar.
+  useEffect(() => {
+    reset(duracionSegundos);
+  }, [duracionSegundos, reset]);
 
   // Check subscription status
   useEffect(() => {
@@ -275,6 +282,8 @@ export default function ExamPage() {
                   userAnswer={userAnswers[currentQuestionIndex]}
                   mode={mode}
                   isFinished={isFinished}
+                  canEdit={isAdmin}
+                  onEdit={() => setShowEditModal(true)}
                 />
               </div>
 
@@ -318,6 +327,15 @@ export default function ExamPage() {
           </div>
         </div>
       </div>
+
+      {/* Edit Modal (solo admin) */}
+      {showEditModal && currentQuestion && (
+        <QuestionFormModal
+          question={currentQuestion}
+          onClose={() => setShowEditModal(false)}
+          onSaved={() => setShowEditModal(false)}
+        />
+      )}
 
       {/* Results Modal */}
       {showResultsModal && results && (
