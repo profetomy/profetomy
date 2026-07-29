@@ -23,7 +23,7 @@ export function QuestionDisplay({
   const points = question.doublePoints ? 2 : 1;
 
   return (
-    <div className="flex flex-col h-full overflow-hidden">
+    <div className="flex flex-col h-full overflow-y-auto">
       <div className="text-lg font-bold mb-3 shrink-0 text-foreground/80 flex items-center gap-2">
         <span>Pregunta N° {questionNumber}{doublePointsText}:</span>
         {question.isPublished === false && (
@@ -41,13 +41,14 @@ export function QuestionDisplay({
       </div>
 
       {question.image && (
-        <div className="h-[250px] lg:h-auto lg:flex-1 min-h-0 relative w-full mb-4 shrink-0 lg:shrink">
+        <div className="h-[300px] lg:h-auto lg:flex-1 lg:min-h-[340px] relative w-full mb-4 shrink-0 lg:shrink">
           <Image
             src={question.image}
             alt="Imagen de la pregunta"
             fill
+            sizes="(max-width: 1024px) 100vw, 60vw"
             className="border border-[#ddd] dark:border-zinc-800 rounded"
-            style={{ 
+            style={{
               objectFit: 'contain'
             }}
           />
